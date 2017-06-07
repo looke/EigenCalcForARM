@@ -1,5 +1,5 @@
 /*
- * test_factorial.cpp
+ * test_StaticVector.cpp
  *
  *  Created on: 2017年6月7日
  *      Author: looke
@@ -56,5 +56,15 @@ TEST(StaticVectorGetElementExceptionTest, postive)
 	EXPECT_THROW(testVector.getElement(-1), length_error);
 	//测试异常
 	EXPECT_THROW(testVector.getElement(-3), length_error);
+}
+
+/*
+ * 测试vector元素设置
+ */
+TEST(StaticVectorSetElementTest, postive)
+{
+	StaticVector testVector = StaticVector(3);
+	testVector.setElement(0,23);
+	EXPECT_EQ(23, testVector.getElement(0));
 }
 

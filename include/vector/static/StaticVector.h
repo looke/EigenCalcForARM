@@ -13,13 +13,13 @@ class StaticVector : public BasicVector
 {
 public:
 	StaticVector();
-	StaticVector(int input_dimension);
+	StaticVector(int input_dimension) throw(length_error);
 
 	//取向量的元素
-	double getElement(int index);
+	double getElement(int index) throw(length_error);
 
 	//设置向量的元素
-	void setElement(int index, double value);
+	void setElement(int index, double value) throw(length_error);
 
 protected:
 	void init(int input_dimension);

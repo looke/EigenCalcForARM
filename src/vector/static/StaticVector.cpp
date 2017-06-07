@@ -9,11 +9,15 @@
 
 StaticVector::StaticVector()
 {
-	this->space = 20;
+	this->init(0);
 };
 
-StaticVector::StaticVector(int input_dimension)
+StaticVector::StaticVector(int input_dimension) throw(length_error)
 {
+	if(input_dimension < 0 || input_dimension > this->dimension)
+	{
+		throw length_error("StaticVector Creation Exception: input_dimension out of range.");
+	}
 	this->init(input_dimension);
 };
 
@@ -31,13 +35,21 @@ void StaticVector::init(int input_dimension)
 };
 
 //取向量的元素
-double StaticVector::getElement(int index)
+double StaticVector::getElement(int index) throw(length_error)
 {
+	if(index < 0 || index > this->dimension)
+	{
+		throw length_error("StaticVector GetElement Exception: index out of range.");
+	}
 	return this->vector_static[index];
 };
 
 //设置向量的元素
-void StaticVector::setElement(int index, double value)
+void StaticVector::setElement(int index, double value) throw(length_error)
 {
+	if(index < 0 || index > this->dimension)
+	{
+		throw length_error("StaticVector SetElement Exception: index out of range.");
+	}
 	this->vector_static[index] = value;
 };

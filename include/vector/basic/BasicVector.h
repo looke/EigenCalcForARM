@@ -9,6 +9,8 @@
 #define VECTOR_BASIC_BASICVECTOR_H_
 
 #include <stdexcept>
+#include <string>
+#include <sstream>
 using namespace std;
 
 class BasicVector
@@ -16,7 +18,7 @@ class BasicVector
 
 public:
 	BasicVector();
-	BasicVector(int input_dimension) throw(length_error);
+	BasicVector(int input_dimension) throw(out_of_range);
 
 	//求向量的模
 	double getNormOfVector();
@@ -26,14 +28,16 @@ public:
 	//向量维度
 	int getDimension();
 
-	void resetDimension(int input_newDimension) throw(length_error);
+	void resetDimension(int input_newDimension) throw(out_of_range);
 
 	//取向量的元素
-	virtual double getElement(int index) throw(length_error);
+	virtual double getElement(int index) throw(out_of_range);
 
 	//设置向量的元素
-	virtual void setElement(int index, double value) throw(length_error);
+	virtual void setElement(int index, double value) throw(out_of_range);
 
+	//输出异常信息
+	string getOutOfRangeErrorMessage(int lengthOrIndex);
 	//拷贝向量的元素
 	void copyVector(BasicVector* input_Vector);
 

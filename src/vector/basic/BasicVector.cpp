@@ -17,12 +17,12 @@ BasicVector::BasicVector()
 	this->init();
 };
 
-BasicVector::BasicVector(int input_dimension) throw(length_error)
+BasicVector::BasicVector(int input_dimension) throw(out_of_range)
 {
 	this->space = 20;
 	if(input_dimension < 0 || input_dimension > this->space)
 	{
-		throw length_error("BasicVector Creation Exception: length out of range.");
+		throw out_of_range(getOutOfRangeErrorMessage(input_dimension));
 	}
 	if(input_dimension > 0)
 	{
@@ -32,11 +32,11 @@ BasicVector::BasicVector(int input_dimension) throw(length_error)
 };
 
 //取向量的元素
-double BasicVector::getElement(int index) throw(length_error)
+double BasicVector::getElement(int index) throw(out_of_range)
 {};
 
 //设置向量的元素
-void BasicVector::setElement(int index, double value) throw(length_error)
+void BasicVector::setElement(int index, double value) throw(out_of_range)
 {};
 
 //求向量的模
@@ -73,11 +73,11 @@ int BasicVector::getDimension()
 	return this->dimension;
 };
 
-void BasicVector::resetDimension(int input_newDimension) throw(length_error)
+void BasicVector::resetDimension(int input_newDimension) throw(out_of_range)
 {
 	if(input_newDimension < 0 || input_newDimension > this->space)
 	{
-		throw length_error("BasicVector ResetDimension Exception: length out for range.");
+		throw out_of_range(getOutOfRangeErrorMessage(input_newDimension));
 	}
 	this->dimension = input_newDimension;
 };
@@ -106,6 +106,18 @@ void BasicVector::printVector()
 	cout << endl;
 };
 
+//异常使用的错误信息
+string BasicVector::getOutOfRangeErrorMessage(int lengthOrIndex)
+{
+	stringstream stream;
+	stream<<lengthOrIndex;
+	string detail_input_dimension = stream.str();
+	stream.str("");
+	stream<<this->space;
+	string detail_space = stream.str();
+	string exInfo = "Out of range. input:" +detail_input_dimension + ". Range: 0 to " + detail_space;
+	return exInfo;
+};
 
 void BasicVector::init()
 {};

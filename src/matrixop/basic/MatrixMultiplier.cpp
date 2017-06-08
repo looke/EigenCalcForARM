@@ -111,14 +111,10 @@ void MatrixMultiplier::multiplyCalc()
 	//}
 };
 
-
+//打印乘积结果矩阵
 void MatrixMultiplier::printMultiplyResult()
 {
-	//if(isLegalMultiply)
-	//{
-		p_MultiResult->printMatrix();
-
-	//}
+	p_MultiResult->printMatrix();
 };
 
 string MatrixMultiplier::getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)

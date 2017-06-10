@@ -86,6 +86,31 @@ TEST(MatrixTransposerNotSquareTest, postive)
 	MatrixTransposer testTransposer = MatrixTransposer();
 
 	EXPECT_EQ(0,testTransposer.transposeSquareMatrix(&testMatrix45));
+
+	EXPECT_EQ(1, testMatrix45.getMatrixElement(0,0));
+	EXPECT_EQ(2, testMatrix45.getMatrixElement(0,1));
+	EXPECT_EQ(3, testMatrix45.getMatrixElement(0,2));
+	EXPECT_EQ(4, testMatrix45.getMatrixElement(0,3));
+	EXPECT_EQ(5, testMatrix45.getMatrixElement(0,4));
+
+
+	EXPECT_EQ(6, testMatrix45.getMatrixElement(1,0));
+	EXPECT_EQ(7, testMatrix45.getMatrixElement(1,1));
+	EXPECT_EQ(8, testMatrix45.getMatrixElement(1,2));
+	EXPECT_EQ(9, testMatrix45.getMatrixElement(1,3));
+	EXPECT_EQ(10,testMatrix45.getMatrixElement(1,4));
+
+	EXPECT_EQ(11, testMatrix45.getMatrixElement(2,0));
+	EXPECT_EQ(12, testMatrix45.getMatrixElement(2,1));
+	EXPECT_EQ(13, testMatrix45.getMatrixElement(2,2));
+	EXPECT_EQ(14, testMatrix45.getMatrixElement(2,3));
+	EXPECT_EQ(15, testMatrix45.getMatrixElement(2,4));
+
+	EXPECT_EQ(16, testMatrix45.getMatrixElement(3,0));
+	EXPECT_EQ(17, testMatrix45.getMatrixElement(3,1));
+	EXPECT_EQ(18, testMatrix45.getMatrixElement(3,2));
+	EXPECT_EQ(19, testMatrix45.getMatrixElement(3,3));
+	EXPECT_EQ(20, testMatrix45.getMatrixElement(3,4));
 }
 
 /*

@@ -25,7 +25,7 @@ GivensTransformation::GivensTransformation(BasicVector* p_input_Vector)
 bool GivensTransformation::getGivensMatrixAfterMultiple(int elementIndexToZero, BasicMatrix* p_GivensMatrix)
 {
 	int size = this->p_GivensVector->getDimension();
-	if(p_GivensMatrix->rowNum != size || p_GivensMatrix->columnNum != size)
+	if(p_GivensMatrix->rowNum != size || p_GivensMatrix->columnNum != size || elementIndexToZero < 0 || elementIndexToZero >= size)
 	{
 		return false;
 	}
@@ -74,7 +74,7 @@ bool GivensTransformation::getGivensMatrixAfterMultiple(int elementIndexToZero, 
 bool GivensTransformation::getGivensMatrixPreMultiple(int elementIndexToZero, BasicMatrix* p_GivensMatrix)
 {
 	int size = this->p_GivensVector->getDimension();
-	if(p_GivensMatrix->rowNum != size || p_GivensMatrix->columnNum != size)
+	if(p_GivensMatrix->rowNum != size || p_GivensMatrix->columnNum != size || elementIndexToZero < 0 || elementIndexToZero >= size)
 	{
 		return false;
 	}

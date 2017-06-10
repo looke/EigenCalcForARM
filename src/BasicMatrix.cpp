@@ -6,7 +6,7 @@
  */
 
 
-#include "..\include\matrix\basic\BasicMatrix.h"
+#include "BasicMatrix.h"
 #include <iostream>
 
 using namespace std;

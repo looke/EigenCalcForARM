@@ -7,15 +7,15 @@
 
 
 #include "..\gtest_src\gtest\gtest.h"
-#include "..\include\matrix\static\StaticMatrix.h"
-#include "..\include\matrixop\static\StaticMatrixMultiplier.h"
+#include "StaticMatrix.h"
+#include "MatrixMultiplier.h"
 #include "math.h"
 
 
-class StaticMatrixMultiplierReloadTest:public testing::Test
+class MatrixMultiplierReloadTest:public testing::Test
 {
 public:
-	StaticMatrixMultiplierReloadTest():leftMatrix_old(2,3),rightMatrix_old(3,5),resultMatrix(2,5),sMatrixMultiplier(&leftMatrix_old, &rightMatrix_old, &resultMatrix)
+	MatrixMultiplierReloadTest():leftMatrix_old(2,3),rightMatrix_old(3,5),resultMatrix(2,5),sMatrixMultiplier(&leftMatrix_old, &rightMatrix_old, &resultMatrix)
 	{}
 protected:
     void SetUp()
@@ -27,20 +27,17 @@ protected:
 
     }
 
-
     StaticMatrix leftMatrix_old;
     StaticMatrix rightMatrix_old;
     StaticMatrix resultMatrix;
 
-    StaticMatrixMultiplier sMatrixMultiplier;
-
-
+    MatrixMultiplier sMatrixMultiplier;
 };
 
 /*
- * 测试vector长度信息获取
+ * 测试重新加载后的矩阵乘法
  */
-TEST_F(StaticMatrixMultiplierReloadTest,StaticMultiplierReloadTest)
+TEST_F(MatrixMultiplierReloadTest,MultiplierMulticalcTest)
 {
 	StaticMatrix leftMatrix44 = StaticMatrix(4,4);
 	leftMatrix44.setMatrixElement(0,0,1);
@@ -83,8 +80,10 @@ TEST_F(StaticMatrixMultiplierReloadTest,StaticMultiplierReloadTest)
 	StaticMatrix resultMatrix43 = StaticMatrix(4,3);
 
 	sMatrixMultiplier.reload(&leftMatrix44, &rightMatrix43, &resultMatrix43);
-	sMatrixMultiplier.multiplyCalc();
 
+	bool result = true;
+
+	EXPECT_EQ(result, sMatrixMultiplier.multiplyCalc());
 	EXPECT_EQ(10, resultMatrix43.getMatrixElement(0,0));
 	EXPECT_EQ(20, resultMatrix43.getMatrixElement(0,1));
 	EXPECT_EQ(30, resultMatrix43.getMatrixElement(0,2));
@@ -100,4 +99,18 @@ TEST_F(StaticMatrixMultiplierReloadTest,StaticMultiplierReloadTest)
 	EXPECT_EQ(58, resultMatrix43.getMatrixElement(3,0));
 	EXPECT_EQ(116, resultMatrix43.getMatrixElement(3,1));
 	EXPECT_EQ(174, resultMatrix43.getMatrixElement(3,2));
+}
+
+
+/*
+ * 测试重新加载后的矩阵乘法异常处理
+ */
+TEST_F(MatrixMultiplierReloadTest, MatrixMultiplierMultiCalcExceptionTest)
+{
+	StaticMatrix leftMatrix32 = StaticMatrix(3,2);
+	StaticMatrix rightMatrix33 = StaticMatrix(3,3);
+	StaticMatrix resultMatrix33 = StaticMatrix(3,3);
+	sMatrixMultiplier.reload(&leftMatrix32, &rightMatrix33, &resultMatrix33);
+	bool result = false;
+	EXPECT_EQ(result, sMatrixMultiplier.multiplyCalc());
 }

@@ -6,7 +6,7 @@
  */
 
 #include "..\gtest_src\gtest\gtest.h"
-#include "..\include\vector\static\StaticVector.h"
+#include "StaticVector.h"
 #include "math.h"
 /*
  * 测试vector创建以及异常处理
@@ -16,8 +16,8 @@ TEST(StaticVectorCreateTest, postive)
 	EXPECT_NO_THROW(StaticVector(0));
 	EXPECT_NO_THROW(StaticVector(10));
 	EXPECT_NO_THROW(StaticVector(20));
-	EXPECT_THROW(StaticVector(21), out_of_range);
-	EXPECT_THROW(StaticVector(-1), out_of_range);
+	//EXPECT_THROW(StaticVector(21), out_of_range);
+	//EXPECT_THROW(StaticVector(-1), out_of_range);
 }
 
 /*
@@ -56,8 +56,8 @@ TEST(StaticVectorSizeResetExceptionTest, postive)
 	StaticVector testVector = StaticVector(3);
 	EXPECT_NO_THROW(testVector.resetDimension(0));
 	EXPECT_NO_THROW(testVector.resetDimension(20));
-	EXPECT_THROW(testVector.resetDimension(21), out_of_range);
-	EXPECT_THROW(testVector.resetDimension(-1), out_of_range);
+	EXPECT_EQ(0,testVector.resetDimension(21));
+	EXPECT_EQ(0,testVector.resetDimension(-1));
 }
 
 /*
@@ -74,15 +74,15 @@ TEST(StaticVectorGetElementTest, postive)
 /*
  * 测试vector元素查询 异常处理
  */
-TEST(StaticVectorGetElementExceptionTest, postive)
+TEST(StaticVectorGetElementExceptionTest, negative)
 {
 	StaticVector testVector = StaticVector(5);
 	//测试异常
-	EXPECT_THROW(testVector.getElement(5), out_of_range);
+	EXPECT_NO_THROW(testVector.getElement(5));
 	//测试异常
-	EXPECT_THROW(testVector.getElement(-1), out_of_range);
+	EXPECT_NO_THROW(testVector.getElement(-1));
 	//测试异常
-	EXPECT_THROW(testVector.getElement(-3), out_of_range);
+	EXPECT_NO_THROW(testVector.getElement(-3));
 }
 
 /*
@@ -106,8 +106,8 @@ TEST(StaticVectorSetElementExceptionTest, postive)
 {
 	StaticVector testVector = StaticVector(3);
 	testVector.setElement(0,23);
-	EXPECT_THROW(testVector.setElement(3,23), out_of_range);
-	EXPECT_THROW(testVector.setElement(-1,23), out_of_range);
+	EXPECT_EQ(0, testVector.setElement(3,23));
+	EXPECT_EQ(0, testVector.setElement(-1,23));
 }
 
 /*

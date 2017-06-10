@@ -5,7 +5,7 @@
  *      Author: looke
  */
 
-#include "..\include\matrixop\basic\MatrixMultiplier.h"
+#include "MatrixMultiplier.h"
 #include <iostream>
 using namespace std;
 
@@ -14,35 +14,16 @@ MatrixMultiplier::MatrixMultiplier(BasicMatrix* leftOp, BasicMatrix* rightOp, Ba
 	this->init(leftOp, rightOp, resultOp);
 };
 
-void MatrixMultiplier::init(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)  throw(length_error)
+void MatrixMultiplier::init(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)
 {
-
+	this->p_leftOpMatrix = leftOp;
+	this->p_rightOpMatrix = rightOp;
+	this->p_MultiResult = resultOp;
 };
-/*
-void MatrixMultiplier::init(BasicMatrix* leftOp, BasicMatrix* rightOp)
-{
-	this->leftOpMatrix = leftOp;
-	this->leftRow = leftOp->rowNum;
-	this->leftColumn = leftOp->columnNum;
 
-	this->rightOpMatrix = rightOp;
-	this->rightRow = rightOp->rowNum;
-	this->rightColumn = rightOp->columnNum;
-
-	if(this->leftColumn == this->rightRow)
-	{
-		this->isLegalMultiply = true;
-		this->MultiResult = DynamicMatrix(this->leftRow, this->rightColumn);
-	}
-	else
-	{
-		this->isLegalMultiply = false;
-	}
-};
-*/
 void MatrixMultiplier::reload(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)
 {
-
+	this->init(leftOp, rightOp, resultOp);
 };
 /*
  * 重新装填
@@ -84,21 +65,21 @@ void MatrixMultiplier::reload(BasicMatrix* leftOp, BasicMatrix* rightOp)
 	//}
 //};
 
-void MatrixMultiplier::multiplyCalc()
+bool MatrixMultiplier::multiplyCalc()
 {
-	//if(isLegalMultiply)
-	//{
+	if(p_leftOpMatrix->columnNum == p_rightOpMatrix->rowNum && p_leftOpMatrix->rowNum == p_MultiResult->rowNum && p_rightOpMatrix->columnNum == p_MultiResult->columnNum)
+	{
 		double temp = 0.0;
 		double leftOp = 0.0;
 		double rightOp = 0.0;
 		double multiTemp = 0.0;
-		for(int i=0; i<this->leftRow; i++)
+		for(int i=0; i<p_leftOpMatrix->rowNum; i++)
 		{
-			for(int j=0; j<this->rightColumn; j++)
+			for(int j=0; j<p_rightOpMatrix->columnNum; j++)
 			{
 				temp=0;
 
-				for(int k=0; k<this->leftColumn; k++ )
+				for(int k=0; k<p_leftOpMatrix->columnNum; k++ )
 				{
 					leftOp = p_leftOpMatrix->getMatrixElement(i,k);
 					rightOp = p_rightOpMatrix->getMatrixElement(k,j);
@@ -108,7 +89,10 @@ void MatrixMultiplier::multiplyCalc()
 				p_MultiResult->setMatrixElement(i,j, temp);
 			}
 		}
-	//}
+		return true;
+	}
+	else
+		return false;
 };
 
 //打印乘积结果矩阵
@@ -116,7 +100,7 @@ void MatrixMultiplier::printMultiplyResult()
 {
 	p_MultiResult->printMatrix();
 };
-
+/*
 string MatrixMultiplier::getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)
 {
 	stringstream stream;
@@ -144,3 +128,4 @@ string MatrixMultiplier::getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicM
 	string exInfo = "Matrix length Error. LeftOp:" +left_Row + "*" + left_Column + " RightOp:" + right_Row + "*" + right_Column + " ResultOp:" + result_Row + "*" + result_Column + ".";
 	return exInfo;
 };
+*/

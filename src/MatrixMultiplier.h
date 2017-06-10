@@ -7,7 +7,7 @@
 
 #ifndef MATRIXMULTIPLIER_H_
 #define MATRIXMULTIPLIER_H_
-#include "..\include\matrix\basic\BasicMatrix.h"
+#include "BasicMatrix.h"
 
 class MatrixMultiplier
 {
@@ -15,14 +15,14 @@ public:
 
 	MatrixMultiplier(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
 
-	virtual void reload(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
-	virtual void init(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp) throw(length_error);
+	void reload(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
+	void init(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
 
-	void multiplyCalc();
+	bool multiplyCalc();
 
 	void printMultiplyResult();
 
-	string getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
+	//string getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
 
 	//BasicMatrix* getMultiplyResult();
 	virtual ~MatrixMultiplier() {};
@@ -32,14 +32,6 @@ protected:
 	BasicMatrix* p_rightOpMatrix;//ÓÒ²Ù×÷Êý¾ØÕó
 
 	BasicMatrix* p_MultiResult;
-
-	//bool isLegalMultiply;
-
-	int leftRow;
-	int leftColumn;
-
-	int rightRow;
-	int rightColumn;
 };
 
 #endif /* MATRIXMULTIPLIER_H_ */

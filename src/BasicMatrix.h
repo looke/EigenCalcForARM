@@ -8,7 +8,7 @@
 #ifndef MATRIX_BASICMATRIX_H_
 #define MATRIX_BASICMATRIX_H_
 
-#include "..\include\vector\basic\BasicVector.h"
+#include "BasicVector.h"
 #include "math.h"
 
 class BasicMatrix

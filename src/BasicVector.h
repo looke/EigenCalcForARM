@@ -8,17 +8,17 @@
 #ifndef VECTOR_BASIC_BASICVECTOR_H_
 #define VECTOR_BASIC_BASICVECTOR_H_
 
-#include <stdexcept>
-#include <string>
-#include <sstream>
-using namespace std;
+//#include <stdexcept>
+//#include <string>
+//#include <sstream>
+//using namespace std;
 
 class BasicVector
 {
 
 public:
 	BasicVector();
-	BasicVector(int input_dimension) throw(out_of_range);
+	BasicVector(int input_dimension);// throw(out_of_range);
 
 	//求向量的模
 	double getNormOfVector();
@@ -28,16 +28,16 @@ public:
 	//向量维度
 	int getDimension();
 
-	void resetDimension(int input_newDimension) throw(out_of_range);
+	bool resetDimension(int input_newDimension);
 
 	//取向量的元素
-	virtual double getElement(int index) throw(out_of_range);
+	virtual double getElement(int index);
 
 	//设置向量的元素
-	virtual void setElement(int index, double value) throw(out_of_range);
+	virtual bool setElement(int index, double value);
 
 	//输出异常信息
-	string getOutOfRangeErrorMessage(int lengthOrIndex);
+	//string getOutOfRangeErrorMessage(int lengthOrIndex);
 	//拷贝向量的元素
 	void copyVector(BasicVector* input_Vector);
 
@@ -53,7 +53,7 @@ protected:
 	int dimension;
 	int space;
 	//double* p_Vector;
-	virtual void init();
+	virtual void init(int input_dimension);
 
 };
 

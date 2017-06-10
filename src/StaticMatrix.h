@@ -8,7 +8,7 @@
 #ifndef MATRIX_STATIC_STATICMATRIX_H_
 #define MATRIX_STATIC_STATICMATRIX_H_
 
-#include "..\include\matrix\basic\BasicMatrix.h"
+#include "BasicMatrix.h"
 
 class StaticMatrix:public BasicMatrix
 {

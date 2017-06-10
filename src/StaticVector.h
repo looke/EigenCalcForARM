@@ -7,19 +7,19 @@
 
 #ifndef VECTOR_STATIC_STATICVECTOR_H_
 #define VECTOR_STATIC_STATICVECTOR_H_
-#include "..\include\vector\basic\BasicVector.h"
+#include "BasicVector.h"
 
 class StaticVector : public BasicVector
 {
 public:
 	StaticVector();
-	StaticVector(int input_dimension) throw(out_of_range);
+	StaticVector(int input_dimension);
 
 	//取向量的元素
-	double getElement(int index) throw(out_of_range);
+	double getElement(int index);
 
 	//设置向量的元素
-	void setElement(int index, double value) throw(out_of_range);
+	bool setElement(int index, double value);
 
 protected:
 	void init(int input_dimension);

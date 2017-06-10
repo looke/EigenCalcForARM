@@ -6,8 +6,8 @@
  */
 
 #include "..\gtest_src\gtest\gtest.h"
-#include "..\include\matrix\static\StaticMatrix.h"
-#include "..\include\matrixop\basic\MatrixTransposer.h"
+#include "StaticMatrix.h"
+#include "MatrixTransposer.h"
 #include "math.h"
 
 /*
@@ -85,7 +85,7 @@ TEST(MatrixTransposerNotSquareTest, postive)
 	StaticMatrix testMatrix45 = StaticMatrix(4,5);
 	MatrixTransposer testTransposer = MatrixTransposer();
 
-	EXPECT_THROW(testTransposer.transposeSquareMatrix(&testMatrix45), length_error);
+	EXPECT_EQ(0,testTransposer.transposeSquareMatrix(&testMatrix45));
 }
 
 /*
@@ -138,6 +138,6 @@ TEST(MatrixTransposerMatrixNotMatchExceptionTest, postive)
 
 	MatrixTransposer testTransposer = MatrixTransposer();
 
-	EXPECT_THROW(testTransposer.transposeMatrix(&testMatrix45, &testMatrix44), length_error);
-	EXPECT_THROW(testTransposer.transposeMatrix(&testMatrix65, &testMatrix54), length_error);
+	EXPECT_EQ(0,testTransposer.transposeMatrix(&testMatrix45, &testMatrix44));
+	EXPECT_EQ(0,testTransposer.transposeMatrix(&testMatrix65, &testMatrix54));
 }

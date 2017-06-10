@@ -6,67 +6,68 @@
  */
 
 #include "..\gtest_src\gtest\gtest.h"
-#include "..\include\matrix\static\StaticMatrix.h"
-#include "..\include\matrixop\static\StaticMatrixMultiplier.h"
+#include "StaticMatrix.h"
+#include "MatrixMultiplier.h"
 #include "math.h"
 
 /*
  * ≤‚ ‘StaticMatrixMultiplier¥¥Ω®“Ï≥£¥¶¿Ì
  */
+/*
 TEST(StaticMatrixMultiplierCreateExceptionTest, postive)
 {
 	StaticMatrix leftMatrix32 = StaticMatrix(3,2);
 	StaticMatrix rightMatrix33 = StaticMatrix(3,3);
 	StaticMatrix resultMatrix33 = StaticMatrix(3,3);
-	EXPECT_THROW(StaticMatrixMultiplier(&leftMatrix32, &rightMatrix33, &resultMatrix33), length_error);
+	EXPECT_EQ(0, MatrixMultiplier(&leftMatrix32, &rightMatrix33, &resultMatrix33));
 
 	StaticMatrix leftMatrix42 = StaticMatrix(4,2);
 	StaticMatrix rightMatrix22 = StaticMatrix(2,2);
 	StaticMatrix resultMatrix44 = StaticMatrix(4,4);
-	EXPECT_THROW(StaticMatrixMultiplier(&leftMatrix42, &rightMatrix22, &resultMatrix44), length_error);
+	EXPECT_EQ(0,MatrixMultiplier(&leftMatrix42, &rightMatrix22, &resultMatrix44));
 
 	StaticMatrix leftMatrix53 = StaticMatrix(5,3);
 	StaticMatrix rightMatrix34 = StaticMatrix(3,4);
 	StaticMatrix resultMatrix24 = StaticMatrix(2,4);
-	EXPECT_THROW(StaticMatrixMultiplier(&leftMatrix53, &rightMatrix34, &resultMatrix24), length_error);
+	EXPECT_EQ(0,MatrixMultiplier(&leftMatrix53, &rightMatrix34, &resultMatrix24));
 
 	StaticMatrix leftMatrix65 = StaticMatrix(6,5);
 	StaticMatrix rightMatrix45 = StaticMatrix(4,5);
 	StaticMatrix resultMatrix65 = StaticMatrix(6,5);
-	EXPECT_THROW(StaticMatrixMultiplier(&leftMatrix65, &rightMatrix45, &resultMatrix65), length_error);
+	EXPECT_EQ(0,MatrixMultiplier(&leftMatrix65, &rightMatrix45, &resultMatrix65));
 }
-
+*/
 /*
- * ≤‚ ‘StaticMatrixMultiplier¥¥Ω®
+ * ≤‚ ‘MatrixMultiplier¥¥Ω®
  */
-TEST(StaticMatrixMultiplierCreateTest, postive)
+TEST(MatrixMultiplierCreateTest, postive)
 {
 	StaticMatrix leftMatrix33 = StaticMatrix(3,3);
 	StaticMatrix rightMatrix33 = StaticMatrix(3,3);
 	StaticMatrix resultMatrix33 = StaticMatrix(3,3);
-	EXPECT_NO_THROW(StaticMatrixMultiplier(&leftMatrix33, &rightMatrix33, &resultMatrix33));
+	EXPECT_NO_THROW(MatrixMultiplier(&leftMatrix33, &rightMatrix33, &resultMatrix33));
 
 	StaticMatrix leftMatrix42 = StaticMatrix(4,2);
 	StaticMatrix rightMatrix22 = StaticMatrix(2,2);
 	StaticMatrix resultMatrix42 = StaticMatrix(4,2);
-	EXPECT_NO_THROW(StaticMatrixMultiplier(&leftMatrix42, &rightMatrix22, &resultMatrix42));
+	EXPECT_NO_THROW(MatrixMultiplier(&leftMatrix42, &rightMatrix22, &resultMatrix42));
 
 	StaticMatrix leftMatrix53 = StaticMatrix(5,3);
 	StaticMatrix rightMatrix34 = StaticMatrix(3,4);
 	StaticMatrix resultMatrix54 = StaticMatrix(5,4);
-	EXPECT_NO_THROW(StaticMatrixMultiplier(&leftMatrix53, &rightMatrix34, &resultMatrix54));
+	EXPECT_NO_THROW(MatrixMultiplier(&leftMatrix53, &rightMatrix34, &resultMatrix54));
 
 	StaticMatrix leftMatrix65 = StaticMatrix(6,5);
 	StaticMatrix rightMatrix55 = StaticMatrix(5,5);
 	StaticMatrix resultMatrix65 = StaticMatrix(6,5);
-	EXPECT_NO_THROW(StaticMatrixMultiplier(&leftMatrix65, &rightMatrix55, &resultMatrix65));
+	EXPECT_NO_THROW(MatrixMultiplier(&leftMatrix65, &rightMatrix55, &resultMatrix65));
 }
 
 
 /*
- * ≤‚ ‘StaticMatrixMultiplier æÿ’Û≥À∑®
+ * ≤‚ ‘MatrixMultiplier æÿ’Û≥À∑®
  */
-TEST(StaticMatrixMultiplierMultiCalcTest_IxI, postive)
+TEST(MatrixMultiplierMultiCalcTest_IxI, postive)
 {
 	StaticMatrix leftMatrix33 = StaticMatrix(3,3);
 	leftMatrix33.resetMatrixToI();
@@ -75,7 +76,7 @@ TEST(StaticMatrixMultiplierMultiCalcTest_IxI, postive)
 
 	StaticMatrix resultMatrix33 = StaticMatrix(3,3);
 
-	StaticMatrixMultiplier(&leftMatrix33, &rightMatrix33, &resultMatrix33).multiplyCalc();
+	MatrixMultiplier(&leftMatrix33, &rightMatrix33, &resultMatrix33).multiplyCalc();
 
 	EXPECT_EQ(1, rightMatrix33.getMatrixElement(0,0));
 	EXPECT_EQ(0, rightMatrix33.getMatrixElement(0,1));
@@ -91,9 +92,9 @@ TEST(StaticMatrixMultiplierMultiCalcTest_IxI, postive)
 }
 
 /*
- * ≤‚ ‘StaticMatrixMultiplier æÿ’Û≥À∑®
+ * ≤‚ ‘MatrixMultiplier æÿ’Û≥À∑®
  */
-TEST(StaticMatrixMultiplierMultiCalcTest_NxN, postive)
+TEST(MatrixMultiplierMultiCalcTest_NxN, postive)
 {
 	StaticMatrix leftMatrix44 = StaticMatrix(4,4);
 	leftMatrix44.setMatrixElement(0,0,1);
@@ -135,7 +136,7 @@ TEST(StaticMatrixMultiplierMultiCalcTest_NxN, postive)
 
 	StaticMatrix resultMatrix43 = StaticMatrix(4,3);
 
-	StaticMatrixMultiplier(&leftMatrix44, &rightMatrix43, &resultMatrix43).multiplyCalc();
+	EXPECT_EQ(true,MatrixMultiplier(&leftMatrix44, &rightMatrix43, &resultMatrix43).multiplyCalc());
 
 	EXPECT_EQ(10, resultMatrix43.getMatrixElement(0,0));
 	EXPECT_EQ(20, resultMatrix43.getMatrixElement(0,1));
@@ -152,4 +153,16 @@ TEST(StaticMatrixMultiplierMultiCalcTest_NxN, postive)
 	EXPECT_EQ(58, resultMatrix43.getMatrixElement(3,0));
 	EXPECT_EQ(116, resultMatrix43.getMatrixElement(3,1));
 	EXPECT_EQ(174, resultMatrix43.getMatrixElement(3,2));
+}
+
+/*
+ * ≤‚ ‘MatrixMultiplier æÿ’Û≥À∑® Œ¨∂»≤ª∆•≈‰
+ */
+TEST(MatrixMultiplierMultiCalcExceptionTest, postive)
+{
+	StaticMatrix leftMatrix32 = StaticMatrix(3,2);
+	StaticMatrix rightMatrix33 = StaticMatrix(3,3);
+	StaticMatrix resultMatrix33 = StaticMatrix(3,3);
+	bool result = false;
+	EXPECT_EQ(result, MatrixMultiplier(&leftMatrix32, &rightMatrix33, &resultMatrix33).multiplyCalc());
 }

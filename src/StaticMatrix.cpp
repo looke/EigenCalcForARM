@@ -5,7 +5,7 @@
  *      Author: looke
  */
 
-#include "..\include\matrix\static\StaticMatrix.h"
+#include "StaticMatrix.h"
 #include <iostream>
 #include "math.h"
 

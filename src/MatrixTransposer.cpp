@@ -5,20 +5,20 @@
  *      Author: looke
  */
 
-#include "..\include\matrixop\basic\MatrixTransposer.h"
+#include "MatrixTransposer.h"
 using namespace std;
 
 /*
  * 转置方阵
  */
-void MatrixTransposer::transposeSquareMatrix(BasicMatrix* input_matrix) throw (length_error)
+bool MatrixTransposer::transposeSquareMatrix(BasicMatrix* input_matrix)
 {
 	int rowNumber = input_matrix->rowNum;
 	int columnNumber = input_matrix->columnNum;
 
 	if(rowNumber != columnNumber)
 	{
-		throw length_error(getMatrixNotSquareErrorMessage(rowNumber,columnNumber));
+		return false;
 	}
 
 	double temp;
@@ -31,14 +31,15 @@ void MatrixTransposer::transposeSquareMatrix(BasicMatrix* input_matrix) throw (l
 			input_matrix->setMatrixElement(j,i,temp);
 		}
 	}
+	return true;
 };
 
 //转置任意矩阵
-void MatrixTransposer::transposeMatrix(BasicMatrix* p_opMatrix, BasicMatrix* p_resultMatrix) throw(length_error)
+bool MatrixTransposer::transposeMatrix(BasicMatrix* p_opMatrix, BasicMatrix* p_resultMatrix)
 {
 	if(p_opMatrix->rowNum != p_resultMatrix->columnNum || p_opMatrix->columnNum != p_resultMatrix->rowNum)
 	{
-		throw length_error(getMatrixNotSquareErrorMessage(p_opMatrix->rowNum,p_opMatrix->columnNum,p_resultMatrix->rowNum,p_resultMatrix->columnNum));
+		return false;
 	}
 
 	for(int i=0; i<p_opMatrix->rowNum; i++)
@@ -48,12 +49,14 @@ void MatrixTransposer::transposeMatrix(BasicMatrix* p_opMatrix, BasicMatrix* p_r
 			p_resultMatrix->setMatrixElement(j,i,p_opMatrix->getMatrixElement(i,j));
 		}
 	}
+	return true;
 
 };
 
 /*
  * 生成非方阵异常信息
  */
+/*
 string MatrixTransposer::getMatrixNotSquareErrorMessage(int rowNumber, int columnNumber)
 {
 	stringstream stream;
@@ -67,10 +70,11 @@ string MatrixTransposer::getMatrixNotSquareErrorMessage(int rowNumber, int colum
 	string exInfo = "Matrix must be Square. Matrix Row: " +row + " Matrix Column: " + column + ".";
 	return exInfo;
 };
-
+*/
 /*
  * 生成矩阵维度异常信息
  */
+/*
 string MatrixTransposer::getMatrixNotSquareErrorMessage(int op_rowNumber, int op_columnNumber,int re_rowNumber, int re_columnNumber)
 {
 	stringstream stream;
@@ -90,3 +94,4 @@ string MatrixTransposer::getMatrixNotSquareErrorMessage(int op_rowNumber, int op
 	string exInfo = "Input Matrix and Result Matrix row and column must be match. Input Matrix Row: " +op_row + " Input Matrix Column: " + op_column + ". Result Matrix Row: " + re_row + " Result Matrix Column: " + re_column + ".";
 	return exInfo;
 };
+*/

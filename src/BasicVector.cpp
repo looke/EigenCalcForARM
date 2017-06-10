@@ -5,7 +5,7 @@
  *      Author: looke
  */
 
-#include "..\include\vector\basic\BasicVector.h"
+#include "BasicVector.h"
 #include "math.h"
 #include "iostream"
 using namespace std;
@@ -14,29 +14,20 @@ BasicVector::BasicVector()
 {
 	this->space = 20;
 	this->dimension = 0;
-	this->init();
+	this->init(0);
 };
 
-BasicVector::BasicVector(int input_dimension) throw(out_of_range)
+BasicVector::BasicVector(int input_dimension)
 {
-	this->space = 20;
-	if(input_dimension < 0 || input_dimension > this->space)
-	{
-		throw out_of_range(getOutOfRangeErrorMessage(input_dimension));
-	}
-	if(input_dimension > 0)
-	{
-		this->dimension = input_dimension;
-	}
-	this->init();
+	this->init(input_dimension);
 };
 
 //取向量的元素
-double BasicVector::getElement(int index) throw(out_of_range)
+double BasicVector::getElement(int index)
 {};
 
 //设置向量的元素
-void BasicVector::setElement(int index, double value) throw(out_of_range)
+bool BasicVector::setElement(int index, double value)
 {};
 
 //求向量的模
@@ -73,13 +64,14 @@ int BasicVector::getDimension()
 	return this->dimension;
 };
 
-void BasicVector::resetDimension(int input_newDimension) throw(out_of_range)
+bool BasicVector::resetDimension(int input_newDimension)
 {
 	if(input_newDimension < 0 || input_newDimension > this->space)
 	{
-		throw out_of_range(getOutOfRangeErrorMessage(input_newDimension));
+		return false;
 	}
 	this->dimension = input_newDimension;
+	return true;
 };
 
 //拷贝向量的元素
@@ -106,6 +98,7 @@ void BasicVector::printVector()
 	cout << endl;
 };
 
+/*
 //异常使用的错误信息
 string BasicVector::getOutOfRangeErrorMessage(int lengthOrIndex)
 {
@@ -118,6 +111,6 @@ string BasicVector::getOutOfRangeErrorMessage(int lengthOrIndex)
 	string exInfo = "Out of range. input:" +detail_input_dimension + ". Range: 0 to " + detail_space;
 	return exInfo;
 };
-
-void BasicVector::init()
+*/
+void BasicVector::init(int input_dimension)
 {};

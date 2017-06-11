@@ -13,30 +13,41 @@ using namespace std;
 
 StaticMatrix::StaticMatrix()
 {
-	//this->precision = 0.0000000001;
+	initPrecision();
 	this->space = 20;
-	this->rowNum = 1;
-	this->columnNum = 1;
+
+	this->rowNum = 0;
+	this->columnNum = 0;
+
+	this->initMatrix();
+	//初始化行列向量对象
+	this->matrixVector = StaticVector(this->rowNum);
 };
 
 StaticMatrix::StaticMatrix(int inputRowNum, int inputColumnNum)
 {
 	initPrecision();
 	this->space = 20;
-	this->rowNum = inputRowNum;
-	this->columnNum = inputColumnNum;
-	for(int i=0; i<this->space; i++)
+
+	if(inputRowNum >= 0 && inputColumnNum >=0 && inputRowNum<=space && inputColumnNum<=space)
 	{
-		for(int j=0; j<this->space; j++)
-		{
-			this->matrixNxN[i][j] = 0;
-		}
+		this->rowNum = inputRowNum;
+		this->columnNum = inputColumnNum;
+	}
+	else
+	{
+		this->rowNum = 0;
+		this->columnNum = 0;
 	}
 
 	this->initMatrix();
+	//初始化行列向量对象
+	this->matrixVector = StaticVector(this->rowNum);
 };
 
-
+/*
+ * 按1,2,3,4...递增顺序初始化矩阵各元素
+ */
 void StaticMatrix::initMatrix()
 {
 	double tempValue = 1;
@@ -48,17 +59,16 @@ void StaticMatrix::initMatrix()
 			tempValue++;
 		}
 	}
-
-	//初始化行列向量对象
-	//this->columnVector = StaticVector(this->rowNum);
-
-	//this->rowVector = StaticVector(this->columnNum);
-
 };
 
-void StaticMatrix::setMatrixElement(int rNum, int cNum, double val)
+bool StaticMatrix::setMatrixElement(int rNum, int cNum, double val)
 {
-	this->matrixNxN[rNum][cNum] = val;
+	if(rNum >= 0 && rNum < rowNum && cNum >= 0 && cNum < columnNum)
+	{
+		this->matrixNxN[rNum][cNum] = val;
+		return true;
+	}
+	return false;
 };
 
 
@@ -93,9 +103,9 @@ void StaticMatrix::printMatrix()
 };
 
 //交换行
-void StaticMatrix::swapRow(int from, int to)
+bool StaticMatrix::swapRow(int from, int to)
 {
-	if(from < this->rowNum && to < this->rowNum)
+	if(from >=0 && from < this->rowNum && to >=0 && to < this->rowNum)
 	{
 		double temp[this->columnNum];
 
@@ -113,17 +123,18 @@ void StaticMatrix::swapRow(int from, int to)
 		{
 			matrixNxN[to][i] = temp[i];
 		}
+		return true;
 	}
 	else
 	{
-		cout<<"Illegal row number." << endl;
+		return false;
 	}
 };
 
 //交换列
-void StaticMatrix::swapColumn(int from, int to)
+bool StaticMatrix::swapColumn(int from, int to)
 {
-	if(from < this->columnNum && to < this->columnNum)
+	if(from >=0 && from < this->columnNum && to >=0 && to < this->columnNum)
 	{
 		double temp[this->rowNum];
 
@@ -141,30 +152,51 @@ void StaticMatrix::swapColumn(int from, int to)
 		{
 			matrixNxN[i][to] = temp[i];
 		}
+		return true;
 	}
 	else
 	{
-		cout<<"Illegal column number." << endl;
+		return false;
 	}
 
 };
 
-//交换对角线主元
-void StaticMatrix::swapDiagElement(int from, int to)
+/*
+ * 交换对角线主元
+ * 仅方阵专用，非方阵返回false，并不会交换
+ */
+bool StaticMatrix::swapDiagElement(int from, int to)
 {
-	if(from < this->columnNum && to < this->columnNum && from < this->rowNum && to < this->rowNum)
+	//非方阵
+	if(this->rowNum != this->columnNum)
+	{
+		return false;
+	}
+
+	if(from>=0 && from < this->rowNum && from < this->columnNum && to >=0 && to < this->rowNum && to < this->columnNum )
 	{
 		double temp;
 		temp = matrixNxN[from][from];
 
 		matrixNxN[from][from] = matrixNxN[to][to];
 		matrixNxN[to][to] = temp;
+		return true;
 	}
+	return false;
 };
 
-//将矩阵重置为单位矩阵
-void StaticMatrix::resetMatrixToI()
+/*
+ * 将矩阵重置为单位矩阵
+ * 方阵专用，非方阵返回false 并保持原状
+ */
+bool StaticMatrix::resetMatrixToI()
 {
+	//非方阵
+	if(this->rowNum != this->columnNum)
+	{
+		return false;
+	}
+
 	for(int i=0; i<this->rowNum; i++)
 	{
 		for(int j=0; j<this->columnNum; j++)
@@ -179,9 +211,10 @@ void StaticMatrix::resetMatrixToI()
 			}
 		}
 	}
+	return true;
 };
 
-//将矩阵重置为单位矩阵
+//将矩阵重置为0矩阵
 void StaticMatrix::resetMatrixToZero()
 {
 	for(int i=0; i<this->rowNum; i++)
@@ -196,71 +229,147 @@ void StaticMatrix::resetMatrixToZero()
 };
 
 //获取指定列向量
-void StaticMatrix::getColumnVector(int columnNo, BasicVector* p_Vector)
+BasicVector* StaticMatrix::getColumnVector(int columnNo)
 {
-	int newColumnVectorDimension = this->rowNum ;
-	p_Vector->resetDimension(newColumnVectorDimension);
-
-	for(int i=0; i<this->rowNum; i++)
+	if(columnNo>=0 && columnNo<this->columnNum)
 	{
-		p_Vector->setElement(i,matrixNxN[i][columnNo]);
+		int newColumnVectorDimension = this->rowNum ;
+		matrixVector.resetDimension(newColumnVectorDimension);
 
+		for(int i=0; i<this->rowNum; i++)
+		{
+			matrixVector.setElement(i,matrixNxN[i][columnNo]);
+
+		}
+		return &matrixVector;
 	}
+	else
+	{
+		matrixVector.resetDimension(0);
+		return &matrixVector;
+	}
+
 };
 
 //获取指定行向量
-void StaticMatrix::getRowVector(int rowNo, BasicVector* p_Vector)
+BasicVector* StaticMatrix::getRowVector(int rowNo)
 {
-	int newRowVectorDimension = this->columnNum ;
-	p_Vector->resetDimension(newRowVectorDimension);
-
-	for(int i=0; i<this->columnNum; i++)
+	if(rowNo>=0 && rowNo<this->rowNum)
 	{
-		p_Vector->setElement(i,matrixNxN[rowNo][i]);
+		int newRowVectorDimension = this->columnNum ;
+		matrixVector.resetDimension(newRowVectorDimension);
+
+		for(int i=0; i<this->columnNum; i++)
+		{
+			matrixVector.setElement(i,matrixNxN[rowNo][i]);
+		}
+		return &matrixVector;
+	}
+	else
+	{
+		matrixVector.resetDimension(0);
+		return &matrixVector;
 	}
 };
 
 
-//获取对角线子矩阵指定列向量
-void StaticMatrix::getSubMatrixColumnVector(int subMatrixIndex, int columnNo, BasicVector* p_Vector)
+/*
+ * 获取对角线子矩阵指定列向量
+ * 仅对方阵生效，非方阵返回0元素向量
+ */
+BasicVector* StaticMatrix::getSubMatrixColumnVector(int subMatrixIndex, int columnNo)
 {
-	int newColumnVectorDimension = this->rowNum - subMatrixIndex;
-	p_Vector->resetDimension(newColumnVectorDimension);
-
-	int index = 0;
-	for(int i=subMatrixIndex; i<this->rowNum; i++)
+	//非方阵
+	if(this->rowNum != this->columnNum)
 	{
-		p_Vector->setElement(index,matrixNxN[i][subMatrixIndex+columnNo]);
-		index++;
+		matrixVector.resetDimension(0);
+		return &matrixVector;
+	}
+
+	//入参越界判断
+	if(subMatrixIndex >=0 && columnNo>=0 && subMatrixIndex+columnNo < this->columnNum)
+	{
+		int newColumnVectorDimension = this->rowNum - subMatrixIndex;
+		matrixVector.resetDimension(newColumnVectorDimension);
+
+		int index = 0;
+		for(int i=subMatrixIndex; i<this->rowNum; i++)
+		{
+			matrixVector.setElement(index,matrixNxN[i][subMatrixIndex+columnNo]);
+			index++;
+		}
+		return &matrixVector;
+	}
+	else
+	{
+		matrixVector.resetDimension(0);
+		return &matrixVector;
 	}
 
 };
 
-//获取对角线子矩阵指定行向量
-void StaticMatrix::getSubMatrixRowVector(int subMatrixIndex, int rowNo, BasicVector* p_Vector)
+/*
+ * 获取对角线子矩阵指定行向量
+ * 仅对方阵生效，非方阵返回0元素向量
+ */
+BasicVector* StaticMatrix::getSubMatrixRowVector(int subMatrixIndex, int rowNo)
 {
-	int newRowVectorDimension = this->columnNum - subMatrixIndex;
-	p_Vector->resetDimension(newRowVectorDimension);
-	int index = 0;
-	for(int i=subMatrixIndex; i<this->columnNum; i++)
+	//非方阵
+	if(this->rowNum != this->columnNum)
 	{
-		p_Vector->setElement(index,matrixNxN[subMatrixIndex+rowNo][i]);
-		index++;
+		matrixVector.resetDimension(0);
+		return &matrixVector;
 	}
 
+	//入参越界判断
+	if(subMatrixIndex >=0 && rowNo>=0 && subMatrixIndex+rowNo < this->rowNum)
+	{
+		int newRowVectorDimension = this->columnNum - subMatrixIndex;
+		matrixVector.resetDimension(newRowVectorDimension);
+		int index = 0;
+		for(int i=subMatrixIndex; i<this->columnNum; i++)
+		{
+			matrixVector.setElement(index,matrixNxN[subMatrixIndex+rowNo][i]);
+			index++;
+		}
+		return &matrixVector;
+	}
+	else
+	{
+		matrixVector.resetDimension(0);
+		return &matrixVector;
+	}
 };
 
-//获取指定对角子矩阵hessenberg列向量
-void StaticMatrix::getSubMatrixHessenColumnVector(int subMatrixIndex, BasicVector* p_Vector)
+/*
+ * 获取指定对角子矩阵hessenberg列向量
+ * 仅对方阵生效，非方阵返回0元素向量
+ */
+BasicVector* StaticMatrix::getSubMatrixHessenColumnVector(int subMatrixIndex)
 {
-	int newColumnVectorDimension = this->rowNum - subMatrixIndex - 1;
-	p_Vector->resetDimension(newColumnVectorDimension);
-
-	int index = 0;
-	for(int i=subMatrixIndex+1; i<this->rowNum; i++)
+	//非方阵
+	if(this->rowNum != this->columnNum)
 	{
-		p_Vector->setElement(index,matrixNxN[i][subMatrixIndex]);
-		index++;
+		matrixVector.resetDimension(0);
+		return &matrixVector;
 	}
+	//入参越界判断
+	if(subMatrixIndex >=0 && subMatrixIndex < this->columnNum)
+	{
+		int newColumnVectorDimension = this->rowNum - subMatrixIndex - 1;
+		matrixVector.resetDimension(newColumnVectorDimension);
 
+		int index = 0;
+		for(int i=subMatrixIndex+1; i<this->rowNum; i++)
+		{
+			matrixVector.setElement(index,matrixNxN[i][subMatrixIndex]);
+			index++;
+		}
+		return &matrixVector;
+	}
+	else
+	{
+		matrixVector.resetDimension(0);
+		return &matrixVector;
+	}
 };

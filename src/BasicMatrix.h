@@ -22,47 +22,43 @@ public:
 	int space;
 
 	//设置矩阵指定元素的值
-	virtual void setMatrixElement(int rNum, int cNum, double val);
+	virtual bool setMatrixElement(int rNum, int cNum, double val);
 
 	//获取矩阵指定元素的值
 	virtual double getMatrixElement(int rNum, int cNum);
-
-	//获取矩阵指定元素的值(对元素值进行整形，小于精度的值直接返回0)
-	virtual double getMatrixElementRegulared(int rNum, int cNum, double lowEdge);
-
 
 	//打印矩阵
 	virtual void printMatrix();
 
 	//交换行
-	virtual void swapRow(int from, int to);
+	virtual bool swapRow(int from, int to);
 
 	//交换列
-	virtual void swapColumn(int from, int to);
+	virtual bool swapColumn(int from, int to);
 
 	//交换对角线主元
-	virtual void swapDiagElement(int from, int to);
+	virtual bool swapDiagElement(int from, int to);
 
 	//将矩阵重置为单位矩阵
-	virtual void resetMatrixToI();
+	virtual bool resetMatrixToI();
 
 	//将矩阵重置为单位矩阵
 	virtual void resetMatrixToZero();
 
 	//获取指定列向量
-	virtual void getColumnVector(int columnNo, BasicVector* p_Vector);
+	virtual BasicVector* getColumnVector(int columnNo);
 
 	//获取指定行向量
-	virtual void getRowVector(int rowNo, BasicVector* p_Vector);
+	virtual BasicVector* getRowVector(int rowNo);
 
 	//获取指定对角子矩阵列向量
-	virtual void getSubMatrixColumnVector(int subMatrixIndex, int columnNo, BasicVector* p_Vector);
+	virtual BasicVector* getSubMatrixColumnVector(int subMatrixIndex, int columnNo);
 
 	//获取指定对角子矩阵行向量
-	virtual void getSubMatrixRowVector(int subMatrixIndex, int rowNo, BasicVector* p_Vector);
+	virtual BasicVector* getSubMatrixRowVector(int subMatrixIndex, int rowNo);
 
 	//获取指定对角子矩阵hessenberg列向量
-	virtual void getSubMatrixHessenColumnVector(int subMatrixIndex, BasicVector* p_Vector);
+	virtual BasicVector* getSubMatrixHessenColumnVector(int subMatrixIndex);
 
 	//计算两个矩阵各个元素的最大差值(检查行列数)
 	double calcMaxDifferentialWithCheck(BasicMatrix* targetMatrix);
@@ -107,18 +103,27 @@ public:
 	double FrobeniousNorm();
 
 	//重新设定矩阵维度
-	void resizeMatrix(int row, int column);
+	bool resizeMatrix(int row, int column);
 
 	//判断矩阵是否属于upper hessenberg矩阵 对于极小值按0处理
 	bool isUpperHessenbergMatrix();
 	//判断矩阵是否属于upper Triangle矩阵 对于极小值按0处理
 	bool isUpperTriangleMatrix();
 
+	//沿对角线 向下移动指定对角子矩阵 移动指定距离
+	bool moveDiagonalSubMatrixDown(int headIndex, int tailIndex, int steps);
+
+	//沿对角线 向上移动指定对角子矩阵 移动指定距离
+	bool moveDiagonalSubMatrixUp(int headIndex, int tailIndex, int steps);
+
 	virtual ~BasicMatrix() {};
 protected:
 
 	double precision;
 	virtual void initMatrix();
+
+	//获取矩阵指定元素的值(对元素值进行整形，小于精度的值直接返回0)
+	virtual double getMatrixElementRegulared(int rNum, int cNum, double lowEdge);
 };
 
 

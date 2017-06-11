@@ -30,6 +30,8 @@ BasicMatrix::BasicMatrix(int inputRowNum, int inputColumnNum)
 	}
 	else
 	{
+		this->rowNum = 0;
+		this->columnNum = 0;
 		cout<<"Illegal in put row/column numbers!" << endl;
 		cout<<"Using default row/column number construct Matrix!" << endl;
 		//BasicMatrix();
@@ -45,7 +47,7 @@ void BasicMatrix::printMatrix()
 };
 
 
-void BasicMatrix::setMatrixElement(int rNum, int cNum, double val)
+bool BasicMatrix::setMatrixElement(int rNum, int cNum, double val)
 {
 
 };
@@ -61,7 +63,7 @@ double BasicMatrix::getMatrixElementRegulared(int rNum, int cNum, double lowEdge
 /*
  * 交换指定两行
  */
-void BasicMatrix::swapRow(int from, int to)
+bool BasicMatrix::swapRow(int from, int to)
 {
 
 };
@@ -69,13 +71,13 @@ void BasicMatrix::swapRow(int from, int to)
 /*
  *交换指定两列
  */
-void BasicMatrix::swapColumn(int from, int to)
+bool BasicMatrix::swapColumn(int from, int to)
 {
 
 };
 
 //交换对角线主元
-void BasicMatrix::swapDiagElement(int from, int to)
+bool BasicMatrix::swapDiagElement(int from, int to)
 {
 
 };
@@ -84,7 +86,7 @@ void BasicMatrix::swapDiagElement(int from, int to)
 /*
  * 将矩阵重置为单位阵
  */
-void BasicMatrix::resetMatrixToI()
+bool BasicMatrix::resetMatrixToI()
 {
 
 };
@@ -98,22 +100,22 @@ void BasicMatrix::resetMatrixToZero()
 };
 
 //获取指定列向量
-void BasicMatrix::getColumnVector(int columnNo, BasicVector* p_Vector)
+BasicVector* BasicMatrix::getColumnVector(int columnNo)
 {};
 
 //获取指定行向量
-void BasicMatrix::getRowVector(int rowNo, BasicVector* p_Vector)
+BasicVector* BasicMatrix::getRowVector(int rowNo)
 {};
 
 //获取指定对角子矩阵列向量
-void BasicMatrix::getSubMatrixColumnVector(int subMatrixIndex, int columnNo, BasicVector* p_Vector)
+BasicVector* BasicMatrix::getSubMatrixColumnVector(int subMatrixIndex, int columnNo)
 {};
 
 //获取指定对角子矩阵行向量
-void BasicMatrix::getSubMatrixRowVector(int subMatrixIndex, int rowNo, BasicVector* p_Vector)
+BasicVector* BasicMatrix::getSubMatrixRowVector(int subMatrixIndex, int rowNo)
 {};
 //获取指定对角子矩阵hessenberg列向量
-void BasicMatrix::getSubMatrixHessenColumnVector(int subMatrixIndex, BasicVector* p_Vector)
+BasicVector* BasicMatrix::getSubMatrixHessenColumnVector(int subMatrixIndex)
 {};
 /*
  * 计算矩阵对应元素最大差异(检查行列数)
@@ -396,7 +398,7 @@ double BasicMatrix::FrobeniousNorm()
 /*
  * 重新设定矩阵维度
  */
-void BasicMatrix::resizeMatrix(int row, int column)
+bool BasicMatrix::resizeMatrix(int row, int column)
 {
 	if(row < this->space && column < this->space)
 	{
@@ -460,4 +462,92 @@ bool BasicMatrix::isUpperTriangleMatrix()
 		}
 	}
 	return true;
+};
+
+/*
+ * 沿对角线 向下移动指定对角子矩阵 移动指定距离
+ * 仅对方阵有效，非方阵返回false,保持矩阵不变
+ */
+bool BasicMatrix::moveDiagonalSubMatrixDown(int headIndex, int tailIndex, int steps)
+{
+	//非方阵
+	if(this->rowNum != this->columnNum)
+	{
+		return false;
+	}
+
+	//维度检查
+	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps >=0 && steps < columnNum-tailIndex)
+	{
+		double temp;
+		int newRowIndex, newColumnIndex;
+
+		for(int i=tailIndex; i>=headIndex; i--)
+		{
+			for(int j=tailIndex; j>=headIndex; j--)
+			{
+				temp = this->getMatrixElement(i,j);
+				newRowIndex = i+steps;
+				newColumnIndex = j+steps;
+				//在新位置上设置取值
+				this->setMatrixElement(newRowIndex,newColumnIndex,temp);
+				//将原位置取值重置
+				if(i==j)//对角线元素
+				{
+					this->setMatrixElement(i,j,1);
+				}
+				else
+				{
+					this->setMatrixElement(i,j,0);
+				}
+			}
+		}
+		return true;
+
+	}
+	return false;
+};
+
+/*
+ * 沿对角线 向上移动指定对角子矩阵 移动指定距离
+ * 仅对方阵有效，非方阵返回false,保持矩阵不变
+ */
+bool BasicMatrix::moveDiagonalSubMatrixUp(int headIndex, int tailIndex, int steps)
+{
+	//非方阵
+	if(this->rowNum != this->columnNum)
+	{
+		return false;
+	}
+
+	//维度检查
+	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps >=0 && steps < columnNum+headIndex-tailIndex)
+	{
+		double temp;
+		int newRowIndex, newColumnIndex;
+
+		for(int i=headIndex; i<=tailIndex; i++)
+		{
+			for(int j=headIndex; j<=tailIndex; j++)
+			{
+				temp = this->getMatrixElement(i,j);
+				newRowIndex = i-steps;
+				newColumnIndex = j-steps;
+				//在新位置上设置取值
+				this->setMatrixElement(newRowIndex,newColumnIndex,temp);
+				//将原位置取值重置
+				if(i==j)//对角线元素
+				{
+					this->setMatrixElement(i,j,1);
+				}
+				else
+				{
+					this->setMatrixElement(i,j,0);
+				}
+			}
+		}
+		return true;
+
+	}
+	return false;
 };

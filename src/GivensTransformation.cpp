@@ -8,12 +8,12 @@
 #include "GivensTransformation.h"
 #include "math.h"
 
-GivensTransformation::GivensTransformation()
+GivensTransformation::GivensTransformation():m_Transposer()
 {
 	//this->isUsingPreElement = true;
 };
 
-GivensTransformation::GivensTransformation(BasicVector* p_input_Vector)
+GivensTransformation::GivensTransformation(BasicVector* p_input_Vector):m_Transposer()
 {
 	this->init(p_input_Vector);
 };
@@ -52,6 +52,8 @@ bool GivensTransformation::getGivensMatrixAfterMultiple(int elementIndexToZero, 
 	GenerateGivensMatrix(i, i_Value, j, j_Value,p_GivensMatrix);
 
 	//将p_GivensMatrix进行转置
+	m_Transposer.transposeSquareMatrix(p_GivensMatrix);
+	/*
 	double temp;
 	for(int i=0; i<p_GivensMatrix->rowNum;i++)
 	{
@@ -63,7 +65,7 @@ bool GivensTransformation::getGivensMatrixAfterMultiple(int elementIndexToZero, 
 			p_GivensMatrix->setMatrixElement(j,i,temp);
 		}
 	}
-
+	*/
 	return true;
 };
 

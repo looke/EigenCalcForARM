@@ -10,6 +10,7 @@
 
 #include "BasicMatrix.h"
 #include "BasicVector.h"
+#include "MatrixTransposer.h"
 
 class GivensTransformation
 {
@@ -45,6 +46,7 @@ protected:
 	void GenerateGivensMatrix(int i, double i_Value, int j, double j_Value, BasicMatrix* p_GivensMatrix);
 
 	//string getMatrixSizeErrorMessage(int vectorSize, int rowNumber, int columnNumber);
+	MatrixTransposer m_Transposer;
 };
 
 

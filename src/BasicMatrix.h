@@ -102,6 +102,11 @@ public:
 	//计算矩阵的Frobenious范数 ||A||f
 	double FrobeniousNorm();
 
+	/*
+	 * 计算矩阵的舍去精度
+	 */
+	double getLowEdge();
+
 	//重新设定矩阵维度
 	bool resizeMatrix(int row, int column);
 
@@ -115,15 +120,15 @@ public:
 
 	//沿对角线 向上移动指定对角子矩阵 移动指定距离
 	bool moveDiagonalSubMatrixUp(int headIndex, int tailIndex, int steps);
-
+	//获取矩阵指定元素的值(对元素值进行整形，小于精度的值直接返回0)
+	virtual double getMatrixElementRegulared(int rNum, int cNum, double lowEdge);
 	virtual ~BasicMatrix() {};
 protected:
 
 	double precision;
 	virtual void initMatrix();
 
-	//获取矩阵指定元素的值(对元素值进行整形，小于精度的值直接返回0)
-	virtual double getMatrixElementRegulared(int rNum, int cNum, double lowEdge);
+
 };
 
 

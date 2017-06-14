@@ -15,7 +15,7 @@
 class HouseholderTransformation
 {
 public:
-	HouseholderTransformation();
+	//HouseholderTransformation();
 	HouseholderTransformation(BasicVector* p_input_Vector);
 
 	//生成Householder变换矩阵,将输入向量,转换为第一自然基向量e1

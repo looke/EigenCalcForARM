@@ -8,8 +8,8 @@
 #include "HouseholderTransformation.h"
 //#include <iostream>
 //using namespace std;
-HouseholderTransformation::HouseholderTransformation()
-{};
+//HouseholderTransformation::HouseholderTransformation()
+//{};
 
 HouseholderTransformation::HouseholderTransformation(BasicVector* p_input_Vector)
 {

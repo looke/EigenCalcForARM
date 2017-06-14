@@ -514,6 +514,34 @@ TEST(MatrixDiagonalSubMoveDownTest, postive)
 	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,1));
 	EXPECT_EQ(9,testMatrix33.getMatrixElement(2,2));
 
+	testMatrix33.moveDiagonalSubMatrixDown(0,1,0);
+
+	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix33.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix33.getMatrixElement(0,2));
+
+	EXPECT_EQ(4,testMatrix33.getMatrixElement(1,0));
+	EXPECT_EQ(5,testMatrix33.getMatrixElement(1,1));
+	EXPECT_EQ(6,testMatrix33.getMatrixElement(1,2));
+
+	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,0));
+	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,1));
+	EXPECT_EQ(9,testMatrix33.getMatrixElement(2,2));
+
+	testMatrix33.moveDiagonalSubMatrixDown(0,2,0);
+
+	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix33.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix33.getMatrixElement(0,2));
+
+	EXPECT_EQ(4,testMatrix33.getMatrixElement(1,0));
+	EXPECT_EQ(5,testMatrix33.getMatrixElement(1,1));
+	EXPECT_EQ(6,testMatrix33.getMatrixElement(1,2));
+
+	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,0));
+	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,1));
+	EXPECT_EQ(9,testMatrix33.getMatrixElement(2,2));
+
 	testMatrix33.moveDiagonalSubMatrixDown(0,1,1);
 
 	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
@@ -561,15 +589,86 @@ TEST(MatrixDiagonalSubMoveDownTest, postive)
 	EXPECT_EQ(0,testMatrix33.getMatrixElement(2,0));
 	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,1));
 	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,2));
+
+
+	StaticMatrix testMatrix44 = StaticMatrix(4,4);
+
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix44.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix44.getMatrixElement(0,2));
+	EXPECT_EQ(4,testMatrix44.getMatrixElement(0,3));
+
+	EXPECT_EQ(5,testMatrix44.getMatrixElement(1,0));
+	EXPECT_EQ(6,testMatrix44.getMatrixElement(1,1));
+	EXPECT_EQ(7,testMatrix44.getMatrixElement(1,2));
+	EXPECT_EQ(8,testMatrix44.getMatrixElement(1,3));
+
+	EXPECT_EQ(9,testMatrix44.getMatrixElement(2,0));
+	EXPECT_EQ(10,testMatrix44.getMatrixElement(2,1));
+	EXPECT_EQ(11,testMatrix44.getMatrixElement(2,2));
+	EXPECT_EQ(12,testMatrix44.getMatrixElement(2,3));
+
+	EXPECT_EQ(13,testMatrix44.getMatrixElement(3,0));
+	EXPECT_EQ(14,testMatrix44.getMatrixElement(3,1));
+	EXPECT_EQ(15,testMatrix44.getMatrixElement(3,2));
+	EXPECT_EQ(16,testMatrix44.getMatrixElement(3,3));
+
+	testMatrix44.moveDiagonalSubMatrixDown(0,1,2);
+
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(0,0));
+	EXPECT_EQ(0,testMatrix44.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix44.getMatrixElement(0,2));
+	EXPECT_EQ(4,testMatrix44.getMatrixElement(0,3));
+
+	EXPECT_EQ(0,testMatrix44.getMatrixElement(1,0));
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(1,1));
+	EXPECT_EQ(7,testMatrix44.getMatrixElement(1,2));
+	EXPECT_EQ(8,testMatrix44.getMatrixElement(1,3));
+
+	EXPECT_EQ(9,testMatrix44.getMatrixElement(2,0));
+	EXPECT_EQ(10,testMatrix44.getMatrixElement(2,1));
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(2,2));
+	EXPECT_EQ(2,testMatrix44.getMatrixElement(2,3));
+
+	EXPECT_EQ(13,testMatrix44.getMatrixElement(3,0));
+	EXPECT_EQ(14,testMatrix44.getMatrixElement(3,1));
+	EXPECT_EQ(5,testMatrix44.getMatrixElement(3,2));
+	EXPECT_EQ(6,testMatrix44.getMatrixElement(3,3));
 }
 
 /*
- * 测试Matrix 主对角线子矩阵 向上下移动
+ * 测试Matrix 主对角线子矩阵 向上移动
  */
 TEST(MatrixDiagonalSubMoveUpTest, postive)
 {
 	StaticMatrix testMatrix33 = StaticMatrix(3,3);
 
+	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix33.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix33.getMatrixElement(0,2));
+
+	EXPECT_EQ(4,testMatrix33.getMatrixElement(1,0));
+	EXPECT_EQ(5,testMatrix33.getMatrixElement(1,1));
+	EXPECT_EQ(6,testMatrix33.getMatrixElement(1,2));
+
+	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,0));
+	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,1));
+	EXPECT_EQ(9,testMatrix33.getMatrixElement(2,2));
+
+	testMatrix33.moveDiagonalSubMatrixUp(1,2,0);
+	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix33.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix33.getMatrixElement(0,2));
+
+	EXPECT_EQ(4,testMatrix33.getMatrixElement(1,0));
+	EXPECT_EQ(5,testMatrix33.getMatrixElement(1,1));
+	EXPECT_EQ(6,testMatrix33.getMatrixElement(1,2));
+
+	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,0));
+	EXPECT_EQ(8,testMatrix33.getMatrixElement(2,1));
+	EXPECT_EQ(9,testMatrix33.getMatrixElement(2,2));
+
+	testMatrix33.moveDiagonalSubMatrixUp(0,2,0);
 	EXPECT_EQ(1,testMatrix33.getMatrixElement(0,0));
 	EXPECT_EQ(2,testMatrix33.getMatrixElement(0,1));
 	EXPECT_EQ(3,testMatrix33.getMatrixElement(0,2));
@@ -595,4 +694,48 @@ TEST(MatrixDiagonalSubMoveUpTest, postive)
 	EXPECT_EQ(7,testMatrix33.getMatrixElement(2,0));
 	EXPECT_EQ(0,testMatrix33.getMatrixElement(2,1));
 	EXPECT_EQ(1,testMatrix33.getMatrixElement(2,2));
+
+	StaticMatrix testMatrix44 = StaticMatrix(4,4);
+
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(0,0));
+	EXPECT_EQ(2,testMatrix44.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix44.getMatrixElement(0,2));
+	EXPECT_EQ(4,testMatrix44.getMatrixElement(0,3));
+
+	EXPECT_EQ(5,testMatrix44.getMatrixElement(1,0));
+	EXPECT_EQ(6,testMatrix44.getMatrixElement(1,1));
+	EXPECT_EQ(7,testMatrix44.getMatrixElement(1,2));
+	EXPECT_EQ(8,testMatrix44.getMatrixElement(1,3));
+
+	EXPECT_EQ(9,testMatrix44.getMatrixElement(2,0));
+	EXPECT_EQ(10,testMatrix44.getMatrixElement(2,1));
+	EXPECT_EQ(11,testMatrix44.getMatrixElement(2,2));
+	EXPECT_EQ(12,testMatrix44.getMatrixElement(2,3));
+
+	EXPECT_EQ(13,testMatrix44.getMatrixElement(3,0));
+	EXPECT_EQ(14,testMatrix44.getMatrixElement(3,1));
+	EXPECT_EQ(15,testMatrix44.getMatrixElement(3,2));
+	EXPECT_EQ(16,testMatrix44.getMatrixElement(3,3));
+
+	testMatrix44.moveDiagonalSubMatrixUp(2,3,2);
+
+	EXPECT_EQ(11,testMatrix44.getMatrixElement(0,0));
+	EXPECT_EQ(12,testMatrix44.getMatrixElement(0,1));
+	EXPECT_EQ(3,testMatrix44.getMatrixElement(0,2));
+	EXPECT_EQ(4,testMatrix44.getMatrixElement(0,3));
+
+	EXPECT_EQ(15,testMatrix44.getMatrixElement(1,0));
+	EXPECT_EQ(16,testMatrix44.getMatrixElement(1,1));
+	EXPECT_EQ(7,testMatrix44.getMatrixElement(1,2));
+	EXPECT_EQ(8,testMatrix44.getMatrixElement(1,3));
+
+	EXPECT_EQ(9,testMatrix44.getMatrixElement(2,0));
+	EXPECT_EQ(10,testMatrix44.getMatrixElement(2,1));
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(2,2));
+	EXPECT_EQ(0,testMatrix44.getMatrixElement(2,3));
+
+	EXPECT_EQ(13,testMatrix44.getMatrixElement(3,0));
+	EXPECT_EQ(14,testMatrix44.getMatrixElement(3,1));
+	EXPECT_EQ(0,testMatrix44.getMatrixElement(3,2));
+	EXPECT_EQ(1,testMatrix44.getMatrixElement(3,3));
 }

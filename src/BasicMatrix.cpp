@@ -396,6 +396,15 @@ double BasicMatrix::FrobeniousNorm()
 };
 
 /*
+ * 计算矩阵的舍去精度 ，如果元素绝对值小于舍去精度，可以被认为是0
+ */
+double BasicMatrix::getLowEdge()
+{
+	return this->FrobeniousNorm() * this->precision;
+};
+
+
+/*
  * 重新设定矩阵维度
  */
 bool BasicMatrix::resizeMatrix(int row, int column)
@@ -404,7 +413,7 @@ bool BasicMatrix::resizeMatrix(int row, int column)
 	{
 		this->rowNum = row;
 		this->columnNum = column;
-		this->resetMatrixToI();
+		//this->resetMatrixToI();
 	}
 };
 
@@ -477,7 +486,7 @@ bool BasicMatrix::moveDiagonalSubMatrixDown(int headIndex, int tailIndex, int st
 	}
 
 	//维度检查
-	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps >=0 && steps < columnNum-tailIndex)
+	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps > 0 && steps < columnNum-tailIndex)
 	{
 		double temp;
 		int newRowIndex, newColumnIndex;
@@ -521,7 +530,7 @@ bool BasicMatrix::moveDiagonalSubMatrixUp(int headIndex, int tailIndex, int step
 	}
 
 	//维度检查
-	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps >=0 && steps < columnNum+headIndex-tailIndex)
+	if(headIndex >=0 && tailIndex >=0 && headIndex < tailIndex && tailIndex < this->columnNum && steps > 0 && steps < columnNum+headIndex-tailIndex)
 	{
 		double temp;
 		int newRowIndex, newColumnIndex;

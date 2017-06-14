@@ -22,7 +22,7 @@ public:
 
 	//string getMatrixNotSquareErrorMessage(int rowNumber, int columnNumber);
 	//string getMatrixNotSquareErrorMessage(int op_rowNumber, int op_columnNumber,int re_rowNumber, int re_columnNumber);
-	~MatrixTransposer() {};
+	//~MatrixTransposer() {};
 protected:
 
 };

@@ -12,13 +12,13 @@ using namespace std;
 //DoubleShiftQRIteration::DoubleShiftQRIteration()
 //{};
 
-DoubleShiftQRIteration::DoubleShiftQRIteration(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
+DoubleShiftQRIteration::DoubleShiftQRIteration(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
 :m_Transposer(),m_Multiplier(p_input_OpMatrix,p_input_OpMatrix,p_input_TempMatrix),m_GivensTrans(p_input_TransVector),m_HouseholderTrans(p_input_TransVector),m_HessenbergForm(p_input_OpMatrix,p_input_QTMatrix_Total,p_input_QQTMatrix_Step,p_input_TempMatrix)
 {
-	this->init(p_input_OpMatrix,p_input_TransVector,p_input_QMatrix_Total,p_input_QTMatrix_Total,p_input_QQTMatrix_Step,p_input_TempMatrix);
+	this->init(p_input_OpMatrix,p_input_TransVector,p_input_QTMatrix_Total,p_input_QQTMatrix_Step,p_input_TempMatrix);
 };
 
-void DoubleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
+void DoubleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
 {
 	//操作矩阵
 	this->p_OpMatrix = p_input_OpMatrix;
@@ -27,7 +27,7 @@ void DoubleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicVector* p_i
 	this->p_TransVectorForQStep = p_input_TransVector;
 
 	//Q 矩阵 隐式迭代  总体Q用于右乘OP矩阵
-	this->p_QMatrix_Implicit_Total = p_input_QMatrix_Total;
+	//this->p_QMatrix_Implicit_Total = p_input_QMatrix_Total;
 	//QT 矩阵 隐式迭代 总体QT用于左乘OP矩阵
 	this->p_QTMatrix_Implicit_Total = p_input_QTMatrix_Total;
 
@@ -40,9 +40,9 @@ void DoubleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicVector* p_i
 	this->generateHessenbergOpMatrix();
 };
 
-void DoubleShiftQRIteration::reload(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
+void DoubleShiftQRIteration::reload(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
 {
-	this->init(p_input_OpMatrix,p_input_TransVector,p_input_QMatrix_Total,p_input_QTMatrix_Total,p_input_QQTMatrix_Step,p_input_TempMatrix);
+	this->init(p_input_OpMatrix,p_input_TransVector,p_input_QTMatrix_Total,p_input_QQTMatrix_Step,p_input_TempMatrix);
 };
 
 
@@ -55,8 +55,8 @@ void DoubleShiftQRIteration::generateHessenbergOpMatrix()
 	m_HessenbergForm.formularUpperHessnbergMatrix();
 	//this->p_OpHessenbergMatrix->copyMatrixElementNoCheck(m_HessenbergForm.getOpMatrix());
 	//此时p_OpMatrix已变成上Hessenberg矩阵
-	p_QMatrix_Implicit_Total->copyMatrixElementNoCheck(p_QTMatrix_Implicit_Total);
-	this->m_Transposer.transposeSquareMatrix(p_QMatrix_Implicit_Total);
+	//p_QMatrix_Implicit_Total->copyMatrixElementNoCheck(p_QTMatrix_Implicit_Total);
+	//this->m_Transposer.transposeSquareMatrix(p_QMatrix_Implicit_Total);
 };
 
 /*
@@ -146,7 +146,7 @@ void DoubleShiftQRIteration::initForWilkinsonImplicitQR()
 	cout << "initForWilkinsonImplicitQR---Q1" << endl;
 	p_QQTMatrix_Implicit_Step->printMatrix();
 	//更新总体转换矩阵Q total
-	updateQ_Total();
+	//updateQ_Total();
 	//更新hessenberg矩阵 By Q
 	updateHessenbergOpMatrix_By_Q_IM_QRIteration();
 
@@ -313,7 +313,7 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration_Step()
 		p_QQTMatrix_Implicit_Step->printMatrix();
 
 		//更新总体转换矩阵Q total
-		updateQ_Total();
+		//updateQ_Total();
 		//更新hessenberg矩阵
 		updateHessenbergOpMatrix_By_Q_IM_QRIteration();
 		cout << "wilkinson_IM_QRIteration_Step---QiT * Hessenberg * Qi" << endl;
@@ -377,7 +377,7 @@ void DoubleShiftQRIteration::endForWilkinsonImplicitQR()
 	//p_QMatrix_Implicit_Step->printMatrix();
 
 	//更新总体转换矩阵Q total
-	updateQ_Total();
+	//updateQ_Total();
 
 	//更新hessenberg矩阵 By Q
 	updateHessenbergOpMatrix_By_Q_IM_QRIteration();
@@ -401,13 +401,13 @@ void DoubleShiftQRIteration::updateQT_Total()
 /*
  * 更新总体转换矩阵Q QT
  */
-void DoubleShiftQRIteration::updateQ_Total()
-{
+//void DoubleShiftQRIteration::updateQ_Total()
+//{
 	//计算Q_Total * Q_Step
-	this->m_Multiplier.reload(p_QMatrix_Implicit_Total, p_QQTMatrix_Implicit_Step, p_TempMatrix);
-	this->m_Multiplier.multiplyCalc();
-	this->p_QMatrix_Implicit_Total->copyMatrixElementNoCheck(p_TempMatrix);
-};
+//	this->m_Multiplier.reload(p_QMatrix_Implicit_Total, p_QQTMatrix_Implicit_Step, p_TempMatrix);
+//	this->m_Multiplier.multiplyCalc();
+//	this->p_QMatrix_Implicit_Total->copyMatrixElementNoCheck(p_TempMatrix);
+//};
 
 BasicMatrix* DoubleShiftQRIteration::getOpHessenbergMatrix()
 {
@@ -420,7 +420,7 @@ BasicMatrix* DoubleShiftQRIteration::getQTMatrix_Total()
 	return this->p_QTMatrix_Implicit_Total;
 };
 
-BasicMatrix* DoubleShiftQRIteration::getQMatrix_Total()
-{
-	return this->p_QMatrix_Implicit_Total;
-};
+//BasicMatrix* DoubleShiftQRIteration::getQMatrix_Total()
+//{
+//	return this->p_QMatrix_Implicit_Total;
+//};

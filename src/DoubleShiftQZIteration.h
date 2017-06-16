@@ -116,6 +116,14 @@ protected:
 	//Z 全尺寸矩阵 隐式迭代 总体Z用于右乘OP矩阵
 	BasicMatrix* p_ZMatrix_Implicit_Total;
 
+	//QZ 全尺寸矩阵 隐式迭代 分步 Q用于左乘OP矩阵
+	BasicMatrix* p_QZMatrix_Implicit_Step;
+
+	//中间过程矩阵
+	BasicMatrix* p_TempMatrix_Trans;
+	//中间过程矩阵
+	BasicMatrix* p_TempMatrix;
+
 	//用于计算隐式双步QZ跌代单步转换矩阵Qi的向量---3维
 	//BasicVector* p_TransVectorForQStep_3;
 	//用于计算隐式双步QZ跌代单步转换矩阵Qn-1的向量---2维
@@ -126,8 +134,7 @@ protected:
 	//用于计算隐式双步QZ跌代单步转换矩阵Zi的向量---2维
 	//BasicVector* p_TransVectorForZStep_2;
 
-	//QZ 全尺寸矩阵 隐式迭代 分步 Q用于左乘OP矩阵
-	BasicMatrix* p_QZMatrix_Implicit_Step;
+
 
 	//Q 全尺寸矩阵 隐式迭代 分步 Q用于左乘OP矩阵
 	//BasicMatrix* p_QMatrix_Implicit_Step;
@@ -135,10 +142,6 @@ protected:
 	//BasicMatrix* p_ZMatrix_Implicit_Step;
 
 
-	//中间过程矩阵
-	BasicMatrix* p_TempMatrix_Trans;
-	//中间过程矩阵
-	BasicMatrix* p_TempMatrix;
 
 	//Qi 子矩阵 显式迭代 分步 Qi用于左乘OP矩阵 3x3
 	//BasicMatrix* p_QSubMatrix_Implicit_Step_3;

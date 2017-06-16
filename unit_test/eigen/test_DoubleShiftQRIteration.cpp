@@ -53,9 +53,12 @@ TEST(DoubleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_QQTMatrix_Step = StaticMatrix(4,4);
 	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
 
-	DoubleShiftQRIteration dsIteration = DoubleShiftQRIteration(&test44,&test44_vector,&test44_QMatrix,&test44_QTMatrix,&test44_QQTMatrix_Step,&test44_TempMatrix);
+	DoubleShiftQRIteration dsIteration = DoubleShiftQRIteration(&test44,&test44_vector,&test44_QTMatrix,&test44_QQTMatrix_Step,&test44_TempMatrix);
 	//dsIteration.wilkinson_IM_QRIteration();
 
+	MatrixTransposer m_Transposer = MatrixTransposer();
+	test44_QMatrix.copyMatrixElementNoCheck(&test44_QTMatrix);
+	m_Transposer.transposeSquareMatrix(&test44_QMatrix);
 
 	MatrixMultiplier m_Multiplier = MatrixMultiplier(&test44_QTMatrix,&test44_Original, &test44_TempMatrix);
 	m_Multiplier.multiplyCalc();

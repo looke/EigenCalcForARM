@@ -19,10 +19,10 @@ class DoubleShiftQRIteration
 {
 public:
 	//DoubleShiftQRIteration();
-	DoubleShiftQRIteration(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_Input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
+	DoubleShiftQRIteration(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
 
-	void init(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_Input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
-	void reload(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_Input_QMatrix_Total,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
+	void init(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
+	void reload(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix);
 	//virtual ~DoubleShiftQRIteration(){};
 
 	//Wilkinson双位移QR迭代  显式
@@ -37,7 +37,7 @@ public:
 
 	//获取总体转换矩阵
 	BasicMatrix* getQTMatrix_Total();
-	BasicMatrix* getQMatrix_Total();
+	//BasicMatrix* getQMatrix_Total();
 
 	//Wilkinson双位移QR迭代 隐式 -单步
 	void wilkinson_IM_QRIteration_Step();
@@ -70,7 +70,7 @@ public:
 	//隐式QR迭代 更新总体转换矩阵Q QT
 	//void updateTotalQQT();
 	void updateQT_Total();
-	void updateQ_Total();
+	//void updateQ_Total();
 protected:
 
 	//p+t 两个wilkinson位移值的和
@@ -91,7 +91,7 @@ protected:
 	BasicVector* p_TransVectorForQStep;
 
 	//Q 矩阵 隐式迭代  总体Q用于右乘OP矩阵
-	BasicMatrix* p_QMatrix_Implicit_Total;
+	//BasicMatrix* p_QMatrix_Implicit_Total;
 	//QT 矩阵 隐式迭代 总体QT用于左乘OP矩阵
 	BasicMatrix* p_QTMatrix_Implicit_Total;
 

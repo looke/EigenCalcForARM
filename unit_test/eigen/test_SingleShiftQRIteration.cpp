@@ -97,7 +97,7 @@ TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
 
 	singleQRIt.reload(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);
-	singleQRIt.rayleigh_Quotient_IM_QRIteration(80);
+	//singleQRIt.rayleigh_Quotient_IM_QRIteration(80);
 
 	cout << "After 10 Iteration: OpMatrix" << endl;
 	test44.printMatrix();

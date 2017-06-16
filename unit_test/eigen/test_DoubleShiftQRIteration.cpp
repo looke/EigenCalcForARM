@@ -54,7 +54,7 @@ TEST(DoubleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
 
 	DoubleShiftQRIteration dsIteration = DoubleShiftQRIteration(&test44,&test44_vector,&test44_QMatrix,&test44_QTMatrix,&test44_QQTMatrix_Step,&test44_TempMatrix);
-	dsIteration.wilkinson_IM_QRIteration();
+	//dsIteration.wilkinson_IM_QRIteration();
 
 
 	MatrixMultiplier m_Multiplier = MatrixMultiplier(&test44_QTMatrix,&test44_Original, &test44_TempMatrix);

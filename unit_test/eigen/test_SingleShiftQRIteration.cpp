@@ -45,7 +45,7 @@ TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test33_TempMatrix = StaticMatrix(3,3);
 
 	SingleShiftQRIteration singleQRIt = SingleShiftQRIteration(&test33,&test33_QTMatrix,&test33_QQTMatrix_Step,&test33_TempMatrix);
-	singleQRIt.rayleigh_Quotient_IM_QRIteration(10);
+	//singleQRIt.rayleigh_Quotient_IM_QRIteration(10);
 	cout << "After 10 Iteration: OpMatrix" << endl;
 	test33.printMatrix();
 	lowEdge = test33.getLowEdge();

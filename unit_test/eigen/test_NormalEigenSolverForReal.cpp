@@ -78,7 +78,7 @@ TEST(NormalEigenSolverForReal_Test_Normal6x6, postive)
 	StaticMatrix test66_TempMatrix = StaticMatrix(6,6);
 
 	NormalEigenSolverForReal normalEigen = NormalEigenSolverForReal(&test66,&test66_vector,&test66_QTMatrix,&test66_QMatrix,&test66_QQTMatrix,&test66_DeflatedMatrix,&test66_TempMatrix_Trans,&test66_TempMatrix);
-	normalEigen.calcEigenValue();
+//	normalEigen.calcEigenValue();
 
 	lowEdge = test66.getLowEdge();
 	EXPECT_GT(lowEdge,test66.getMatrixElement(1,0));

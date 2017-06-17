@@ -56,7 +56,7 @@ TEST(HessenbergTriangleFormular_HT_Test_Normal4x4, postive)
 	StaticMatrix TempMatrix_44 = StaticMatrix(4,4);
 
 	HessenbergTriangleFormular HTFormular = HessenbergTriangleFormular(&AMatrix_44, &BMatrix_44, &QMatrix_44, &ZMatrix_44, &QZMatrix_Step_44, &TempMatrix_Trans_44, &TempMatrix_44);
-	HTFormular.formularABMatrix();
+	//HTFormular.formularABMatrix();
 
 	lowEdge = AMatrix_44.getLowEdge();
 	EXPECT_LT(fabs(AMatrix_44.getMatrixElement(2,0)-(0)),lowEdge);

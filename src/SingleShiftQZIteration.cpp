@@ -25,10 +25,10 @@ void SingleShiftQZIteration::init(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* 
 	//原始操作矩阵B Triangle
 	this->p_OpMatrix_B = p_input_OpMatrix_B;
 
-	//Z 矩阵 隐式迭代 综合 Z用于右乘OP矩阵
-	this->p_ZMatrix_Implicit_Total = p_input_QMatrix_Total;
-	//Q 矩阵 隐式迭代 综合 Q用于左乘OP矩阵
-	this->p_QMatrix_Implicit_Total = p_input_ZMatrix_Total;
+	//Q 矩阵 隐式迭代 综合 Z用于右乘OP矩阵
+	this->p_QMatrix_Implicit_Total = p_input_QMatrix_Total;
+	//Z 矩阵 隐式迭代 综合 Q用于左乘OP矩阵
+	this->p_ZMatrix_Implicit_Total = p_input_ZMatrix_Total;
 
 	//Q/Z 矩阵 隐式迭代 分步 Q用于左乘OP矩阵 Z用于右乘OP矩阵
 	this->p_QZMatrix_Implicit_Step = p_input_QZMatrix_Step;
@@ -167,6 +167,8 @@ void SingleShiftQZIteration::initForImplicitQZ(double input_ShiftValue)
 	m_GivensTrans.reload(p_firstColumnVector);
 	m_GivensTrans.getGivensMatrixPreMultiple(1,p_QZMatrix_Implicit_Step);
 
+	cout << "SingleShiftQZIteration--initForImplicitQZ-----Q-Step" << endl;
+	p_QZMatrix_Implicit_Step->printMatrix();
 	//还原Hessenberg矩阵
 	this->p_OpMatrix_A->setMatrixElement(0,0,temp_old_a00);
 	this->p_OpMatrix_A->setMatrixElement(1,0,temp_old_a10);
@@ -181,6 +183,8 @@ void SingleShiftQZIteration::initForImplicitQZ(double input_ShiftValue)
 	m_GivensTrans.reload(p_secondRowVector);
 	m_GivensTrans.getGivensMatrixAfterMultiple(0,p_QZMatrix_Implicit_Step);
 
+	cout << "SingleShiftQZIteration--initForImplicitQZ-----Z-Step" << endl;
+	p_QZMatrix_Implicit_Step->printMatrix();
 	//更新H-T矩阵对
 	this->updateHTMatrixByZ();
 	//更新综合转换矩阵Z Total

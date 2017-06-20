@@ -36,6 +36,9 @@ public:
 	//设置向量的元素
 	virtual bool setElement(int index, double value);
 
+	//对向量做归一化处理
+	void normalizationVector();
+
 	//输出异常信息
 	//string getOutOfRangeErrorMessage(int lengthOrIndex);
 	//拷贝向量的元素

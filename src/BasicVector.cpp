@@ -86,6 +86,19 @@ void BasicVector::copyVector(BasicVector* input_Vector)
 	}
 
 };
+//对向量做归一化处理
+void BasicVector::normalizationVector()
+{
+	double norm = this->getNormOfVector();
+	double temp;
+
+	for(int i=0; i<this->dimension;i++)
+	{
+		temp = this->getElement(i);
+		temp = temp/norm;
+		this->setElement(i,temp);
+	}
+};
 
 //打印向量
 void BasicVector::printVector()

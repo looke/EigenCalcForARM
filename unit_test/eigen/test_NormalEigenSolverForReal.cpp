@@ -84,3 +84,43 @@ TEST(NormalEigenSolverForReal_Test_Normal6x6, postive)
 	EXPECT_GT(lowEdge,test66.getMatrixElement(1,0));
 }
 
+/*
+ * 测试NormalEigenSolverForReal 求解特征值
+ */
+TEST(NormalEigenSolverForReal_Test_Normal4x4, postive)
+{
+	StaticMatrix test44 = StaticMatrix(4,4);
+
+	test44.setMatrixElement(0,0,1);
+	test44.setMatrixElement(0,1,2);
+	test44.setMatrixElement(0,2,3);
+	test44.setMatrixElement(0,3,4);
+
+	test44.setMatrixElement(1,0,5);
+	test44.setMatrixElement(1,1,6);
+	test44.setMatrixElement(1,2,7);
+	test44.setMatrixElement(1,3,8);
+
+	test44.setMatrixElement(2,0,0);
+	test44.setMatrixElement(2,1,9);
+	test44.setMatrixElement(2,2,10);
+	test44.setMatrixElement(2,3,11);
+
+	test44.setMatrixElement(3,0,0);
+	test44.setMatrixElement(3,1,0);
+	test44.setMatrixElement(3,2,12);
+	test44.setMatrixElement(3,3,13);
+
+	StaticMatrix test44_QTMatrix = StaticMatrix(4,4);
+	StaticMatrix test44_QMatrix = StaticMatrix(4,4);
+	StaticMatrix test44_QQTMatrix = StaticMatrix(4,4);
+	StaticMatrix test44_DeflatedMatrix = StaticMatrix(4,4);
+	StaticMatrix test44_TempMatrix_Trans = StaticMatrix(4,4);
+	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
+	StaticVector test44_vector = StaticVector(4);
+	NormalEigenSolverForReal normalEigen = NormalEigenSolverForReal(&test44,&test44_vector,&test44_QTMatrix,&test44_QMatrix,&test44_QQTMatrix,&test44_DeflatedMatrix,&test44_TempMatrix_Trans,&test44_TempMatrix);
+	normalEigen.calcEigenValue();
+
+	EXPECT_GT(0.0001,fabs(test44.getMatrixElement(3,3)-26.5721));
+
+}

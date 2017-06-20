@@ -139,7 +139,7 @@ void NormalEigenSolverForReal::upgradeDeflatedQQTMatrix()
 	//double temp;
 	//this->p_QTMatrix_Iteration->resetMatrixToI();
 	//this->p_QMatrix_Iteration->resetMatrixToI();
-	int sizeOfSub = deflationEnd - deflationStart + 1;
+	int tailIndex = deflationEnd - deflationStart;
 	cout << "--------upgradeDeflatedQQTMatrix-------------" << endl;
 	cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
 	cout << "--------Before Upgrade---QT_Deflated----------" << endl;
@@ -149,7 +149,7 @@ void NormalEigenSolverForReal::upgradeDeflatedQQTMatrix()
 	//this->p_QMatrix_Deflated_Iteration->printMatrix();
 
 	this->p_QQTMatrix_Iteration->resizeMatrix(this->p_OpMatrix->rowNum,this->p_OpMatrix->columnNum);
-	this->p_QQTMatrix_Iteration->moveDiagonalSubMatrixDown(0,sizeOfSub,deflationStart);
+	this->p_QQTMatrix_Iteration->moveDiagonalSubMatrixDown(0,tailIndex,deflationStart);
 
 	/*
 	for(int i=this->deflationStart,m=0; i<=this->deflationEnd; i++,m++)
@@ -556,7 +556,7 @@ void NormalEigenSolverForReal::resizeMatrixForDeflation()
 	p_QQTMatrix_Iteration->resizeMatrix(newSize,newSize);
 
 	p_TempMatrix_Trans->resetMatrixToI();
-	p_QQTMatrix_Iteration->resizeMatrix(newSize,newSize);
+	p_TempMatrix_Trans->resizeMatrix(newSize,newSize);
 
 	p_TempMatrix->resetMatrixToI();
 	p_TempMatrix->resizeMatrix(newSize,newSize);

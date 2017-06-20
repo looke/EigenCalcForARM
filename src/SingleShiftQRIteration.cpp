@@ -280,7 +280,7 @@ void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration(int iterateNum)
 	}
 };
 
-//瑞利商位移QR迭代 隐式 单步
+//瑞利商位移QR迭代 隐式 单步--每次计算都重置Total转置矩阵
 void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration_Step()
 {
 	//this->generateHessenbergOpMatrix();
@@ -289,7 +289,7 @@ void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration_Step()
 
 	int rayleighValueIndex = p_OpMatrix->rowNum - 1;
 	double rayleighValue= p_OpMatrix->getMatrixElement(rayleighValueIndex,rayleighValueIndex);
-
+	p_QTMatrix_Implicit_Total->resetMatrixToI();
 	implicit_QRIteration_Step(rayleighValue);
 	//cout << "SingelShiftQRIteration--rayleigh_Quotient_IM_QRIteration Step----OP Hessenberg Matrix" <<endl;
 	//p_OpMatrix->printMatrix();

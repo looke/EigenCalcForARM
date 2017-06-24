@@ -56,9 +56,9 @@ public:
 	//获取指定对角子矩阵hessenberg列向量
 	BasicVector* getSubMatrixHessenColumnVector(int subMatrixIndex);
 
-private:
+protected:
 
-	double matrixNxN[20][20];
+	double matrixNxN[10][10];
 	StaticVector matrixVector;
 	void initMatrix();
 

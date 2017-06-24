@@ -14,7 +14,7 @@ using namespace std;
 StaticMatrix::StaticMatrix()
 {
 	initPrecision();
-	this->space = 20;
+	this->space = 10;
 
 	this->rowNum = 0;
 	this->columnNum = 0;
@@ -27,7 +27,7 @@ StaticMatrix::StaticMatrix()
 StaticMatrix::StaticMatrix(int inputRowNum, int inputColumnNum)
 {
 	initPrecision();
-	this->space = 20;
+	this->space = 10;
 
 	if(inputRowNum >= 0 && inputColumnNum >=0 && inputRowNum<=space && inputColumnNum<=space)
 	{

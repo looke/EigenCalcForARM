@@ -38,7 +38,7 @@ TEST(MatrixCreateTest, postive)
 	StaticMatrix testMatrix33 = StaticMatrix(3,3);
 	StaticMatrix testMatrix53 = StaticMatrix(5,3);
 	StaticMatrix testMatrix00 = StaticMatrix(0,0);
-	StaticMatrix testMatrix2020 = StaticMatrix(20,20);
+	StaticMatrix testMatrix1010 = StaticMatrix(10,10);
 	EXPECT_EQ(3,testMatrix33.rowNum);
 	EXPECT_EQ(3,testMatrix33.columnNum);
 
@@ -77,8 +77,8 @@ TEST(MatrixCreateTest, postive)
 	EXPECT_EQ(14,testMatrix53.getMatrixElement(4,1));
 	EXPECT_EQ(15,testMatrix53.getMatrixElement(4,2));
 
-	EXPECT_EQ(20,testMatrix2020.rowNum);
-	EXPECT_EQ(20,testMatrix2020.columnNum);
+	EXPECT_EQ(10,testMatrix1010.rowNum);
+	EXPECT_EQ(10,testMatrix1010.columnNum);
 }
 
 /*

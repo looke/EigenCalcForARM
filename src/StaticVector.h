@@ -25,7 +25,7 @@ protected:
 	void init(int input_dimension);
 
 	//int vector_length;
-	double vector_static[20];
+	double vector_static[10];
 
 private:
 

@@ -1,27 +1,27 @@
 /*
- * StaticVector.cpp
+ * BigStaticVector.cpp
  *
- *  Created on: 2017年4月25日
+ *  Created on: 2017年6月24日
  *      Author: looke
  */
 
-#include "StaticVector.h"
+#include "BigStaticVector.h"
 
-StaticVector::StaticVector()
+BigStaticVector::BigStaticVector()
 {
-	this->space = 10;
+	this->space = 20;
 	this->init(0);
 };
 
-StaticVector::StaticVector(int input_dimension)
+BigStaticVector::BigStaticVector(int input_dimension)
 {
 	this->init(input_dimension);
 };
 
 
-void StaticVector::init(int input_dimension)
+void BigStaticVector::init(int input_dimension)
 {
-	this->space = 10;
+	this->space = 20;
 	for(int i=0; i<space; i++)
 	{
 		vector_static[i] = 1;
@@ -39,7 +39,7 @@ void StaticVector::init(int input_dimension)
 };
 
 //取向量的元素
-double StaticVector::getElement(int index)
+double BigStaticVector::getElement(int index)
 {
 	//if(index < 0 || index >= this->dimension)
 	//{
@@ -49,7 +49,7 @@ double StaticVector::getElement(int index)
 };
 
 //设置向量的元素
-bool StaticVector::setElement(int index, double value)
+bool BigStaticVector::setElement(int index, double value)
 {
 	if(index < 0 || index >= this->dimension)
 	{
@@ -58,3 +58,5 @@ bool StaticVector::setElement(int index, double value)
 	this->vector_static[index] = value;
 	return true;
 };
+
+

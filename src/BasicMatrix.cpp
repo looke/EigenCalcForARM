@@ -301,9 +301,12 @@ void BasicMatrix::regularZeroElement()
 	}
 };
 
-//寻找主对角线上为0的元素,返回所在位置
-//如果有多个0元,返回索引值最大的那个(最靠近右下角的)
-int BasicMatrix::indexOfZeroOnDiagonal()
+/*
+ * 寻找主对角线上为0的元素,返回所在位置
+ * 如果没有0元，返回-1
+ * 如果有多个0元,返回索引值最大的那个(最靠近右下角的)
+ */
+int BasicMatrix::maxIndexOfZeroOnDiagonal()
 {
 	double temp;
 	for(int i=this->rowNum-1; i>=0;i--)

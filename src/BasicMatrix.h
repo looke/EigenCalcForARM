@@ -86,7 +86,7 @@ public:
 
 	//寻找主对角线上为0的元素,返回所在位置
 	//如果有多个0元,返回索引值最大的那个
-	int indexOfZeroOnDiagonal();
+	int maxIndexOfZeroOnDiagonal();
 
 	//对角线全部元素减去指定值
 	void diagonalSubtraction(double subValue);

@@ -111,6 +111,15 @@ void BasicVector::printVector()
 	cout << endl;
 };
 
+//对向量所有元素置0
+void BasicVector::resetVectorElementToZero()
+{
+	for(int i=0; i<this->dimension;i++)
+	{
+		this->setElement(i,0);
+	}
+};
+
 /*
 //异常使用的错误信息
 string BasicVector::getOutOfRangeErrorMessage(int lengthOrIndex)

@@ -28,7 +28,7 @@ public:
 	//void rayleigh_Quotient_EX_QRIteration();
 
 	//瑞利商位移QR迭代 隐式 10次迭代
-	void rayleigh_Quotient_IM_QRIteration();
+	//void rayleigh_Quotient_IM_QRIteration();
 	//瑞利商位移QR迭代 隐式 指定迭代次数
 	void rayleigh_Quotient_IM_QRIteration(int iterateNum);
 	//瑞利商位移QR迭代 隐式 单步

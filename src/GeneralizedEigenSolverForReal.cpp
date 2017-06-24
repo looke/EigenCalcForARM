@@ -13,10 +13,10 @@ using namespace std;
 //{};
 
 GeneralizedEigenSolverForReal::GeneralizedEigenSolverForReal(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* p_input_OpMatrix_B, BasicVector* p_input_Vector, BasicMatrix* p_input_A_deflated, BasicMatrix* p_input_B_deflated, BasicMatrix* p_input_Q_Total, BasicMatrix* p_input_Z_Total, BasicMatrix* p_input_Q_Step, BasicMatrix* p_input_Z_Step, BasicMatrix* p_input_QZ_Step, BasicMatrix* p_input_TempMatrix_Trans,BasicMatrix* p_input_TempMatrix)
-:m_ABInvCalc(),m_HessenbergDeflation(),m_Multiplier(p_input_OpMatrix_A,p_input_OpMatrix_A,p_input_TempMatrix),
+:m_ABInvCalc(),m_HessenbergDeflation(),m_Multiplier(p_input_OpMatrix_A,p_input_OpMatrix_A,p_input_TempMatrix),m_testMulti(p_input_OpMatrix_A,p_input_OpMatrix_A,p_input_TempMatrix),
  m_SingleShifeQZ(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_Q_Step,p_input_Z_Step,p_input_QZ_Step,p_input_TempMatrix_Trans,p_input_TempMatrix),
- m_DoubleShifeQZ(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_Vector,p_input_Q_Step,p_input_Z_Step,p_input_QZ_Step,p_input_TempMatrix_Trans,p_input_TempMatrix),
- m_HessenbergTriangleFormular(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_Q_Total,p_input_Z_Total,p_input_QZ_Step,p_input_TempMatrix_Trans,p_input_TempMatrix),
+ m_DoubleShifeQZ(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_Vector,p_input_Q_Total,p_input_Z_Total,p_input_QZ_Step,p_input_TempMatrix_Trans,p_input_TempMatrix),
+ m_HessenbergTriangleFormular(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_Q_Step,p_input_Z_Step,p_input_QZ_Step,p_input_TempMatrix_Trans,p_input_TempMatrix),
  m_QZTriangleZeroChasing(p_input_OpMatrix_A,p_input_OpMatrix_B,p_input_A_deflated,p_input_B_deflated,p_input_Q_Step, p_input_Z_Step,p_input_QZ_Step, p_input_TempMatrix)
 {
 	this->init(p_input_OpMatrix_A,
@@ -66,6 +66,13 @@ void GeneralizedEigenSolverForReal::init(BasicMatrix* p_input_OpMatrix_A, BasicM
 	//降阶终点索引指示，初始化为n-1
 	this->deflationEnd = p_OpMatrix_A->rowNum - 1;
 
+	this->testForTemp_A_nxn = StaticMatrix(p_input_OpMatrix_A->rowNum,p_input_OpMatrix_A->columnNum);
+	testForTemp_A_nxn.copyMatrixElementNoCheck(p_OpMatrix_A);
+
+	this->testForTemp_B_nxn = StaticMatrix(p_input_OpMatrix_A->rowNum,p_input_OpMatrix_A->columnNum);
+	testForTemp_B_nxn.copyMatrixElementNoCheck(p_OpMatrix_B);
+
+	this->testTemp_nxn = StaticMatrix(p_input_OpMatrix_A->rowNum,p_input_OpMatrix_A->columnNum);
 };
 
 void GeneralizedEigenSolverForReal::reload(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* p_input_OpMatrix_B, BasicVector* p_input_Vector, BasicMatrix* p_input_A_deflated, BasicMatrix* p_input_B_deflated, BasicMatrix* p_input_Q_Total, BasicMatrix* p_input_Z_Total, BasicMatrix* p_input_Q_Step, BasicMatrix* p_input_Z_Step, BasicMatrix* p_input_QZ_Step, BasicMatrix* p_input_TempMatrix_Trans,BasicMatrix* p_input_TempMatrix)
@@ -427,30 +434,30 @@ bool GeneralizedEigenSolverForReal::isDiagonalBlockComplexEigen(BasicMatrix* p_I
 };
 
 //测试打印，Q_Total * OP * Z_Total
-/*
+
 void GeneralizedEigenSolverForReal::showQxOPxZ()
 {
-	p_testForTemp_A_nxn->copyMatrixElementNoCheck(this->p_OpMatrix_A);
-	p_testMulti->reload(this->p_QMatrix_Total, p_testForTemp_A_nxn);
-	p_testMulti->multiplyCalc();
-	p_testForTemp_A_nxn->copyMatrixElementNoCheck(p_testMulti->getMultiplyResult());
-	p_testMulti->reload(p_testForTemp_A_nxn,this->p_ZMatrix_Total);
-	p_testMulti->multiplyCalc();
-	p_testForTemp_A_nxn->copyMatrixElementNoCheck(p_testMulti->getMultiplyResult());
+	//print QAZ
+	m_testMulti.reload(this->p_QMatrix_Total, &testForTemp_A_nxn,&testTemp_nxn);
+	m_testMulti.multiplyCalc();
+	testForTemp_A_nxn.copyMatrixElementNoCheck(&testTemp_nxn);
+	m_testMulti.reload(&testForTemp_A_nxn,this->p_ZMatrix_Total,&testTemp_nxn);
+	m_testMulti.multiplyCalc();
+	testForTemp_A_nxn.copyMatrixElementNoCheck(&testTemp_nxn);
 	cout << "--------------Q_Total * Op_Matrix_A * Z_Total-----------------" << endl;
-	p_testForTemp_A_nxn->printMatrix();
+	testForTemp_A_nxn.printMatrix();
 
-	p_testForTemp_B_nxn->copyMatrixElementNoCheck(this->p_OpMatrix_B);
-	p_testMulti->reload(this->p_QMatrix_Total, p_testForTemp_B_nxn);
-	p_testMulti->multiplyCalc();
-	p_testForTemp_B_nxn->copyMatrixElementNoCheck(p_testMulti->getMultiplyResult());
-	p_testMulti->reload(p_testForTemp_B_nxn,this->p_ZMatrix_Total);
-	p_testMulti->multiplyCalc();
-	p_testForTemp_B_nxn->copyMatrixElementNoCheck(p_testMulti->getMultiplyResult());
+	//print QBZ
+	m_testMulti.reload(this->p_QMatrix_Total, &testForTemp_B_nxn,&testTemp_nxn);
+	m_testMulti.multiplyCalc();
+	testForTemp_B_nxn.copyMatrixElementNoCheck(&testTemp_nxn);
+	m_testMulti.reload(&testForTemp_B_nxn,this->p_ZMatrix_Total,&testTemp_nxn);
+	m_testMulti.multiplyCalc();
+	testForTemp_B_nxn.copyMatrixElementNoCheck(&testTemp_nxn);
 	cout << "--------------Q_Total * Op_Matrix_B * Z_Total-----------------" << endl;
-	p_testForTemp_B_nxn->printMatrix();
+	testForTemp_B_nxn.printMatrix();
 };
-*/
+
 //计算特征值
 void GeneralizedEigenSolverForReal::calcEigenValue()
 {
@@ -473,12 +480,12 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 	//p_ZMatrix_Iteration->copyMatrixElementNoCheck(p_QZTriangleZeroChasing->getGivensMatrix_Z_Total());
 
 	//更新原始Hessenberg-Trianlge 矩阵使用Q矩阵左乘H-T矩阵对
-	updateHTMatrixByQ();
+	//updateHTMatrixByQ();
 	//更新总体转换矩阵
 	updateQMatrixTotal();
 
 	//更新原始Hessenberg-Trianlge 矩阵使用Z矩阵右乘H-T矩阵对
-	updateHTMatrixByZ();
+	//updateHTMatrixByZ();
 	//更新总体转换矩阵
 	updateZMatrixTotal();
 	//打印总体转换矩阵乘积测试
@@ -557,6 +564,8 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 		//打印总体转换矩阵乘积测试
 		//showQxOPxZ();
 	}
+	//打印总体转换矩阵乘积测试
+	//showQxOPxZ();
 	int i = 0;
 	double subDiagonalElement;
 	while (i < this->p_OpMatrix_A->columnNum - 1)
@@ -586,6 +595,8 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 		}
 		i++;
 	}
+	//打印总体转换矩阵乘积测试
+	//showQxOPxZ();
 };
 
 //初步化为对角块以后，最后一步迭代，将0,1索引上的2x2对角块进行上三角化

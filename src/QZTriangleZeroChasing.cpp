@@ -86,7 +86,7 @@ void QZTriangleZeroChasing::deflate()
 		this->p_OpSubMatrix_B->printMatrix();
 
 		//获取主对角线0元位置索引
-		zeroIndex = this->p_OpSubMatrix_B->indexOfZeroOnDiagonal();
+		zeroIndex = this->p_OpSubMatrix_B->maxIndexOfZeroOnDiagonal();
 		cout << "deflate----Zero Index of Sub B:" << zeroIndex << endl;
 
 		//判断主对角线0元的位置

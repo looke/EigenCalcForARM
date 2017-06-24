@@ -9,6 +9,7 @@
 #define EIGEN_BASIC_GENERALIZEDEIGENSOLVERFORREAL_H_
 
 #include "BasicMatrix.h"
+#include "StaticMatrix.h"
 #include "BasicVector.h"
 #include "DoubleShiftQZIteration.h"
 #include "SingleShiftQZIteration.h"
@@ -73,7 +74,7 @@ public:
 	BasicMatrix* getZMatrix_Total();
 
 	//测试打印，Q_Total * OP * Z_Total
-	//void showQxOPxZ();
+	void showQxOPxZ();
 
 protected:
 	//降阶起点索引指示，初始化为0
@@ -147,9 +148,10 @@ protected:
 	ABInverseCalculator m_ABInvCalc;
 
 	//测试总体转置矩阵的临时测试对象
-	//BasicMatrix* p_testForTemp_A_nxn;
-	//BasicMatrix* p_testForTemp_B_nxn;
-	//MatrixMultiplier* p_testMulti;
+	StaticMatrix testForTemp_A_nxn;
+	StaticMatrix testForTemp_B_nxn;
+	StaticMatrix testTemp_nxn;
+	MatrixMultiplier m_testMulti;
 
 };
 

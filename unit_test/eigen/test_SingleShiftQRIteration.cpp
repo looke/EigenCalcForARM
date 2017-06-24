@@ -18,7 +18,7 @@ using namespace std;
 /*
  * ²âÊÔSingleShiftQRIteration ÒþÊ½µü´ú
  */
-TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
+TEST(SingleShiftQRIterationIMITTest_Normal_3x3, postive)
 {
 	MatrixTransposer m_Transposer = MatrixTransposer();
 	double lowEdge, maxDiff;
@@ -45,8 +45,8 @@ TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test33_TempMatrix = StaticMatrix(3,3);
 
 	SingleShiftQRIteration singleQRIt = SingleShiftQRIteration(&test33,&test33_QTMatrix,&test33_QQTMatrix_Step,&test33_TempMatrix);
-	//singleQRIt.rayleigh_Quotient_IM_QRIteration(10);
-	cout << "After 10 Iteration: OpMatrix" << endl;
+	singleQRIt.rayleigh_Quotient_IM_QRIteration(50);
+	cout << "After 50 Iteration: OpMatrix" << endl;
 	test33.printMatrix();
 	lowEdge = test33.getLowEdge();
 	EXPECT_GT(lowEdge, fabs(test33.getMatrixElement(0,0)-9));
@@ -67,7 +67,13 @@ TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
 	test33_Original.printMatrix();
 	maxDiff = test33_Original.calcMaxDifferentialNoCheck(&test33);
 	EXPECT_GE(lowEdge, maxDiff);
+}
 
+/*
+ * ²âÊÔSingleShiftQRIteration ÒþÊ½µü´ú
+ */
+TEST(SingleShiftQRIterationIMITTest_Normal_4x4, postive)
+{
 	StaticMatrix test44 = StaticMatrix(4,4);
 
 	test44.setMatrixElement(0,0,54);
@@ -96,24 +102,27 @@ TEST(SingleShiftQRIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_QQTMatrix_Step = StaticMatrix(4,4);
 	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
 
-	singleQRIt.reload(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);
-	//singleQRIt.rayleigh_Quotient_IM_QRIteration(80);
 
-	cout << "After 10 Iteration: OpMatrix" << endl;
+	SingleShiftQRIteration singleQRIt = SingleShiftQRIteration(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);;
+	//singleQRIt.reload(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);
+	singleQRIt.rayleigh_Quotient_IM_QRIteration(80);
+
+	cout << "After 80 Iteration: OpMatrix" << endl;
 	test44.printMatrix();
 
-	m_Multi.reload(&test44_QTMatrix, &test44_Original, &test44_TempMatrix);
+	MatrixMultiplier m_Multi = MatrixMultiplier(&test44_QTMatrix, &test44_Original, &test44_TempMatrix);
 	m_Multi.multiplyCalc();
 	test44_Original.copyMatrixElementNoCheck(&test44_TempMatrix);
 
 	test44_QMatrix.copyMatrixElementNoCheck(&test44_QTMatrix);
+	MatrixTransposer m_Transposer = MatrixTransposer();
 	m_Transposer.transposeSquareMatrix(&test44_QMatrix);
 
 	m_Multi.reload(&test44_Original,&test44_QMatrix,&test44_TempMatrix);
 	m_Multi.multiplyCalc();
 	test44_Original.copyMatrixElementNoCheck(&test44_TempMatrix);
-	lowEdge = test44_Original.getLowEdge();
-	maxDiff = test44_Original.calcMaxDifferentialNoCheck(&test44);
+	double lowEdge = test44_Original.getLowEdge();
+	double maxDiff = test44_Original.calcMaxDifferentialNoCheck(&test44);
 	EXPECT_GE(lowEdge, maxDiff);
 
 }

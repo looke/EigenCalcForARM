@@ -78,7 +78,7 @@ TEST(NormalEigenSolverForReal_Test_Normal6x6, postive)
 	StaticMatrix test66_TempMatrix = StaticMatrix(6,6);
 
 	NormalEigenSolverForReal normalEigen = NormalEigenSolverForReal(&test66,&test66_vector,&test66_QTMatrix,&test66_QMatrix,&test66_QQTMatrix,&test66_DeflatedMatrix,&test66_TempMatrix_Trans,&test66_TempMatrix);
-//	normalEigen.calcEigenValue();
+	normalEigen.calcEigenValue();
 
 	lowEdge = test66.getLowEdge();
 	EXPECT_GT(lowEdge,test66.getMatrixElement(1,0));
@@ -111,6 +111,9 @@ TEST(NormalEigenSolverForReal_Test_Normal4x4, postive)
 	test44.setMatrixElement(3,2,12);
 	test44.setMatrixElement(3,3,13);
 
+	StaticMatrix test44_A_Original = StaticMatrix(4,4);
+	test44_A_Original.copyMatrixElementNoCheck(&test44);
+
 	StaticMatrix test44_QTMatrix = StaticMatrix(4,4);
 	StaticMatrix test44_QMatrix = StaticMatrix(4,4);
 	StaticMatrix test44_QQTMatrix = StaticMatrix(4,4);
@@ -118,9 +121,22 @@ TEST(NormalEigenSolverForReal_Test_Normal4x4, postive)
 	StaticMatrix test44_TempMatrix_Trans = StaticMatrix(4,4);
 	StaticMatrix test44_TempMatrix = StaticMatrix(4,4);
 	StaticVector test44_vector = StaticVector(4);
+
 	NormalEigenSolverForReal normalEigen = NormalEigenSolverForReal(&test44,&test44_vector,&test44_QTMatrix,&test44_QMatrix,&test44_QQTMatrix,&test44_DeflatedMatrix,&test44_TempMatrix_Trans,&test44_TempMatrix);
 	normalEigen.calcEigenValue();
 
 	EXPECT_GT(0.0001,fabs(test44.getMatrixElement(3,3)-26.5721));
+
+	test44_TempMatrix.resizeMatrix(4,4);
+	MatrixMultiplier m_Multi = MatrixMultiplier(&test44_QTMatrix ,&test44_A_Original, &test44_TempMatrix);
+	m_Multi.multiplyCalc();
+	test44_A_Original.copyMatrixElementNoCheck(&test44_TempMatrix);
+	m_Multi.reload(&test44_A_Original,&test44_QMatrix,&test44_TempMatrix);
+	m_Multi.multiplyCalc();
+	test44_A_Original.copyMatrixElementNoCheck(&test44_TempMatrix);
+
+	double lowEdge = test44_A_Original.getLowEdge();
+
+	EXPECT_GT(lowEdge,fabs(test44_A_Original.calcMaxDifferentialNoCheck(&test44)));
 
 }

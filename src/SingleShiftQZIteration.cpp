@@ -38,7 +38,7 @@ void SingleShiftQZIteration::init(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* 
 	//中间过程矩阵
 	this->p_TempMatrix = p_input_TempMatrix;
 
-	this->generateHessenTriangleOpMatrix();
+	//this->generateHessenTriangleOpMatrix();
 };
 
 void SingleShiftQZIteration::reload(BasicMatrix* p_intput_OpMatrix_A, BasicMatrix* p_intput_OpMatrix_B,BasicMatrix* p_input_QMatrix_Total,BasicMatrix* p_input_ZMatrix_Total,BasicMatrix* p_input_QZMatrix_Step,BasicMatrix* p_input_TempMatrix_Trans,BasicMatrix* p_input_TempMatrix)
@@ -245,15 +245,19 @@ void SingleShiftQZIteration::implicit_QZIteration(double input_shiftValue)
 //单值rayleigh商位移QZ迭代 隐式
 void SingleShiftQZIteration::rayleigh_Quotient_IM_QZIteration(int iterateNum)
 {
-	//generateHessenTriangleOpMatrix();
+	p_QMatrix_Implicit_Total->resetMatrixToI();
+	p_ZMatrix_Implicit_Total->resetMatrixToI();
 
-	int rayleighValueIndex = p_OpMatrix_A->rowNum - 1;
-	double rayleighValue;
+	this->generateHessenTriangleOpMatrix();
+
+	//int rayleighValueIndex = p_OpMatrix_A->rowNum - 1;
+	//double rayleighValue;
 	int i=0;
 	while (i<iterateNum)
 	{
-		rayleighValue = p_OpMatrix_A->getMatrixElement(rayleighValueIndex,rayleighValueIndex);
-		implicit_QZIteration_Step(rayleighValue);
+		this->rayleigh_Quotient_IM_QZIteration_Step();
+		//rayleighValue = p_OpMatrix_A->getMatrixElement(rayleighValueIndex,rayleighValueIndex);
+		//implicit_QZIteration_Step(rayleighValue);
 		//cout << "SingleShiftQZIteration--rayleigh_Quotient_IM_QRIteration----OP Hessenberg Matrix after:" << i << "iteration" <<endl;
 		//p_OpMatrix_Hessenberg->printMatrix();
 		i++;

@@ -33,7 +33,7 @@ void SingleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicMatrix* p_i
 	//中间过程矩阵
 	this->p_TempMatrix = p_input_TempMatrix;
 
-	generateHessenbergOpMatrix();
+	//generateHessenbergOpMatrix();
 };
 
 void SingleShiftQRIteration::reload(BasicMatrix* p_input_OpMatrix, BasicMatrix* p_input_QTMatrix_Implicit_Total,BasicMatrix* p_input_Q_QT_Matrix_Implicit_Step,BasicMatrix* p_input_TempMatrix)
@@ -177,8 +177,9 @@ void SingleShiftQRIteration::updateOpMatrix_By_Q_IM_QRIteration()
 //单值位移QR迭代 隐式
 void SingleShiftQRIteration::implicit_QRIteration(double input_shiftValue)
 {
+	p_QTMatrix_Implicit_Total->resetMatrixToI();
 	//操作矩阵转换为Hessenberg矩阵
-	//this->generateHessenbergOpMatrix();
+	this->generateHessenbergOpMatrix();
 	//cout << "SingelShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
 	//this->p_OpMatrix->printMatrix();
 
@@ -253,17 +254,17 @@ void SingleShiftQRIteration::rayleigh_Quotient_EX_QRIteration()
 */
 
 //瑞利商位移QR迭代 隐式 10次迭代
-void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration()
-{
-	this->rayleigh_Quotient_IM_QRIteration(10);
-}
+//void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration()
+//{
+//	this->rayleigh_Quotient_IM_QRIteration(10);
+//}
 
 //瑞利商位移QR迭代 隐式 指定迭代次数
 void SingleShiftQRIteration::rayleigh_Quotient_IM_QRIteration(int iterateNum)
 {
 	int iterationNumber = iterateNum;
-
-	//this->generateHessenbergOpMatrix();
+	p_QTMatrix_Implicit_Total->resetMatrixToI();
+	this->generateHessenbergOpMatrix();
 	//cout << "SingelShiftQRIteration--rayleigh_Quotient_IM_QRIteration----OP Hessenberg Matrix" << endl;
 	//this->p_OpMatrix->printMatrix();
 

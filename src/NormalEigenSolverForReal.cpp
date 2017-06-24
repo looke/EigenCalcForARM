@@ -14,7 +14,10 @@ using namespace std;
 //{};
 
 NormalEigenSolverForReal::NormalEigenSolverForReal(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_Vector,BasicMatrix* p_input_QT_Total,BasicMatrix* p_input_Q_Total,BasicMatrix* p_input_QQTMatrix_It,BasicMatrix* p_input_OpMatrix_deflated,BasicMatrix* p_TempMatrix_Trans,BasicMatrix* p_TempMatrix)
-:m_HessenbergDeflation(),m_Transposer(),m_Multiplier(p_input_OpMatrix,p_input_OpMatrix,p_TempMatrix),m_HessenbergForm(p_input_OpMatrix,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix),m_SingleShifeQR(p_input_OpMatrix,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix),m_DoubleShifeQR(p_input_OpMatrix,p_input_Vector,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix)
+:m_HessenbergDeflation(),m_Transposer(),m_Multiplier(p_input_OpMatrix,p_input_OpMatrix,p_TempMatrix),
+ m_HessenbergForm(p_input_OpMatrix,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix),
+ m_SingleShifeQR(p_input_OpMatrix,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix),
+ m_DoubleShifeQR(p_input_OpMatrix,p_input_Vector,p_input_QQTMatrix_It,p_TempMatrix_Trans,p_TempMatrix)
 {
 	this->init(p_input_OpMatrix,p_input_Vector,p_input_QT_Total,p_input_Q_Total,p_input_QQTMatrix_It,p_input_OpMatrix_deflated,p_TempMatrix_Trans,p_TempMatrix);
 };

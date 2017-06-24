@@ -78,7 +78,7 @@ TEST(SingleShiftQZIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_Temp = StaticMatrix(4,4);
 
 	SingleShiftQZIteration singleQZ = SingleShiftQZIteration(&test44_A,&test44_B,&test44_Q_Total,&test44_Z_Total,&test44_QZ_Step, &test44_Temp_Trans,&test44_Temp);
-//	singleQZ.rayleigh_Quotient_IM_QZIteration(150);
+	singleQZ.rayleigh_Quotient_IM_QZIteration(150);
 	lowEdge = test44_A.getLowEdge();
-//	EXPECT_GT(lowEdge, fabs(test44_A.getMatrixElement(3,2)-0));
+	EXPECT_GT(lowEdge, fabs(test44_A.getMatrixElement(0,0)/test44_B.getMatrixElement(0,0)-1));
 }

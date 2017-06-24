@@ -78,7 +78,7 @@ TEST(DoubleShiftQZIterationIMITTest_Normal4x4, postive)
 	StaticMatrix test44_Temp = StaticMatrix(4,4);
 
 	DoubleShiftQZIteration doubleQZ = DoubleShiftQZIteration(&test44_A, &test44_B, &test44_Vector, &test44_Q_Total, &test44_Z_Total, &test44_QZ_Step, &test44_Temp_Trans, &test44_Temp);
-	//doubleQZ.wilkinson_IM_QZIteration();
+	doubleQZ.wilkinson_IM_QZIteration();
 	lowEdge = test44_A.getLowEdge();
-	EXPECT_GT(lowEdge, fabs(test44_A.getMatrixElement(3,2)-0));
+	EXPECT_GT(0.0000001, fabs(test44_A.getMatrixElement(0,0)/test44_B.getMatrixElement(0,0)-1));
 }

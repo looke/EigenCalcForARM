@@ -39,7 +39,7 @@ void DoubleShiftQZIteration::init(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* 
 	//中间过程矩阵
 	this->p_TempMatrix = p_input_TempMatrix;
 
-	this->generateHessenTriangleOpMatrix();
+	//this->generateHessenTriangleOpMatrix();
 };
 
 void DoubleShiftQZIteration::reload(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* p_input_OpMatrix_B,BasicVector* p_input_TransVectorForQZStep,BasicMatrix* p_input_QMatrix_Total,BasicMatrix* p_input_ZMatrix_Total,BasicMatrix* p_input_QZMatrix_Step,BasicMatrix* p_input_TempMatrix_Trans,BasicMatrix* p_input_TempMatrix)
@@ -601,13 +601,13 @@ void DoubleShiftQZIteration::wilkinson_IM_QZIteration_Single()
 void DoubleShiftQZIteration::wilkinson_IM_QZIteration()
 {
 	//操作矩阵转换为Hessenberg-Triangle矩阵
-	//this->generateHessenTriangleOpMatrix();
+	this->generateHessenTriangleOpMatrix();
 	cout << "DoubleShiftQZIteration--H-T Format----OP Hessenberg Matrix" << endl;
 	this->p_OpMatrix_A->printMatrix();
 	cout << "DoubleShiftQZIteration--H-T Format----OP Triangle Matrix" << endl;
 	this->p_OpMatrix_B->printMatrix();
 
-	int iteratNumber = 100;
+	int iteratNumber = 200;
 	int i = 0;
 	while(i < iteratNumber)
 	{

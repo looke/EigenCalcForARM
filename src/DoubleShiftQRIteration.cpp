@@ -37,7 +37,7 @@ void DoubleShiftQRIteration::init(BasicMatrix* p_input_OpMatrix,BasicVector* p_i
 	//中间过程矩阵
 	this->p_TempMatrix = p_input_TempMatrix;
 
-	this->generateHessenbergOpMatrix();
+	//this->generateHessenbergOpMatrix();
 };
 
 void DoubleShiftQRIteration::reload(BasicMatrix* p_input_OpMatrix,BasicVector* p_input_TransVector,BasicMatrix* p_input_QTMatrix_Total,BasicMatrix* p_input_QQTMatrix_Step,BasicMatrix* p_input_TempMatrix)
@@ -226,12 +226,13 @@ void DoubleShiftQRIteration::updateHessenbergOpMatrix_By_Q_IM_QRIteration()
 };
 
 /*
- * Wilkinson双位移QR迭代 隐式(不需要先进行矩阵Hessenberg格式化，init和reload时已经完成转换)
+ * Wilkinson双位移QR迭代 隐式
  */
 void DoubleShiftQRIteration::wilkinson_IM_QRIteration()
 {
+	p_QTMatrix_Implicit_Total->resetMatrixToI();
 	//操作矩阵转换为Hessenberg矩阵
-	//this->generateHessenbergOpMatrix();
+	this->generateHessenbergOpMatrix();
 	cout << "DoubleShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
 	this->p_OpMatrix->printMatrix();
 
@@ -245,7 +246,7 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration()
 };
 
 /*
- * Wilkinson双位移QR迭代 隐式 作为迭代接口单独使用(不需要先进行矩阵Hessenberg格式化，init和reload时已经完成转换)
+ * Wilkinson双位移QR迭代 隐式 作为迭代接口单独使用
  */
 void DoubleShiftQRIteration::wilkinson_IM_QRIteration_Single()
 {

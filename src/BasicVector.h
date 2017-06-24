@@ -39,6 +39,9 @@ public:
 	//对向量做归一化处理
 	void normalizationVector();
 
+	//对向量所有元素置0
+	void resetVectorElementToZero();
+
 	//输出异常信息
 	//string getOutOfRangeErrorMessage(int lengthOrIndex);
 	//拷贝向量的元素

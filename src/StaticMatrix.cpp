@@ -16,8 +16,8 @@ StaticMatrix::StaticMatrix()
 	initPrecision();
 	this->space = 10;
 
-	this->rowNum = 0;
-	this->columnNum = 0;
+	this->rowNum = 10;
+	this->columnNum = 10;
 
 	this->initMatrix();
 	//初始化行列向量对象

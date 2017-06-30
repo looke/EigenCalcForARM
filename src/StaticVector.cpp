@@ -10,7 +10,7 @@
 StaticVector::StaticVector()
 {
 	this->space = 10;
-	this->init(0);
+	this->init(10);
 };
 
 StaticVector::StaticVector(int input_dimension)

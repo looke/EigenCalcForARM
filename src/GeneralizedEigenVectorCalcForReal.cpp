@@ -8,7 +8,9 @@
 #include "GeneralizedEigenVectorCalcForReal.h"
 
 GeneralizedEigenVectorCalcForReal::GeneralizedEigenVectorCalcForReal(BasicMatrix* p_input_UpTriangleMatrix_A, BasicMatrix* p_input_UpTriangleMatrix_B, BasicMatrix* p_input_UpTriangleMatrix_BinvA, BasicMatrix* p_input_SubMatrix, BasicMatrix* p_input_SubInverMatrix, BasicMatrix* p_input_TempMatrix)
-:m_Multiplier(p_input_UpTriangleMatrix_A,p_input_UpTriangleMatrix_B,p_input_TempMatrix),m_Inverser(p_input_SubMatrix,p_input_SubInverMatrix),m_EigenVectorCalcForReal(p_input_UpTriangleMatrix_BinvA,p_input_SubMatrix,p_input_SubInverMatrix,p_input_TempMatrix)
+:m_Multiplier(p_input_UpTriangleMatrix_A,p_input_UpTriangleMatrix_B,p_input_TempMatrix),
+ m_Inverser(p_input_SubMatrix,p_input_SubInverMatrix),
+ m_EigenVectorCalcForReal(p_input_UpTriangleMatrix_BinvA,p_input_SubMatrix,p_input_SubInverMatrix,p_input_TempMatrix)
 {
 	this->init(p_input_UpTriangleMatrix_A, p_input_UpTriangleMatrix_B, p_input_UpTriangleMatrix_BinvA, p_input_SubMatrix, p_input_SubInverMatrix, p_input_TempMatrix);
 };

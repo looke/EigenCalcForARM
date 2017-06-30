@@ -10,7 +10,7 @@
 BigStaticVector::BigStaticVector()
 {
 	this->space = 20;
-	this->init(0);
+	this->init(20);
 };
 
 BigStaticVector::BigStaticVector(int input_dimension)

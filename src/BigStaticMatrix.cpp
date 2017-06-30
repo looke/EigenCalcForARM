@@ -16,8 +16,8 @@ BigStaticMatrix::BigStaticMatrix()
 	initPrecision();
 	this->space = 20;
 
-	this->rowNum = 0;
-	this->columnNum = 0;
+	this->rowNum = 20;
+	this->columnNum = 20;
 
 	this->initMatrix();
 	//初始化行列向量对象

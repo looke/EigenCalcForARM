@@ -65,4 +65,18 @@ m_MatrixSquareRoot(p_input_OpMatrix,p_input_OpMatrix,p_input_OpMatrix,p_input_Op
 };
 
 
+void MagCalibration::init(BasicMatrix* p_input_OpMatrix)
+{
 
+};
+
+void MagCalibration::reload(BasicMatrix* p_input_OpMatrix)
+{
+
+};
+
+//生成校正参数
+bool MagCalibration::generateCaliInfo()
+{
+	return true;
+};

@@ -324,6 +324,8 @@ void DoubleShiftQZIteration::updateQMatrix_Total()
 	this->m_Multiplier.reload(p_QZMatrix_Implicit_Step, p_QMatrix_Implicit_Total,p_TempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	p_QMatrix_Implicit_Total->copyMatrixElementNoCheck(p_TempMatrix);
+	cout << "updateQMatrix_Total: Q Total" << endl;
+	p_QMatrix_Implicit_Total->printMatrix();
 };
 
 /*
@@ -335,6 +337,8 @@ void DoubleShiftQZIteration::updateZMatrix_Total()
 	this->m_Multiplier.reload(p_ZMatrix_Implicit_Total, p_QZMatrix_Implicit_Step, p_TempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	p_ZMatrix_Implicit_Total->copyMatrixElementNoCheck(p_TempMatrix);
+	cout << "updateZMatrix_Total: Z Total" << endl;
+	p_ZMatrix_Implicit_Total->printMatrix();
 };
 
 //Wilkinson位移QZ迭代 隐式 初始化

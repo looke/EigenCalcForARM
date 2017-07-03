@@ -61,6 +61,7 @@ void QZTriangleZeroChasing::deflate()
 	//右Givens变换矩阵Z-总体综合矩阵
 	p_GivensMatrixFor_Z_total->resetMatrixToI();
 
+	double tempTarget_A, tempTarget_B, lowEdge;
 
 	for(int i=0; i<this->p_OpMatrix_A->rowNum; i++)
 	{
@@ -112,92 +113,124 @@ void QZTriangleZeroChasing::deflate()
 				cout << "deflate---- Sub B target:" << j << endl;
 
 				//cout << "deflate----clean&Resize Q\Z step" << endl;
-				this->resizeTransMatrix(i);
+
 				//左Givens变换矩阵G-单步过程矩阵
 				//p_GivensMatrixFor_Q_step->resetMatrixToI();
 				//右Givens变换矩阵Z-单步过程矩阵
 				//p_GivensMatrixFor_Z_step->resetMatrixToI();
+				lowEdge = this->p_OpSubMatrix_B->getLowEdge();
+				tempTarget_B = this->p_OpSubMatrix_B->getMatrixElementRegulared(j,j,lowEdge);
+				while(0 != tempTarget_B)
+				{
+					this->resizeTransMatrix(i);
+					//根据B子矩阵生成Q子矩阵
+					generateGivensSubMatrixForB(j);
+					cout << "deflate---- Q step" <<endl;
+					this->p_GivensMatrixFor_QZ_step->printMatrix();
 
-				//根据B子矩阵生成Q子矩阵
-				generateGivensSubMatrixForB(j);
-				cout << "deflate---- Q step" <<endl;
-				this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//更新A,B子矩阵
+					updateSubOpMatrix_A_By_Q();
+					updateSubOpMatrix_B_By_Q();
+					cout << "deflate---- Sub Q A " <<endl;
+					this->p_OpSubMatrix_A->printMatrix();
+					cout << "deflate---- Sub Q B " <<endl;
+					this->p_OpSubMatrix_B->printMatrix();
 
-				//更新A,B子矩阵
-				updateSubOpMatrix_A_By_Q();
-				updateSubOpMatrix_B_By_Q();
-				cout << "deflate---- Sub Q A " <<endl;
-				this->p_OpSubMatrix_A->printMatrix();
-				cout << "deflate---- Sub Q B " <<endl;
-				this->p_OpSubMatrix_B->printMatrix();
+					//将Q子矩阵升级为全维度Q矩阵
+					upgradeGivensSubMatrix_QZ();
+					cout << "FullSize---- Q step" <<endl;
+					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//相关变换阵升级为全维度变换阵
+					upgradeTransMatrix();
+					//更新Q 总体矩阵
+					updateGivensMatrix_Total_Q();
+					//更新原始操作矩阵
+					updateOpMatrix_A_By_Q();
+					updateOpMatrix_B_By_Q();
+					tempTarget_B = this->p_OpSubMatrix_B->getMatrixElementRegulared(j,j,lowEdge);
+				}
 
-				//将Q子矩阵升级为全维度Q矩阵
-				upgradeGivensSubMatrix_QZ();
-				//相关变换阵升级为全维度变换阵
-				upgradeTransMatrix();
-				//更新Q 总体矩阵
-				updateGivensMatrix_Total_Q();
-				//更新原始操作矩阵
-				updateOpMatrix_A_By_Q();
-				updateOpMatrix_B_By_Q();
+				lowEdge = this->p_OpSubMatrix_A->getLowEdge();
+				tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(j,j-2,lowEdge);
+				while(0 != tempTarget_A)
+				{
+					this->resizeTransMatrix(i);
+					//根据A子矩阵生成Z子矩阵
+					generateGivensSubMatrixForA(j);
 
-				this->resizeTransMatrix(i);
-				//根据A子矩阵生成Z子矩阵
-				generateGivensSubMatrixForA(j);
+					cout << "deflate---- Z step" <<endl;
+					this->p_GivensMatrixFor_QZ_step->printMatrix();
 
-				cout << "deflate---- Z step" <<endl;
-				this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//更新A,B子矩阵
+					updateSubOpMatrix_A_By_Z();
+					updateSubOpMatrix_B_By_Z();
 
-				//更新A,B子矩阵
-				updateSubOpMatrix_A_By_Z();
-				updateSubOpMatrix_B_By_Z();
+					cout << "deflate---- Sub G A Z" <<endl;
+					this->p_OpSubMatrix_A->printMatrix();
+					cout << "deflate---- Sub G B Z" <<endl;
+					this->p_OpSubMatrix_B->printMatrix();
 
-				cout << "deflate---- Sub G A Z" <<endl;
-				this->p_OpSubMatrix_A->printMatrix();
-				cout << "deflate---- Sub G B Z" <<endl;
-				this->p_OpSubMatrix_B->printMatrix();
+					//将Z子矩阵升级为全维度Z矩阵
+					upgradeGivensSubMatrix_QZ();
+					cout << "FullSize---- Z step" <<endl;
+					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//相关变换阵升级为全维度变换阵
+					upgradeTransMatrix();
+					//更新Z 总体矩阵
+					updateGivensMatrix_Total_Z();
+					//更新原始操作矩阵
+					updateOpMatrix_A_By_Z();
+					updateOpMatrix_B_By_Z();
 
-				//将Z子矩阵升级为Z矩阵
-				upgradeGivensSubMatrix_QZ();
+					tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(j,j-2,lowEdge);
+				}
 
-				//更新Z 总体矩阵
-				updateGivensMatrix_Total_Z();
-				//更新原始操作矩阵
-				updateOpMatrix_A_By_Z();
-				updateOpMatrix_B_By_Z();
-
+				cout << "deflate---- Op A " <<endl;
+				this->p_OpMatrix_A->printMatrix();
+				cout << "deflate---- Op B " <<endl;
+				this->p_OpMatrix_B->printMatrix();
 			}
 		}
 		cout << "deflate----Final Z for iterate:" << i <<endl;
 		cout << "deflate----clean Z iterate" << endl;
 		//右Givens变换矩阵Z-单步过程矩阵
 		//p_GivensMatrixFor_Z_step->resetMatrixToI();
-		this->resizeTransMatrix(i);
 
-		//此时0元应当位于B子矩阵右下角,对A子矩阵再进行一次变换,化最末行次对角元为0
-		generateGivensSubMatrixForA_last();
-		cout << "deflate----Final Z for iterate:" << i <<endl;
-		this->p_GivensMatrixFor_QZ_step->printMatrix();
 
-		//更新A,B子矩阵
-		updateSubOpMatrix_A_By_Z();
-		updateSubOpMatrix_B_By_Z();
-		cout << "deflate---- Sub A Z_final" <<endl;
-		this->p_OpSubMatrix_A->printMatrix();
-		cout << "deflate---- Sub B Z_final" <<endl;
-		this->p_OpSubMatrix_B->printMatrix();
+		lowEdge = this->p_OpSubMatrix_A->getLowEdge();
+		tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(p_OpSubMatrix_A->rowNum-1,p_OpSubMatrix_A->rowNum-2,lowEdge);
+		while(0 != tempTarget_A)
+		{
+			this->resizeTransMatrix(i);
+			//此时0元应当位于B子矩阵右下角,对A子矩阵再进行一次变换,化最末行次对角元为0
+			generateGivensSubMatrixForA_last();
+			cout << "deflate----Final Z for iterate:" << i <<endl;
+			this->p_GivensMatrixFor_QZ_step->printMatrix();
 
-		//将Z子矩阵升级为全维度Z矩阵
-		upgradeGivensSubMatrix_QZ();
-		//更新Z迭代矩阵
-		updateGivensMatrix_Total_Z();
+			//更新A,B子矩阵
+			updateSubOpMatrix_A_By_Z();
+			updateSubOpMatrix_B_By_Z();
+			cout << "deflate---- Sub A Z_final" <<endl;
+			this->p_OpSubMatrix_A->printMatrix();
+			cout << "deflate---- Sub B Z_final" <<endl;
+			this->p_OpSubMatrix_B->printMatrix();
 
-		//cout << "deflate---- Z iterate" <<endl;
-		//this->p_GivensMatrixFor_Z_iterate->printMatrix();
+			//将Z子矩阵升级为全维度Z矩阵
+			upgradeGivensSubMatrix_QZ();
 
-		//将变换过程施加在OP操作矩阵，更新G,Z综合变换矩阵
-		updateOpMatrix_A_By_Z();
-		updateOpMatrix_B_By_Z();
+			//相关变换阵升级为全维度变换阵
+			upgradeTransMatrix();
+			//更新Z迭代矩阵
+			updateGivensMatrix_Total_Z();
+
+			//cout << "deflate---- Z iterate" <<endl;
+			//this->p_GivensMatrixFor_Z_iterate->printMatrix();
+
+			//将变换过程施加在OP操作矩阵，更新G,Z综合变换矩阵
+			updateOpMatrix_A_By_Z();
+			updateOpMatrix_B_By_Z();
+			tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(p_OpSubMatrix_A->rowNum-1,p_OpSubMatrix_A->rowNum-2,lowEdge);
+		}
 
 		cout << "deflate---- Op A " <<endl;
 		this->p_OpMatrix_A->printMatrix();

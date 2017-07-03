@@ -6,6 +6,8 @@
  */
 
 #include "GeneralizedEigenSolverForReal.h"
+#include <cstdlib>
+#include <time.h>
 #include "iostream"
 using namespace std;
 
@@ -73,6 +75,8 @@ void GeneralizedEigenSolverForReal::init(BasicMatrix* p_input_OpMatrix_A, BasicM
 	testForTemp_B_nxn.copyMatrixElementNoCheck(p_OpMatrix_B);
 
 	this->testTemp_nxn = StaticMatrix(p_input_OpMatrix_A->rowNum,p_input_OpMatrix_A->columnNum);
+
+	this->noDeflateLimite = 50;
 };
 
 void GeneralizedEigenSolverForReal::reload(BasicMatrix* p_input_OpMatrix_A, BasicMatrix* p_input_OpMatrix_B, BasicVector* p_input_Vector, BasicMatrix* p_input_A_deflated, BasicMatrix* p_input_B_deflated, BasicMatrix* p_input_Q_Total, BasicMatrix* p_input_Z_Total, BasicMatrix* p_input_Q_Step, BasicMatrix* p_input_Z_Step, BasicMatrix* p_input_QZ_Step, BasicMatrix* p_input_TempMatrix_Trans,BasicMatrix* p_input_TempMatrix)
@@ -458,7 +462,9 @@ void GeneralizedEigenSolverForReal::showQxOPxZ()
 	testForTemp_B_nxn.printMatrix();
 };
 
-//计算特征值
+/*
+ * 计算特征值 ------需要增加随机偏移，防止陷入无法收敛的死循环
+ */
 void GeneralizedEigenSolverForReal::calcEigenValue()
 {
 	this->deflationStart = 0;
@@ -494,6 +500,7 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 	//初始化相关矩阵
 	initEigenCalcMatrix();
 
+	int noDeflateCounter = 0;
 	//将hessenberg操作矩阵近似对角化
 	while(true)
 	{
@@ -516,9 +523,50 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 
 		if(hasNewDeflate)
 		{
-			//生成降阶Hessenberg-Triangle矩阵
-			generateDeflatedHTMatrixPair();
-			m_DoubleShifeQZ.reload(this->p_OpMatrix_Hessenberg_deflated,this->p_OpMatrix_Triangle_deflated,p_OpTransVector, p_QMatrix_Step, p_ZMatrix_Step,p_QZMatrix_Step, p_TempMatrix_Trans, p_TempMatrix);
+			noDeflateCounter = 0;
+		}
+		else
+		{
+			noDeflateCounter++;
+		}
+
+		//生成降阶Hessenberg-Triangle矩阵
+		generateDeflatedHTMatrixPair();
+		m_DoubleShifeQZ.reload(this->p_OpMatrix_Hessenberg_deflated,this->p_OpMatrix_Triangle_deflated,p_OpTransVector, p_QMatrix_Step, p_ZMatrix_Step,p_QZMatrix_Step, p_TempMatrix_Trans, p_TempMatrix);
+
+
+		if(noDeflateCounter>noDeflateLimite)
+		{
+			//此处应当进行随机单步迭代，以求打破无法收敛的死循环
+			//重新resize相关转换矩阵
+			resizeTransMatrix();
+			//std::srand((unsigned)time(NULL));
+			//double randomShift = p_OpMatrix_Hessenberg_deflated->getMatrixElement(0,1)/std::rand();
+			double randomShift = p_OpMatrix_Hessenberg_deflated->getMatrixElement(p_OpMatrix_Hessenberg_deflated->rowNum-1,p_OpMatrix_Hessenberg_deflated->columnNum-1)/p_OpMatrix_Triangle_deflated->getMatrixElement(p_OpMatrix_Triangle_deflated->rowNum-1,p_OpMatrix_Triangle_deflated->columnNum-1);
+			m_SingleShifeQZ.reload(p_OpMatrix_Hessenberg_deflated,p_OpMatrix_Triangle_deflated,p_QMatrix_Step,p_ZMatrix_Step, p_QZMatrix_Step, p_TempMatrix_Trans,p_TempMatrix);
+			m_SingleShifeQZ.implicit_QZIteration_Step(randomShift);
+
+			//将降阶转换矩阵升级为全维度转换矩阵
+			upgradeDeflatedQMatrix();
+			//将相关转换矩阵升级为全维度
+			upgradTransMatrix();
+
+			//更新原始Hessenberg-Trianlge 矩阵使用Q矩阵左乘H-T矩阵对
+			updateHTMatrixByQ();
+			//更新总体转换矩阵
+			updateQMatrixTotal();
+
+
+			//将降阶转换矩阵升级为全维度转换矩阵
+			upgradeDeflatedZMatrix();
+			//更新原始Hessenberg-Trianlge 矩阵使用Z矩阵右乘H-T矩阵对
+			updateHTMatrixByZ();
+			//更新总体转换矩阵
+			updateZMatrixTotal();
+
+
+			noDeflateCounter = 0;
+			continue;
 		}
 		//重新resize相关转换矩阵
 		resizeTransMatrix();
@@ -660,6 +708,55 @@ void GeneralizedEigenSolverForReal::lastStepIteration(int startIndex)
 	}
 };
 
+/*
+ * 查找正特征值所在主对角线索引
+ * 如果存在多个正特征值，取索引最小的
+ * 如果不存在正特征值，返回-1；
+ */
+int GeneralizedEigenSolverForReal::findPositiveEigenValue()
+{
+	//扫描次主对角元
+	int i = 0;
+	double temp_A, temp_B;
+	double subDiagonalElement;
+
+	while (i < this->p_OpMatrix_A->columnNum - 1)
+	{
+		subDiagonalElement = p_OpMatrix_A->getMatrixElement(i+1,i);
+		if(0 == subDiagonalElement)
+		{
+			//判断是否正特征值
+			temp_A = p_OpMatrix_A->getMatrixElement(i,i);
+			temp_B = p_OpMatrix_B->getMatrixElement(i,i);
+			if((temp_A>0 && temp_B>0) || (temp_A<0 && temp_B<0))
+			{
+				return i;
+			}
+
+			i++;
+		}
+		else
+		{
+			i = i+2;
+		}
+	}
+
+	//补充判断右下角元素
+	subDiagonalElement = p_OpMatrix_A->getMatrixElement(p_OpMatrix_A->columnNum - 1, p_OpMatrix_A->columnNum - 2);
+	if(0 == subDiagonalElement)
+	{
+		//判断是否正特征值
+		temp_A = p_OpMatrix_A->getMatrixElement(p_OpMatrix_A->columnNum - 1,p_OpMatrix_A->columnNum - 1);
+		temp_B = p_OpMatrix_B->getMatrixElement(p_OpMatrix_B->columnNum - 1,p_OpMatrix_B->columnNum - 1);
+		if((temp_A>0 && temp_B>0) || (temp_A<0 && temp_B<0))
+		{
+			return p_OpMatrix_A->columnNum - 1;
+		}
+	}
+
+	return -1;
+};
+/*
 //获取H-T矩阵对
 BasicMatrix* GeneralizedEigenSolverForReal::getHessenbergMatrix()
 {
@@ -679,3 +776,4 @@ BasicMatrix* GeneralizedEigenSolverForReal::getZMatrix_Total()
 {
 	return this->p_ZMatrix_Total;
 };
+*/

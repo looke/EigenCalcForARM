@@ -143,3 +143,58 @@ TEST(QRDecompositionQRDecompTest, postive)
 	EXPECT_EQ(result, fabs(test3_TempMatrix.getMatrixElement(2,2)-(5))<lowEdge);
 }
 
+/*
+ * 测试QRDecomposition QR分解 椭圆约束B矩阵的QR分解 5x5矩阵
+ */
+TEST(QRDecompositionQRDecompTest_Ellipse_BMatrix_5x5, postive)
+{
+	StaticMatrix test55 = StaticMatrix(5,5);
+	test55.resetMatrixToZero();
+	test55.setMatrixElement(0,2,2);
+	test55.setMatrixElement(1,1,-1);
+	test55.setMatrixElement(2,0,2);
+	test55.printMatrix();
+	StaticMatrix test5_QMatrix = StaticMatrix(5,5);
+	StaticMatrix test5_HouseholderTransMatrix = StaticMatrix(5,5);
+	StaticMatrix test5_TempMatrix = StaticMatrix(5,5);
+
+	QRDecomposition qRDecompTest = QRDecomposition(&test55,&test5_QMatrix,&test5_HouseholderTransMatrix,&test5_TempMatrix);
+	qRDecompTest.calcQRMatrix();
+
+	EXPECT_EQ(2, test55.getMatrixElement(0,0));
+	EXPECT_EQ(1, test55.getMatrixElement(1,1));
+	EXPECT_EQ(-2, test55.getMatrixElement(2,2));
+	EXPECT_EQ(0, test55.getMatrixElement(3,3));
+	EXPECT_EQ(0, test55.getMatrixElement(4,4));
+
+}
+
+/*
+ * 测试QRDecomposition QR分解 椭圆约束B矩阵的QR分解 10x10矩阵
+ */
+TEST(QRDecompositionQRDecompTest_Ellipse_BMatrix_10x10, postive)
+{
+	StaticMatrix test1010 = StaticMatrix(10,10);
+	test1010.resetMatrixToZero();
+	test1010.setMatrixElement(0,2,2);
+	test1010.setMatrixElement(1,1,-1);
+	test1010.setMatrixElement(2,0,2);
+	test1010.printMatrix();
+	StaticMatrix test1010_QMatrix = StaticMatrix(10,10);
+	StaticMatrix test1010_HouseholderTransMatrix = StaticMatrix(10,10);
+	StaticMatrix test1010_TempMatrix = StaticMatrix(10,10);
+
+	QRDecomposition qRDecompTest = QRDecomposition(&test1010,&test1010_QMatrix,&test1010_HouseholderTransMatrix,&test1010_TempMatrix);
+	qRDecompTest.calcQRMatrix();
+
+	EXPECT_EQ(2, test1010.getMatrixElement(0,0));
+	EXPECT_EQ(1, test1010.getMatrixElement(1,1));
+	EXPECT_EQ(-2, test1010.getMatrixElement(2,2));
+	EXPECT_EQ(0, test1010.getMatrixElement(3,3));
+	EXPECT_EQ(0, test1010.getMatrixElement(4,4));
+	EXPECT_EQ(0, test1010.getMatrixElement(5,5));
+	EXPECT_EQ(0, test1010.getMatrixElement(6,6));
+	EXPECT_EQ(0, test1010.getMatrixElement(7,7));
+	EXPECT_EQ(0, test1010.getMatrixElement(8,8));
+	EXPECT_EQ(0, test1010.getMatrixElement(9,9));
+}

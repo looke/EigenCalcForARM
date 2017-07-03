@@ -65,13 +65,16 @@ public:
 
 	//将相关转换矩阵升级为全维度
 	void upgradTransMatrix();
+
+	//查找正特征值所在主对角线索引，如果存在多个正特征值，取索引最小的
+	int findPositiveEigenValue();
 	//获取H-T矩阵对
-	BasicMatrix* getHessenbergMatrix();
-	BasicMatrix* getTriangleMatrix();
+	//BasicMatrix* getHessenbergMatrix();
+	//BasicMatrix* getTriangleMatrix();
 
 	//获取Q\Z 综合转换矩阵
-	BasicMatrix* getQMatrix_Total();
-	BasicMatrix* getZMatrix_Total();
+	//BasicMatrix* getQMatrix_Total();
+	//BasicMatrix* getZMatrix_Total();
 
 	//测试打印，Q_Total * OP * Z_Total
 	void showQxOPxZ();
@@ -81,7 +84,8 @@ protected:
 	int deflationStart;
 	//降阶终点索引指示，初始化为n-1
 	int deflationEnd;
-
+	//随机迭代门限，当迭代进行超过门限定义的次数仍然没有降阶时，触发随机迭代机制
+	int noDeflateLimite;
 	//原始操作矩阵
 	BasicMatrix* p_OpMatrix_A;
 	BasicMatrix* p_OpMatrix_B;

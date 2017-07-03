@@ -140,5 +140,5 @@ void NormalEigenVectorCalcForReal::getEigenVectorWithoutPreCheck(int diagonalInd
 	{
 		p_resultVector->setElement(i,0);
 	}
-	p_resultVector->normalizationVector();
+	//p_resultVector->normalizationVector();
 };

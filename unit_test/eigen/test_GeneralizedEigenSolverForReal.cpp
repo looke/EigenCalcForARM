@@ -229,3 +229,70 @@ TEST(GeneralizedEigenSolverForReal_Test_SingularB, postive)
 	EXPECT_GT(lowEdge, test44_B_Original.calcMaxDifferentialNoCheck(&test44_B));
 
 }
+
+/*
+ * 测试GeneralizedEigenSolverForReal 求解特征值
+ */
+TEST(GeneralizedEigenSolverForReal_Test_Normal_3X3, postive)
+{
+	StaticMatrix test33_A = StaticMatrix(3,3);
+	test33_A.setMatrixElement(0,0,274990.04191798158);
+	test33_A.setMatrixElement(0,1,129700425.46824622);
+	test33_A.setMatrixElement(0,2,27251931.289327145);
+
+	test33_A.setMatrixElement(1,0,328007.87061981857);
+	test33_A.setMatrixElement(1,1,142016533.00940323);
+	test33_A.setMatrixElement(1,2,37156463.745292664);
+
+	test33_A.setMatrixElement(2,0,0);
+	test33_A.setMatrixElement(2,1,11957950.451266289);
+	test33_A.setMatrixElement(2,2,28387678.2265172);
+
+	StaticMatrix test33_B = StaticMatrix(3,3);
+	test33_B.setMatrixElement(0,0,-0.000014789493880935526);
+	test33_B.setMatrixElement(0,1,0.0013702168360741711);
+	test33_B.setMatrixElement(0,2,0.0036075074094502123);
+
+	test33_B.setMatrixElement(1,0,0);
+	test33_B.setMatrixElement(1,1,-0.0080263383475187144);
+	test33_B.setMatrixElement(1,2,-0.0047146282466187578);
+
+	test33_B.setMatrixElement(2,0,0);
+	test33_B.setMatrixElement(2,1,0);
+	test33_B.setMatrixElement(2,2,-0.0018070479197437753);
+
+	StaticVector test33_Vector = StaticVector(3);
+	StaticMatrix test33_A_Deflate = StaticMatrix(3,3);
+	StaticMatrix test33_B_Deflate = StaticMatrix(3,3);
+
+	StaticMatrix test33_Q_Total = StaticMatrix(3,3);
+	StaticMatrix test33_Z_Total = StaticMatrix(3,3);
+
+	StaticMatrix test33_Q_Step = StaticMatrix(3,3);
+	StaticMatrix test33_Z_Step = StaticMatrix(3,3);
+	StaticMatrix test33_QZ_Step = StaticMatrix(3,3);
+
+	StaticMatrix test33_Temp_Trans = StaticMatrix(3,3);
+	StaticMatrix test33_Temp = StaticMatrix(3,3);
+
+	GeneralizedEigenSolverForReal gEigenCalc = GeneralizedEigenSolverForReal(
+			&test33_A,
+			&test33_B,
+			&test33_Vector,
+			&test33_A_Deflate,
+			&test33_B_Deflate,
+			&test33_Q_Total,
+			&test33_Z_Total,
+			&test33_Q_Step,
+			&test33_Z_Step,
+			&test33_QZ_Step,
+			&test33_Temp_Trans,
+			&test33_Temp);
+
+	gEigenCalc.calcEigenValue();
+	//double lowEdge = test33_A.getLowEdge();
+	EXPECT_GT(0.0001, fabs(test33_A.getMatrixElement(0,0)/test33_B.getMatrixElement(0,0)+41082690043.7622));
+	EXPECT_GT(0.00001, fabs(test33_A.getMatrixElement(1,1)/test33_B.getMatrixElement(1,1)-1090135094.04833));
+	EXPECT_GT(0.001, fabs(test33_A.getMatrixElement(2,2)/test33_B.getMatrixElement(2,2)+11903458431.683));
+
+}

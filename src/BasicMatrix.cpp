@@ -285,8 +285,9 @@ void BasicMatrix::reverseSignOfColumn(int columnIndex)
 //对矩阵所有元素进行整形,将绝对值小于精度的元素设置为0
 void BasicMatrix::regularZeroElement()
 {
-	double normF = this->FrobeniousNorm();
-	double lowEdge = normF * this->precision;
+	//double normF = this->FrobeniousNorm();
+	//double lowEdge = normF * this->precision;
+	double lowEdge = this->getLowEdge();
 	double temp;
 	for(int i=0; i<this->rowNum;i++)
 	{
@@ -403,7 +404,12 @@ double BasicMatrix::FrobeniousNorm()
  */
 double BasicMatrix::getLowEdge()
 {
-	return this->FrobeniousNorm() * this->precision;
+	double temp = this->FrobeniousNorm() * this->precision;
+	if(temp > 0.00000000000001)
+	{
+		temp = 0.00000000000001;
+	}
+	return temp;
 };
 
 
@@ -412,7 +418,7 @@ double BasicMatrix::getLowEdge()
  */
 bool BasicMatrix::resizeMatrix(int row, int column)
 {
-	if(row < this->space && column < this->space)
+	if(row <= this->space && column <= this->space)
 	{
 		this->rowNum = row;
 		this->columnNum = column;
@@ -430,9 +436,9 @@ bool BasicMatrix::isUpperHessenbergMatrix()
 		return false;
 	}
 
-	double normF = this->FrobeniousNorm();
-	double lowEdge = normF * this->precision;
-
+	//double normF = this->FrobeniousNorm();
+	//double lowEdge = normF * this->precision;
+	double lowEdge = this->getLowEdge();
 	double temp;
 	for(int i=rowNum-1; i>=0; i--)
 	{
@@ -458,9 +464,9 @@ bool BasicMatrix::isUpperTriangleMatrix()
 	{
 		return false;
 	}
-	double normF = this->FrobeniousNorm();
-	double lowEdge = normF * this->precision;
-
+	//double normF = this->FrobeniousNorm();
+	//double lowEdge = normF * this->precision;
+	double lowEdge = this->getLowEdge();
 	double temp;
 	for(int i=rowNum-1; i>=0; i--)
 	{

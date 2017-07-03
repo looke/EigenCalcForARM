@@ -12,7 +12,13 @@ GeneralizedEigenVectorCalcForReal::GeneralizedEigenVectorCalcForReal(BasicMatrix
  m_Inverser(p_input_SubMatrix,p_input_SubInverMatrix),
  m_EigenVectorCalcForReal(p_input_UpTriangleMatrix_BinvA,p_input_SubMatrix,p_input_SubInverMatrix,p_input_TempMatrix)
 {
-	this->init(p_input_UpTriangleMatrix_A, p_input_UpTriangleMatrix_B, p_input_UpTriangleMatrix_BinvA, p_input_SubMatrix, p_input_SubInverMatrix, p_input_TempMatrix);
+	this->init(
+			p_input_UpTriangleMatrix_A,
+			p_input_UpTriangleMatrix_B,
+			p_input_UpTriangleMatrix_BinvA,
+			p_input_SubMatrix,
+			p_input_SubInverMatrix,
+			p_input_TempMatrix);
 };
 void GeneralizedEigenVectorCalcForReal::init(BasicMatrix* p_input_UpTriangleMatrix_A, BasicMatrix* p_input_UpTriangleMatrix_B, BasicMatrix* p_input_UpTriangleMatrix_BinvA, BasicMatrix* p_input_SubMatrix, BasicMatrix* p_input_SubInverMatrix, BasicMatrix* p_input_TempMatrix)
 {
@@ -35,7 +41,7 @@ void GeneralizedEigenVectorCalcForReal::reload(BasicMatrix* p_input_UpTriangleMa
 };
 
 
-//根据指定的对角线索引，计算对应对角线元素(特征值)的特征向量，对前驱元素要进行排查
+//根据指定的对角线索引，计算对应对角线元素(特征值)的特征向量，对前驱元素要进行排查，如果有重复特征值，需要考虑重新规划索引位置
 bool GeneralizedEigenVectorCalcForReal::getEigenVector(int diagonalIndex, BasicVector* p_resultVector)
 {
 	bool result = true;
@@ -84,8 +90,10 @@ void GeneralizedEigenVectorCalcForReal::generateDeflationEnd()
 void GeneralizedEigenVectorCalcForReal::generateDeflationMatrix_B(BasicMatrix* deflated_Matrix_B)
 {
 	int matrixSize = this->deflationEnd - this->deflationStart + 1;
+
 	deflated_Matrix_B->resetMatrixToI();
 	deflated_Matrix_B->resizeMatrix(matrixSize,matrixSize);
+	deflated_Matrix_B->resetMatrixToI();
 
 	for(int i=deflationStart, m=0; i<=deflationEnd; i++,m++)
 	{
@@ -99,8 +107,10 @@ void GeneralizedEigenVectorCalcForReal::generateDeflationMatrix_B(BasicMatrix* d
 void GeneralizedEigenVectorCalcForReal::generateDeflationMatrix_A(BasicMatrix* deflated_Matrix_A)
 {
 	int matrixSize = this->deflationEnd - this->deflationStart + 1;
+
 	deflated_Matrix_A->resetMatrixToI();
 	deflated_Matrix_A->resizeMatrix(matrixSize,matrixSize);
+	deflated_Matrix_A->resetMatrixToI();
 
 	for(int i=deflationStart, m=0; i<=deflationEnd; i++,m++)
 	{
@@ -114,6 +124,8 @@ void GeneralizedEigenVectorCalcForReal::generateDeflationMatrix_A(BasicMatrix* d
 void GeneralizedEigenVectorCalcForReal::generateDeflationMatrix_Temp(BasicMatrix* deflated_Matrix_Temp)
 {
 	int matrixSize = this->deflationEnd - this->deflationStart + 1;
+
 	deflated_Matrix_Temp->resetMatrixToI();
 	deflated_Matrix_Temp->resizeMatrix(matrixSize,matrixSize);
+	deflated_Matrix_Temp->resetMatrixToI();
 };

@@ -7,8 +7,8 @@
 
 
 #include "QRDecomposition.h"
-//#include <iostream>
-//using namespace std;
+#include <iostream>
+using namespace std;
 
 //QRDecomposition::QRDecomposition()
 //{};

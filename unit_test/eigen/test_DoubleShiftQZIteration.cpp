@@ -82,3 +82,51 @@ TEST(DoubleShiftQZIterationIMITTest_Normal4x4, postive)
 	lowEdge = test44_A.getLowEdge();
 	EXPECT_GT(0.0000001, fabs(test44_A.getMatrixElement(0,0)/test44_B.getMatrixElement(0,0)-1));
 }
+
+/*
+ * ²âÊÔDoubleShiftQZIteration ÒþÊ½µü´ú
+ */
+TEST(DoubleShiftQZIterationIMITTest_Normal3x3, postive)
+{
+	double lowEdge;
+	StaticMatrix test33_A = StaticMatrix(3,3);
+	test33_A.setMatrixElement(0,0,274990.04191798158);
+	test33_A.setMatrixElement(0,1,129700425.46824622);
+	test33_A.setMatrixElement(0,2,27251931.289327145);
+
+	test33_A.setMatrixElement(1,0,328007.87061981857);
+	test33_A.setMatrixElement(1,1,142016533.00940323);
+	test33_A.setMatrixElement(1,2,37156463.745292664);
+
+	test33_A.setMatrixElement(2,0,0);
+	test33_A.setMatrixElement(2,1,11957950.451266289);
+	test33_A.setMatrixElement(2,2,28387678.2265172);
+
+	StaticMatrix test33_B = StaticMatrix(3,3);
+	test33_B.setMatrixElement(0,0,-0.000014789493880935526);
+	test33_B.setMatrixElement(0,1,0.0013702168360741711);
+	test33_B.setMatrixElement(0,2,0.0036075074094502123);
+
+	test33_B.setMatrixElement(1,0,0);
+	test33_B.setMatrixElement(1,1,-0.0080263383475187144);
+	test33_B.setMatrixElement(1,2,-0.0047146282466187578);
+
+	test33_B.setMatrixElement(2,0,0);
+	test33_B.setMatrixElement(2,1,0);
+	test33_B.setMatrixElement(2,2,-0.0018070479197437753);
+
+	StaticMatrix test33_A_Original = StaticMatrix(3,3);
+	test33_A_Original.copyMatrixElementNoCheck(&test33_A);
+
+	StaticVector test33_Vector = StaticVector(3);
+	StaticMatrix test33_Q_Total = StaticMatrix(3,3);
+	StaticMatrix test33_Z_Total = StaticMatrix(3,3);
+	StaticMatrix test33_QZ_Step = StaticMatrix(3,3);
+	StaticMatrix test33_Temp_Trans = StaticMatrix(3,3);
+	StaticMatrix test33_Temp = StaticMatrix(3,3);
+
+	DoubleShiftQZIteration doubleQZ = DoubleShiftQZIteration(&test33_A, &test33_B, &test33_Vector, &test33_Q_Total, &test33_Z_Total, &test33_QZ_Step, &test33_Temp_Trans, &test33_Temp);
+	//doubleQZ.wilkinson_IM_QZIteration();
+	lowEdge = test33_A.getLowEdge();
+	EXPECT_GT(0.0000001, fabs(test33_A.getMatrixElement(0,0)/test33_B.getMatrixElement(0,0)-1));
+}

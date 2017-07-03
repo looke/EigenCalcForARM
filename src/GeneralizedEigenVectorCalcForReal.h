@@ -26,7 +26,7 @@ public:
 	void generateDeflationMatrix_B(BasicMatrix* deflated_Matrix_B);
 	void generateDeflationMatrix_A(BasicMatrix* deflated_Matrix_A);
 	void generateDeflationMatrix_Temp(BasicMatrix* deflated_Matrix_Temp);
-	//根据指定的对角线索引，计算对应对角线元素(特征值)的特征向量，对前驱元素要进行排查
+	//根据指定的对角线索引，计算对应对角线元素(特征值)的特征向量，对前驱元素要进行排查，如果有重复特征值，需要考虑重新规划索引位置
 	bool getEigenVector(int diagonalIndex, BasicVector* p_resultVector);
 
 protected:

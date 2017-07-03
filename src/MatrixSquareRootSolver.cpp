@@ -27,7 +27,7 @@ void MatrixSquareRootSolver::init(BasicMatrix* input_opYMatrix, BasicMatrix* inp
 	this->columnNumber = input_opYMatrix->columnNum;
 	this->maxDiff = 10000;
 	this->threshold = 0.01;	//精度要求
-	this->maxIterationTime = 10; //最多迭代10次
+	this->maxIterationTime = 30; //最多迭代30次
 	this->iterationTime = 0; //当前迭代数
 
 	//判断是否方阵
@@ -45,14 +45,14 @@ void MatrixSquareRootSolver::init(BasicMatrix* input_opYMatrix, BasicMatrix* inp
 
 	//生成伴随单位矩阵Z
 	this->p_ZMatrix = input_opZMatrix;
-	this->p_ZMatrix->resetMatrixToI();
+	//this->p_ZMatrix->resetMatrixToI();
 
 	//初始化中间计算值矩阵
 	this->p_tempYMatrix = input_YMatrix_Temp;
-	this->p_tempYMatrix->resetMatrixToI();
+	//this->p_tempYMatrix->resetMatrixToI();
 
 	this->p_tempZMatrix = input_ZMatrix_Temp;
-	this->p_tempZMatrix->resetMatrixToI();
+	//this->p_tempZMatrix->resetMatrixToI();
 
 	this->p_tempMatrix = input_tempMatrix;
 };
@@ -178,6 +178,15 @@ bool MatrixSquareRootSolver::generateSquareRootMatrix()
 {
 	bool isSuccess = true;
 	this->iterationTime=0;
+
+	//生成伴随单位矩阵Z
+	this->p_ZMatrix->resetMatrixToI();
+
+	//初始化中间计算值矩阵
+	this->p_tempYMatrix->resetMatrixToI();
+	this->p_tempZMatrix->resetMatrixToI();
+	this->p_tempMatrix->resetMatrixToI();
+
 	while(this->maxDiff > this->threshold)
 	{
 		this->iterationTime++;

@@ -105,9 +105,9 @@ TEST(SingleShiftQRIterationIMITTest_Normal_4x4, postive)
 
 	SingleShiftQRIteration singleQRIt = SingleShiftQRIteration(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);;
 	//singleQRIt.reload(&test44, &test44_QTMatrix, &test44_QQTMatrix_Step, &test44_TempMatrix);
-	singleQRIt.rayleigh_Quotient_IM_QRIteration(80);
+	singleQRIt.rayleigh_Quotient_IM_QRIteration(250);
 
-	cout << "After 80 Iteration: OpMatrix" << endl;
+	cout << "After 250 Iteration: OpMatrix" << endl;
 	test44.printMatrix();
 
 	MatrixMultiplier m_Multi = MatrixMultiplier(&test44_QTMatrix, &test44_Original, &test44_TempMatrix);

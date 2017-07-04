@@ -153,7 +153,7 @@ TEST(QRDecompositionQRDecompTest_Ellipse_BMatrix_5x5, postive)
 	test55.setMatrixElement(0,2,2);
 	test55.setMatrixElement(1,1,-1);
 	test55.setMatrixElement(2,0,2);
-	test55.printMatrix();
+	//test55.printMatrix();
 	StaticMatrix test5_QMatrix = StaticMatrix(5,5);
 	StaticMatrix test5_HouseholderTransMatrix = StaticMatrix(5,5);
 	StaticMatrix test5_TempMatrix = StaticMatrix(5,5);
@@ -179,7 +179,7 @@ TEST(QRDecompositionQRDecompTest_Ellipse_BMatrix_10x10, postive)
 	test1010.setMatrixElement(0,2,2);
 	test1010.setMatrixElement(1,1,-1);
 	test1010.setMatrixElement(2,0,2);
-	test1010.printMatrix();
+	//test1010.printMatrix();
 	StaticMatrix test1010_QMatrix = StaticMatrix(10,10);
 	StaticMatrix test1010_HouseholderTransMatrix = StaticMatrix(10,10);
 	StaticMatrix test1010_TempMatrix = StaticMatrix(10,10);

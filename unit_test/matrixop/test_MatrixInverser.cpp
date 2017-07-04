@@ -41,7 +41,7 @@ TEST(MatrixInverserInversTest, postive)
 	MatrixMultiplier multiplier = MatrixMultiplier(&testMatrix33_Original,&testMatrix33_inv,&testMatrix33_multi);
 	multiplier.multiplyCalc();
 
-	testMatrix33_multi.printMatrix();
+	//testMatrix33_multi.printMatrix();
 
 	EXPECT_EQ(1, testMatrix33_multi.getMatrixElement(0,0));
 	EXPECT_EQ(1, testMatrix33_multi.getMatrixElement(1,1));

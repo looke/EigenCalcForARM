@@ -46,7 +46,7 @@ TEST(GeneralizedEigenVectorCalcForReal_Test_Normal2x2, postive)
 
 	GeneralizedEigenVectorCalcForReal generalizedVecotrCalc = GeneralizedEigenVectorCalcForReal(&test22_A,&test22_B,&test22_BinvA,&test22_Sub,&test22_Sub_Inv,&test22_Sub_Temp);
 	generalizedVecotrCalc.getEigenVector(1,&resultVector);
-	resultVector.printVector();
+	//resultVector.printVector();
 }
 
 
@@ -138,7 +138,7 @@ TEST(GeneralizedEigenVectorCalcForReal_Test_Singluar_B_4x4, postive)
 
 	GeneralizedEigenVectorCalcForReal generalizedVecotrCalc = GeneralizedEigenVectorCalcForReal(&test44_A,&test44_B,&test44_BinvA,&test44_Sub,&test44_Sub_Inv,&test44_Sub_Temp);
 	generalizedVecotrCalc.getEigenVector(2,&resultVector);
-	resultVector.printVector();
+	//resultVector.printVector();
 
 	StaticMatrix test41_BinvA_Vector = StaticMatrix(4,1);
 	test41_BinvA_Vector.setMatrixElement(0,0,resultVector.getElement(0));
@@ -151,7 +151,7 @@ TEST(GeneralizedEigenVectorCalcForReal_Test_Singluar_B_4x4, postive)
 	StaticMatrix test44_Z_Total_inv = StaticMatrix(4,4);
 	test44_Z_Total_inv.resetMatrixToI();
 	cout << "Z:" << endl;
-	test44_Z_Total.printMatrix();
+	//test44_Z_Total.printMatrix();
 	/*
 	MatrixInverser m_Inverser = MatrixInverser(&test44_Z_Total, &test44_Z_Total_inv);
 	m_Inverser.generateInverseMatrix();
@@ -160,10 +160,14 @@ TEST(GeneralizedEigenVectorCalcForReal_Test_Singluar_B_4x4, postive)
 	*/
 	MatrixMultiplier m_multi = MatrixMultiplier(&test44_Z_Total,&test41_BinvA_Vector,&test41_final_Vector);
 	m_multi.multiplyCalc();
+	resultVector.setElement(0,test41_final_Vector.getMatrixElement(0,0));
+	resultVector.setElement(1,test41_final_Vector.getMatrixElement(1,0));
+	resultVector.setElement(2,test41_final_Vector.getMatrixElement(2,0));
+	resultVector.setElement(3,test41_final_Vector.getMatrixElement(3,0));
+	resultVector.normalizationVector();
 
-
-	EXPECT_GT(0.000001,fabs(test41_final_Vector.getMatrixElement(0,0) + 0.045656847));
-	EXPECT_GT(0.000001,fabs(test41_final_Vector.getMatrixElement(1,0) + 0.00948163));
-	EXPECT_GT(0.000001,fabs(test41_final_Vector.getMatrixElement(2,0) + 0.734004));
-	EXPECT_GT(0.000001,fabs(test41_final_Vector.getMatrixElement(3,0) - 0.677542));
+	EXPECT_GT(0.000001,fabs(resultVector.getElement(0) + 0.045656847));
+	EXPECT_GT(0.000001,fabs(resultVector.getElement(1) + 0.00948163));
+	EXPECT_GT(0.000001,fabs(resultVector.getElement(2) + 0.734004));
+	EXPECT_GT(0.000001,fabs(resultVector.getElement(3) - 0.677542));
 }

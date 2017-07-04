@@ -6,7 +6,7 @@
  */
 
 #include "HessenbergTriangleFormular.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 //HessenbergTriangleFormular::HessenbergTriangleFormular()
@@ -104,14 +104,14 @@ void HessenbergTriangleFormular::formularABMatrix()
 	}
 
 	this->initABMatrix();
-	cout << "After HessenBergTriangle init--- A:" << endl;
-	p_OpMatrix_A->printMatrix();
-	cout << "After HessenBergTriangle init--- B:" << endl;
-	p_OpMatrix_B->printMatrix();
-	cout << "After HessenBergTriangle init--- Q Total:" << endl;
-	p_QMatrix_Total->printMatrix();
-	cout << "After HessenBergTriangle init--- Z Total:" << endl;
-	p_ZMatrix_Total->printMatrix();
+	//cout << "After HessenBergTriangle init--- A:" << endl;
+	//p_OpMatrix_A->printMatrix();
+	//cout << "After HessenBergTriangle init--- B:" << endl;
+	//p_OpMatrix_B->printMatrix();
+	//cout << "After HessenBergTriangle init--- Q Total:" << endl;
+	//p_QMatrix_Total->printMatrix();
+	//cout << "After HessenBergTriangle init--- Z Total:" << endl;
+	//p_ZMatrix_Total->printMatrix();
 
 	for(int i=0; i<this->p_OpMatrix_A->columnNum; i++)
 	{
@@ -147,17 +147,17 @@ void HessenbergTriangleFormular::formularColumnVector(int columnIndex)
 
 			this->m_GivensTrans.reload(p_ColumnVector);
 			this->m_GivensTrans.getGivensMatrixPreMultiple(i, p_QZMatrix_Step);
-			cout << "After HessenBergTriangle--- Left Givens Matrix:" << i << endl;
-			p_QZMatrix_Step->printMatrix();
+			//cout << "After HessenBergTriangle--- Left Givens Matrix:" << i << endl;
+			//p_QZMatrix_Step->printMatrix();
 		}
 
 
 		updateOpMatrix_A_ByQ();
-		cout << "formularColumnVector: columnIndex:" <<columnIndex <<"OP Matrix A By Q" << endl;
-		p_OpMatrix_A->printMatrix();
+		//cout << "formularColumnVector: columnIndex:" <<columnIndex <<"OP Matrix A By Q" << endl;
+		//p_OpMatrix_A->printMatrix();
 		updateOpMatrix_B_ByQ();
-		cout << "formularColumnVector: columnIndex:" <<columnIndex <<"OP Matrix B By Q" << endl;
-		p_OpMatrix_B->printMatrix();
+		//cout << "formularColumnVector: columnIndex:" <<columnIndex <<"OP Matrix B By Q" << endl;
+		//p_OpMatrix_B->printMatrix();
 		updateQMatrix_Total();
 
 		p_QZMatrix_Step->resetMatrixToI();
@@ -168,26 +168,26 @@ void HessenbergTriangleFormular::formularColumnVector(int columnIndex)
 		if(0 != element)
 		{
 			p_ColumnVector = p_OpMatrix_B->getRowVector(i);
-			cout << "p_OpTriangleMatrix_B:getRowVector:" << i << endl;
-			p_ColumnVector->printVector();
+			//cout << "p_OpTriangleMatrix_B:getRowVector:" << i << endl;
+			//p_ColumnVector->printVector();
 			this->m_GivensTrans.reload(p_ColumnVector);
 			//this->p_GivensTrans->setIsUsingPreElement(false);
 			this->m_GivensTrans.getGivensMatrixAfterMultiple(i-1, p_QZMatrix_Step);
-			cout << "After HessenBergTriangle--- Right Givens Matrix:" << i << endl;
-			p_QZMatrix_Step->printMatrix();
+			//cout << "After HessenBergTriangle--- Right Givens Matrix:" << i << endl;
+			//p_QZMatrix_Step->printMatrix();
 		}
 
 		updateOpMatrixByZ();
 		updateZMatrix_Total();
 
-		cout << "After HessenBergTriangle--- A:" << i << endl;
-		p_OpMatrix_A->printMatrix();
-		cout << "After HessenBergTriangle--- B:" << i<< endl;
-		p_OpMatrix_B->printMatrix();
-		cout << "After HessenBergTriangle--- Q:" << i << endl;
-		p_QMatrix_Total->printMatrix();
-		cout << "After HessenBergTriangle--- Z:" << i << endl;
-		p_ZMatrix_Total->printMatrix();
+		//cout << "After HessenBergTriangle--- A:" << i << endl;
+		//p_OpMatrix_A->printMatrix();
+		//cout << "After HessenBergTriangle--- B:" << i<< endl;
+		//p_OpMatrix_B->printMatrix();
+		//cout << "After HessenBergTriangle--- Q:" << i << endl;
+		//p_QMatrix_Total->printMatrix();
+		//cout << "After HessenBergTriangle--- Z:" << i << endl;
+		//p_ZMatrix_Total->printMatrix();
 
 		//确保当前要消去的元素值可以被忽略
 		if(0 == p_OpMatrix_A->getMatrixElementRegulared(i,columnIndex,lowEdge))

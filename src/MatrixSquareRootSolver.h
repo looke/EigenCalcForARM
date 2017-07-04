@@ -26,8 +26,8 @@ public:
 	//BasicMatrix* getSquareRootMatrix();
 
 
-	void printYMatrix();
-	void printZMatrix();
+	//void printYMatrix();
+	//void printZMatrix();
 
 
 	int getIterationTime();

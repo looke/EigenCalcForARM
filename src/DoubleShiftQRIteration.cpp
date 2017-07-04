@@ -6,7 +6,7 @@
  */
 
 #include "DoubleShiftQRIteration.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 //DoubleShiftQRIteration::DoubleShiftQRIteration()
@@ -123,12 +123,12 @@ void DoubleShiftQRIteration::initForWilkinsonImplicitQR()
 	//p_QTSubMatrix_Implicit_Step->copyMatrixElementNoCheck(this->p_HouseholderTrans->getHouseholderMatrixToE1(true));
 	this->m_HouseholderTrans.getHouseholderMatrixToE1_ReverseElement(p_QQTMatrix_Implicit_Step);
 
-	cout << "initForWilkinsonImplicitQR---Q1T sub" << endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "initForWilkinsonImplicitQR---Q1T sub" << endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 	//将子矩阵QT 升级为全尺寸QT矩阵
 	upgradeQQTSubMatrix(0);
-	cout << "initForWilkinsonImplicitQR---Q1T" << endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "initForWilkinsonImplicitQR---Q1T" << endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 	//更新总体转换矩阵QT total
 	updateQT_Total();
 	//更新hessenberg矩阵 By QT
@@ -143,15 +143,15 @@ void DoubleShiftQRIteration::initForWilkinsonImplicitQR()
 	//p_QQTMatrix_Implicit_Step->printMatrix();
 	//将子矩阵Q 升级为全尺寸Q矩阵
 	//upgradeQQTSubMatrix(0);
-	cout << "initForWilkinsonImplicitQR---Q1" << endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "initForWilkinsonImplicitQR---Q1" << endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 	//更新总体转换矩阵Q total
 	//updateQ_Total();
 	//更新hessenberg矩阵 By Q
 	updateHessenbergOpMatrix_By_Q_IM_QRIteration();
 
-	cout << "initForWilkinsonImplicitQR---Q1T * Hessenberg * Q1" << endl;
-	this->p_OpMatrix->printMatrix();
+	//cout << "initForWilkinsonImplicitQR---Q1T * Hessenberg * Q1" << endl;
+	//this->p_OpMatrix->printMatrix();
 };
 
 /*
@@ -233,8 +233,8 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration()
 	p_QTMatrix_Implicit_Total->resetMatrixToI();
 	//操作矩阵转换为Hessenberg矩阵
 	this->generateHessenbergOpMatrix();
-	cout << "DoubleShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
-	this->p_OpMatrix->printMatrix();
+	//cout << "DoubleShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
+	//this->p_OpMatrix->printMatrix();
 
 	int iteratNumber = 10;
 	int i = 0;
@@ -251,8 +251,8 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration()
 void DoubleShiftQRIteration::wilkinson_IM_QRIteration_Single()
 {
 
-	cout << "DoubleShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
-	this->p_OpMatrix->printMatrix();
+	//cout << "DoubleShiftQRIteration--initForImplicitQR----OP Hessenberg Matrix" << endl;
+	//this->p_OpMatrix->printMatrix();
 
 	this->wilkinson_IM_QRIteration_Step();
 };
@@ -292,14 +292,14 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration_Step()
 		//p_QTSubMatrix_Implicit_Step->copyMatrixElementNoCheck(this->p_HouseholderTrans->getHouseholderMatrixToE1(true));
 		this->m_HouseholderTrans.getHouseholderMatrixToE1_ReverseElement(p_QQTMatrix_Implicit_Step);
 
-		cout << "wilkinson_IM_QRIteration_Step---QiT Sub:" << j <<endl;
-		p_QQTMatrix_Implicit_Step->printMatrix();
+		//cout << "wilkinson_IM_QRIteration_Step---QiT Sub:" << j <<endl;
+		//p_QQTMatrix_Implicit_Step->printMatrix();
 
 		//将子矩阵QiT 升级为全尺寸QiT矩阵
 		upgradeQQTSubMatrix(j+1);
 
-		cout << "wilkinson_IM_QRIteration_Step---QiT Full:" << j <<endl;
-		p_QQTMatrix_Implicit_Step->printMatrix();
+		//cout << "wilkinson_IM_QRIteration_Step---QiT Full:" << j <<endl;
+		//p_QQTMatrix_Implicit_Step->printMatrix();
 
 		//更新总体转换矩阵QT total
 		updateQT_Total();
@@ -310,15 +310,15 @@ void DoubleShiftQRIteration::wilkinson_IM_QRIteration_Step()
 		this->m_Transposer.transposeSquareMatrix(p_QQTMatrix_Implicit_Step);
 		//this->p_Transposer->transposeMatrix();
 		//this->p_QSubMatrix_Implicit_Step->copyMatrixElementNoCheck(this->p_Transposer->getTransposeMatrix());
-		cout << "wilkinson_IM_QRIteration_Step---Qi Full:" << j <<endl;
-		p_QQTMatrix_Implicit_Step->printMatrix();
+		//cout << "wilkinson_IM_QRIteration_Step---Qi Full:" << j <<endl;
+		//p_QQTMatrix_Implicit_Step->printMatrix();
 
 		//更新总体转换矩阵Q total
 		//updateQ_Total();
 		//更新hessenberg矩阵
 		updateHessenbergOpMatrix_By_Q_IM_QRIteration();
-		cout << "wilkinson_IM_QRIteration_Step---QiT * Hessenberg * Qi" << endl;
-		p_OpMatrix->printMatrix();
+		//cout << "wilkinson_IM_QRIteration_Step---QiT * Hessenberg * Qi" << endl;
+		//p_OpMatrix->printMatrix();
 	}
 
 	endForWilkinsonImplicitQR();
@@ -349,12 +349,12 @@ void DoubleShiftQRIteration::endForWilkinsonImplicitQR()
 	//this->p_QTSubMatrix_Implicit_LastStep->copyMatrixElementNoCheck(p_GivensTrans->getGivensMatrixPreMultiple(1));
 	this->m_GivensTrans.getGivensMatrixPreMultiple(1,p_QQTMatrix_Implicit_Step);
 
-	cout << "endForWilkinsonImplicitQR---Qn_1T Sub:" <<endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "endForWilkinsonImplicitQR---Qn_1T Sub:" <<endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 	//将子矩阵升级为全尺寸转换矩阵
 	upgradeQQTLastSubMatrix();
-	cout << "endForWilkinsonImplicitQR---Qn_1T Full:" <<endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "endForWilkinsonImplicitQR---Qn_1T Full:" <<endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 
 	//更新总体转换矩阵QT total
 	updateQT_Total();
@@ -367,8 +367,8 @@ void DoubleShiftQRIteration::endForWilkinsonImplicitQR()
 	//this->p_QSubMatrix_Implicit_LastStep->copyMatrixElementNoCheck(this->p_Transposer->getTransposeMatrix());
 
 
-	cout << "endForWilkinsonImplicitQR---Qn_1 Full:" << endl;
-	p_QQTMatrix_Implicit_Step->printMatrix();
+	//cout << "endForWilkinsonImplicitQR---Qn_1 Full:" << endl;
+	//p_QQTMatrix_Implicit_Step->printMatrix();
 
 	//将子矩阵升级为全尺寸转换矩阵
 	//upgradeQQTLastSubMatrix();
@@ -383,8 +383,8 @@ void DoubleShiftQRIteration::endForWilkinsonImplicitQR()
 	//更新hessenberg矩阵 By Q
 	updateHessenbergOpMatrix_By_Q_IM_QRIteration();
 
-	cout << "endForWilkinsonImplicitQR---Qn_1T * Hessenberg * Qn_1" << endl;
-	p_OpMatrix->printMatrix();
+	//cout << "endForWilkinsonImplicitQR---Qn_1T * Hessenberg * Qn_1" << endl;
+	//p_OpMatrix->printMatrix();
 };
 
 /*

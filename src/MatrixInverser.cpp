@@ -6,7 +6,7 @@
  */
 
 #include "MatrixInverser.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 MatrixInverser::MatrixInverser(BasicMatrix* p_input_opMatrix,BasicMatrix* p_input_inverseMatrix)
@@ -71,7 +71,7 @@ void MatrixInverser::generateInverseMatrix()
 	{
 		return;
 	}
-	cout << "Start Invers" << endl;
+	//cout << "Start Invers" << endl;
 
 
 	//对操作矩阵进行归一化以及消元 伴随矩阵同步操作
@@ -80,10 +80,10 @@ void MatrixInverser::generateInverseMatrix()
 		this->unZeroPivotRow(i);
 		this->normalizePivotRow(i);
 		this->eliminateSubMatrix(i);
-		cout << "After normalize and sub eliminate: " << i << endl;
-		this->p_operateMatrix->printMatrix();
-		cout << "-----------------------" << endl;
-		this->p_inverseMatrix->printMatrix();
+		//cout << "After normalize and sub eliminate: " << i << endl;
+		//this->p_operateMatrix->printMatrix();
+		//cout << "-----------------------" << endl;
+		//this->p_inverseMatrix->printMatrix();
 	}
 
 
@@ -91,10 +91,10 @@ void MatrixInverser::generateInverseMatrix()
 	for(int i=this->rowNumber-1; i>0; i--)
 	{
 		this->eliminateUpperMatrix(i);
-		cout << "After up eliminate: " << i << endl;
-		this->p_operateMatrix->printMatrix();
-		cout << "-----------------------" << endl;
-		this->p_inverseMatrix->printMatrix();
+		//cout << "After up eliminate: " << i << endl;
+		//this->p_operateMatrix->printMatrix();
+		//cout << "-----------------------" << endl;
+		//this->p_inverseMatrix->printMatrix();
 	}
 
 	//判断是否满秩
@@ -134,10 +134,10 @@ void MatrixInverser::unZeroPivotRow(int pivotRow)
 		this->p_operateMatrix->swapRow(0,i);
 		this->p_inverseMatrix->swapRow(0,i);
 	}
-	cout << "After swap" << endl;
-	this->p_operateMatrix->printMatrix();
-	cout << "-----------------------" << endl;
-	this->p_inverseMatrix->printMatrix();
+	//cout << "After swap" << endl;
+	//this->p_operateMatrix->printMatrix();
+	//cout << "-----------------------" << endl;
+	//this->p_inverseMatrix->printMatrix();
 };
 
 

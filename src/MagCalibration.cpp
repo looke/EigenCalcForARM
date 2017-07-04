@@ -5,7 +5,7 @@
  *      Author: looke
  */
 #include "MagCalibration.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 MagCalibration::MagCalibration(BasicMatrix* p_input_OpMatrix):
@@ -178,10 +178,10 @@ bool MagCalibration::generateCaliInfo()
 		}
 
 		m_TempMatrix.resizeMatrix(p_OpMatrix_Original->rowNum,1);
-		cout << "Z:" << endl;
-		m_ZMatrix_Total.printMatrix();
-		cout << "Vector for ABinv" << endl;
-		vectorForABInv.printMatrix();
+		//cout << "Z:" << endl;
+		//m_ZMatrix_Total.printMatrix();
+		//cout << "Vector for ABinv" << endl;
+		//vectorForABInv.printMatrix();
 
 		m_MatrixMulti.reload(&m_ZMatrix_Total,&vectorForABInv,&m_TempMatrix);
 		m_MatrixMulti.multiplyCalc();
@@ -217,25 +217,30 @@ bool MagCalibration::generateCaliInfo()
 		s = m_TransVector.getElement(9);
 
 		//初始化比率系数
+		double scale;
 		scale = 4*a*c - b*b;
 		scale = 1/scale;
 		scale = sqrt(scale);
 
-		updateEllipseParaByScale();
+		updateEllipseParaByScale(scale);
 
 		//硬磁校正矩阵
 		bool hardResult = generateHardIronCaliInfo();
 
 		//软磁校正矩阵
 		bool softResult = generateSoftIronCaliInfo();
-
+		if(!softResult)
+		{
+			updateEllipseParaByScale(-1);
+			softResult = generateSoftIronCaliInfo();
+		}
 		result = hardResult&&softResult;
 	}
 
 	return result;
 };
 
-void MagCalibration::updateEllipseParaByScale()
+void MagCalibration::updateEllipseParaByScale(double scale)
 {
 	a = scale * a;
 	b = scale * b;

@@ -8,7 +8,7 @@
 #include "GeneralizedEigenSolverForReal.h"
 #include <cstdlib>
 #include <time.h>
-#include "iostream"
+//#include "iostream"
 using namespace std;
 
 //GeneralizedEigenSolverForReal::GeneralizedEigenSolverForReal()
@@ -112,10 +112,10 @@ void GeneralizedEigenSolverForReal::generateHTOpMatrix()
 	//更新总体转换矩阵
 	//updateQZMatrixTotal();
 
-	cout << "--------generateHTOpMatrix full OpHessenbergMatrix----------" << endl;
-	p_OpMatrix_A->printMatrix();
-	cout << "--------generateHTOpMatrix full OpTriangleMatrix----------" << endl;
-	p_OpMatrix_B->printMatrix();
+	//cout << "--------generateHTOpMatrix full OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix_A->printMatrix();
+	//cout << "--------generateHTOpMatrix full OpTriangleMatrix----------" << endl;
+	//p_OpMatrix_B->printMatrix();
 };
 
 
@@ -160,10 +160,10 @@ void GeneralizedEigenSolverForReal::generateDeflatedHTMatrixPair()
 		}
 	}
 
-	cout << "--------generateDeflatedHTMatrixPair deflated OpHessenbergMatrix----------" << endl;
-	p_OpMatrix_Hessenberg_deflated->printMatrix();
-	cout << "--------generateDeflatedHTMatrixPair deflated OpTriangleMatrix----------" << endl;
-	p_OpMatrix_Triangle_deflated->printMatrix();
+	//cout << "--------generateDeflatedHTMatrixPair deflated OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix_Hessenberg_deflated->printMatrix();
+	//cout << "--------generateDeflatedHTMatrixPair deflated OpTriangleMatrix----------" << endl;
+	//p_OpMatrix_Triangle_deflated->printMatrix();
 
 };
 
@@ -176,10 +176,10 @@ void GeneralizedEigenSolverForReal::upgradeDeflatedQMatrix()
 	//this->p_QMatrix_Iteration->resetMatrixToI();
 	//this->p_ZMatrix_Iteration->resetMatrixToI();
 
-	cout << "--------upgradeDeflatedQMatrix-------------" << endl;
-	cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
-	cout << "--------Before Upgrade---Q_Deflated----------" << endl;
-	p_QMatrix_Step->printMatrix();
+	//cout << "--------upgradeDeflatedQMatrix-------------" << endl;
+	//cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
+	//cout << "--------Before Upgrade---Q_Deflated----------" << endl;
+	//p_QMatrix_Step->printMatrix();
 	//this->p_QMatrix_Deflated_Iteration->printMatrix();
 	//cout << "--------Before Upgrade---Z_Deflated----------" << endl;
 	//this->p_ZMatrix_Deflated_Iteration->printMatrix();
@@ -201,8 +201,8 @@ void GeneralizedEigenSolverForReal::upgradeDeflatedQMatrix()
 		}
 	}
 	*/
-	cout << "--------After Upgrade---Q_FullSize----------" << endl;
-	p_QMatrix_Step->printMatrix();
+	//cout << "--------After Upgrade---Q_FullSize----------" << endl;
+	//p_QMatrix_Step->printMatrix();
 	//this->p_QMatrix_Iteration->printMatrix();
 	//cout << "--------After Upgrade---Z_FullSize----------" << endl;
 	//this->p_ZMatrix_Iteration->printMatrix();
@@ -217,13 +217,13 @@ void GeneralizedEigenSolverForReal::upgradeDeflatedZMatrix()
 	//this->p_QMatrix_Iteration->resetMatrixToI();
 	//this->p_ZMatrix_Iteration->resetMatrixToI();
 
-	cout << "--------upgradeDeflatedQZMatrix-------------" << endl;
-	cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
+	//cout << "--------upgradeDeflatedQZMatrix-------------" << endl;
+	//cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
 	//cout << "--------Before Upgrade---Q_Deflated----------" << endl;
 	//this->p_QMatrix_Deflated_Iteration->printMatrix();
-	cout << "--------Before Upgrade---Z_Deflated----------" << endl;
+	//cout << "--------Before Upgrade---Z_Deflated----------" << endl;
 	//this->p_ZMatrix_Deflated_Iteration->printMatrix();
-	p_ZMatrix_Step->printMatrix();
+	//p_ZMatrix_Step->printMatrix();
 
 	p_ZMatrix_Step->resizeMatrix(this->p_OpMatrix_A->rowNum,this->p_OpMatrix_A->columnNum);
 	p_ZMatrix_Step->moveDiagonalSubMatrixDown(0,tailIndex,deflationStart);
@@ -245,9 +245,9 @@ void GeneralizedEigenSolverForReal::upgradeDeflatedZMatrix()
 	*/
 	//cout << "--------After Upgrade---Q_FullSize----------" << endl;
 	//this->p_QMatrix_Iteration->printMatrix();
-	cout << "--------After Upgrade---Z_FullSize----------" << endl;
+	//cout << "--------After Upgrade---Z_FullSize----------" << endl;
 	//this->p_ZMatrix_Iteration->printMatrix();
-	p_ZMatrix_Step->printMatrix();
+	//p_ZMatrix_Step->printMatrix();
 };
 
 /*
@@ -260,9 +260,9 @@ void GeneralizedEigenSolverForReal::updateQMatrixTotal()
 	this->m_Multiplier.multiplyCalc();
 	p_QMatrix_Total->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "--------updateQMatrixTotal----------" << endl;
-	cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
-	this->p_QMatrix_Total->printMatrix();
+	//cout << "--------updateQMatrixTotal----------" << endl;
+	//cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
+	//this->p_QMatrix_Total->printMatrix();
 	//cout << "--------After Upgrade---Z_Total FullSize----------" << endl;
 	//this->p_ZMatrix_Total->printMatrix();
 };
@@ -276,20 +276,20 @@ void GeneralizedEigenSolverForReal::updateZMatrixTotal()
 	this->m_Multiplier.reload(p_ZMatrix_Total, p_ZMatrix_Step, p_TempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	p_ZMatrix_Total->copyMatrixElementNoCheck(p_TempMatrix);
-	cout << "--------updateZMatrixTotal----------" << endl;
+	//cout << "--------updateZMatrixTotal----------" << endl;
 	//cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
 	//this->p_QMatrix_Total->printMatrix();
-	cout << "--------After Upgrade---Z_Total FullSize----------" << endl;
-	this->p_ZMatrix_Total->printMatrix();
+	//cout << "--------After Upgrade---Z_Total FullSize----------" << endl;
+	//this->p_ZMatrix_Total->printMatrix();
 };
 
 //使用Q矩阵左乘H-T矩阵对
 void GeneralizedEigenSolverForReal::updateHTMatrixByQ()
 {
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Hessenberg Matrix Before" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Triangle Matrix Before" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Hessenberg Matrix Before" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Triangle Matrix Before" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 
 	//更新矩阵Hessenberg A
 	this->m_Multiplier.reload(p_QMatrix_Step, p_OpMatrix_A, p_TempMatrix);
@@ -301,19 +301,19 @@ void GeneralizedEigenSolverForReal::updateHTMatrixByQ()
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix_B->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Hessenberg Matrix After" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Triangle Matrix After" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Hessenberg Matrix After" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByQ----OP Triangle Matrix After" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 };
 
 //使用Z矩阵右乘H-T矩阵对
 void GeneralizedEigenSolverForReal::updateHTMatrixByZ()
 {
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Hessenberg Matrix Before" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Triangle Matrix Before" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Hessenberg Matrix Before" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Triangle Matrix Before" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 
 	//更新矩阵Hessenberg A
 	this->m_Multiplier.reload(p_OpMatrix_A, p_ZMatrix_Step, p_TempMatrix);
@@ -325,10 +325,10 @@ void GeneralizedEigenSolverForReal::updateHTMatrixByZ()
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix_B->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Hessenberg Matrix After" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Triangle Matrix After" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Hessenberg Matrix After" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "GeneralizedEigenSolverForReal--updateHTMatrixByZ----OP Triangle Matrix After" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 };
 
 
@@ -438,7 +438,7 @@ bool GeneralizedEigenSolverForReal::isDiagonalBlockComplexEigen(BasicMatrix* p_I
 };
 
 //测试打印，Q_Total * OP * Z_Total
-
+/*
 void GeneralizedEigenSolverForReal::showQxOPxZ()
 {
 	//print QAZ
@@ -461,7 +461,7 @@ void GeneralizedEigenSolverForReal::showQxOPxZ()
 	cout << "--------------Q_Total * Op_Matrix_B * Z_Total-----------------" << endl;
 	testForTemp_B_nxn.printMatrix();
 };
-
+*/
 /*
  * 计算特征值 ------需要增加随机偏移，防止陷入无法收敛的死循环
  */
@@ -507,10 +507,10 @@ void GeneralizedEigenSolverForReal::calcEigenValue()
 		//Hessenberg矩阵进行整形，将极小值变为0元
 		this->p_OpMatrix_A->regularZeroElement();
 		this->p_OpMatrix_B->regularZeroElement();
-		cout << "--------calcEigenValue After Regular---Fullsize OpHessenbergMatrix----------" << endl;
-		p_OpMatrix_A->printMatrix();
-		cout << "--------calcEigenValue After Regular---Fullsize OpTriangleMatrix----------" << endl;
-		p_OpMatrix_B->printMatrix();
+		//cout << "--------calcEigenValue After Regular---Fullsize OpHessenbergMatrix----------" << endl;
+		//p_OpMatrix_A->printMatrix();
+		//cout << "--------calcEigenValue After Regular---Fullsize OpTriangleMatrix----------" << endl;
+		//p_OpMatrix_B->printMatrix();
 
 		bool hasNewDeflate = m_HessenbergDeflation.findNewDeflationPoint(p_OpMatrix_A, this->deflationStart,this->deflationEnd);
 		this->deflationStart = m_HessenbergDeflation.getNewDeflationStart();
@@ -693,12 +693,12 @@ void GeneralizedEigenSolverForReal::lastStepIteration(int startIndex)
 
 		//Hessenberg矩阵进行整形，将极小值变为0元
 		p_OpMatrix_A->regularZeroElement();
-		cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpHessenbergMatrix----------" << endl;
-		p_OpMatrix_A->printMatrix();
+		//cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpHessenbergMatrix----------" << endl;
+		//p_OpMatrix_A->printMatrix();
 
 		p_OpMatrix_B->regularZeroElement();
-		cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpTriangleMatrix----------" << endl;
-		p_OpMatrix_B->printMatrix();
+		//cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpTriangleMatrix----------" << endl;
+		//p_OpMatrix_B->printMatrix();
 
 		temp = this->p_OpMatrix_A->getMatrixElement(startIndex+1,startIndex);
 		if(0 == temp)

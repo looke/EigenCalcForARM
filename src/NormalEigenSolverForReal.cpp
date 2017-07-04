@@ -6,7 +6,7 @@
  */
 
 #include "NormalEigenSolverForReal.h"
-#include "iostream"
+//#include "iostream"
 using namespace std;
 
 
@@ -86,8 +86,8 @@ void NormalEigenSolverForReal::generateDeflatedHessenbergMatrix()
 		}
 	}
 
-	cout << "--------generateDeflatedHessenbergMatrix deflated OpHessenbergMatrix----------" << endl;
-	p_OpHessenbergMatrix_deflated->printMatrix();
+	//cout << "--------generateDeflatedHessenbergMatrix deflated OpHessenbergMatrix----------" << endl;
+	//p_OpHessenbergMatrix_deflated->printMatrix();
 
 };
 
@@ -143,11 +143,11 @@ void NormalEigenSolverForReal::upgradeDeflatedQQTMatrix()
 	//this->p_QTMatrix_Iteration->resetMatrixToI();
 	//this->p_QMatrix_Iteration->resetMatrixToI();
 	int tailIndex = deflationEnd - deflationStart;
-	cout << "--------upgradeDeflatedQQTMatrix-------------" << endl;
-	cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
-	cout << "--------Before Upgrade---QT_Deflated----------" << endl;
+	//cout << "--------upgradeDeflatedQQTMatrix-------------" << endl;
+	//cout << "--------Deflation Start:" << this->deflationStart << "-----Deflation End:" << this->deflationEnd <<endl;
+	//cout << "--------Before Upgrade---QT_Deflated----------" << endl;
 	//this->p_QTMatrix_Deflated_Iteration->printMatrix();
-	this->p_QQTMatrix_Iteration->printMatrix();
+	//this->p_QQTMatrix_Iteration->printMatrix();
 	//cout << "--------Before Upgrade---Q_Deflated----------" << endl;
 	//this->p_QMatrix_Deflated_Iteration->printMatrix();
 
@@ -169,8 +169,8 @@ void NormalEigenSolverForReal::upgradeDeflatedQQTMatrix()
 		}
 	}
 	*/
-	cout << "--------After Upgrade---QT_FullSize----------" << endl;
-	this->p_QQTMatrix_Iteration->printMatrix();
+	//cout << "--------After Upgrade---QT_FullSize----------" << endl;
+	//this->p_QQTMatrix_Iteration->printMatrix();
 	//cout << "--------After Upgrade---Q_FullSize----------" << endl;
 	//this->p_QMatrix_Iteration->printMatrix();
 };
@@ -193,9 +193,9 @@ void NormalEigenSolverForReal::updateQTMatrixTotal()
 	this->m_Multiplier.multiplyCalc();
 	p_QTMatrix_Total->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "--------updateQTMatrixTotal----------" << endl;
-	cout << "--------After Upgrade---QT_Total FullSize----------" << endl;
-	this->p_QTMatrix_Total->printMatrix();
+	//cout << "--------updateQTMatrixTotal----------" << endl;
+	//cout << "--------After Upgrade---QT_Total FullSize----------" << endl;
+	//this->p_QTMatrix_Total->printMatrix();
 	//cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
 	//this->p_QMatrix_Total->printMatrix();
 };
@@ -210,11 +210,11 @@ void NormalEigenSolverForReal::updateQMatrixTotal()
 	this->m_Multiplier.multiplyCalc();
 	p_QMatrix_Total->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "--------updateQMatrixTotal----------" << endl;
+	//cout << "--------updateQMatrixTotal----------" << endl;
 	//cout << "--------After Upgrade---QT_Total FullSize----------" << endl;
 	//this->p_QTMatrix_Total->printMatrix();
-	cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
-	this->p_QMatrix_Total->printMatrix();
+	//cout << "--------After Upgrade---Q_Total FullSize----------" << endl;
+	//this->p_QMatrix_Total->printMatrix();
 };
 
 /*
@@ -244,16 +244,16 @@ void NormalEigenSolverForReal::generateHessenbergOpMatrix()
  */
 void NormalEigenSolverForReal::updateHessenbergOpMatrix_By_QT()
 {
-	cout << "--------updateHessenbergOpMatrix Before Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
-	p_OpMatrix->printMatrix();
+	//cout << "--------updateHessenbergOpMatrix Before Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix->printMatrix();
 
 	//计算QT_It * OpHessenbergMatrix
 	this->m_Multiplier.reload(p_QQTMatrix_Iteration, p_OpMatrix, p_TempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "--------updateHessenbergOpMatrix After Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
-	p_OpMatrix->printMatrix();
+	//cout << "--------updateHessenbergOpMatrix After Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix->printMatrix();
 
 };
 
@@ -262,16 +262,16 @@ void NormalEigenSolverForReal::updateHessenbergOpMatrix_By_QT()
  */
 void NormalEigenSolverForReal::updateHessenbergOpMatrix_By_Q()
 {
-	cout << "--------updateHessenbergOpMatrix Before Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
-	p_OpMatrix->printMatrix();
+	//cout << "--------updateHessenbergOpMatrix Before Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix->printMatrix();
 
 	//计算OpHessenbergMatrix * Q_It
 	this->m_Multiplier.reload(p_OpMatrix, p_QQTMatrix_Iteration, p_TempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "--------updateHessenbergOpMatrix After Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
-	p_OpMatrix->printMatrix();
+	//cout << "--------updateHessenbergOpMatrix After Upgrade---Fullsize OpHessenbergMatrix----------" << endl;
+	//p_OpMatrix->printMatrix();
 
 };
 
@@ -344,8 +344,8 @@ void NormalEigenSolverForReal::calcEigenValue()
 	{
 		//Hessenberg矩阵进行整形，将极小值变为0元
 		p_OpMatrix->regularZeroElement();
-		cout << "--------calcEigenValue After Regular---Fullsize OpHessenbergMatrix----------" << endl;
-		p_OpMatrix->printMatrix();
+		//cout << "--------calcEigenValue After Regular---Fullsize OpHessenbergMatrix----------" << endl;
+		//p_OpMatrix->printMatrix();
 		p_QQTMatrix_Iteration->resetMatrixToI();
 		//查找降阶点
 		//bool hasNewDeflate = findNewDeflationPoint();
@@ -539,8 +539,8 @@ void NormalEigenSolverForReal::lastStepIteration(int startIndex)
 
 		//Hessenberg矩阵进行整形，将极小值变为0元
 		p_OpMatrix->regularZeroElement();
-		cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpHessenbergMatrix----------" << endl;
-		p_OpMatrix->printMatrix();
+		//cout << "--------calcEigenValue lastStepIteration After Regular---Fullsize OpHessenbergMatrix----------" << endl;
+		//p_OpMatrix->printMatrix();
 
 		temp = this->p_OpMatrix->getMatrixElement(startIndex+1,startIndex);
 		if(0 == temp)

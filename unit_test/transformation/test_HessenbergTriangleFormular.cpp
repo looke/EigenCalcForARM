@@ -74,13 +74,13 @@ TEST(HessenbergTriangleFormular_HT_Test_Normal4x4, postive)
 	EXPECT_LT(fabs(BMatrix_44.getMatrixElement(3,2)-(0)),lowEdge);
 
 	cout << "Q" << endl;
-	QMatrix_44.printMatrix();
+	//QMatrix_44.printMatrix();
 
 	cout << "Z" << endl;
-	ZMatrix_44.printMatrix();
+	//ZMatrix_44.printMatrix();
 
 	cout << "A" << endl;
-	AMatrix_44_Original.printMatrix();
+	//AMatrix_44_Original.printMatrix();
 
 	MatrixMultiplier m_multi = MatrixMultiplier(&QMatrix_44, &AMatrix_44_Original, &TempMatrix_44);
 	m_multi.multiplyCalc();
@@ -89,7 +89,7 @@ TEST(HessenbergTriangleFormular_HT_Test_Normal4x4, postive)
 	m_multi.multiplyCalc();
 	AMatrix_44_Original.copyMatrixElementNoCheck(&TempMatrix_44);
 	cout << "Q * A * Z" << endl;
-	AMatrix_44_Original.printMatrix();
+	//AMatrix_44_Original.printMatrix();
 
 	lowEdge = AMatrix_44_Original.getLowEdge();
 	maxDiff = AMatrix_44_Original.calcMaxDifferentialNoCheck(&AMatrix_44);

@@ -6,7 +6,7 @@
  */
 
 #include "StaticMatrix.h"
-#include <iostream>
+//#include <iostream>
 #include "math.h"
 
 using namespace std;
@@ -89,6 +89,7 @@ double StaticMatrix::getMatrixElementRegulared(int rNum, int cNum, double lowEdg
 	return this->matrixNxN[rNum][cNum];
 };
 
+/*
 void StaticMatrix::printMatrix()
 {
 	for(int i=0;i<this->rowNum;i++)
@@ -101,7 +102,7 @@ void StaticMatrix::printMatrix()
 		cout<<endl;
 	}
 };
-
+*/
 //½»»»ÐÐ
 bool StaticMatrix::swapRow(int from, int to)
 {

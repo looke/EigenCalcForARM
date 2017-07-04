@@ -28,7 +28,7 @@ public:
 	//v=a*x.^2+b*x.*y+c*y.^2+d*x.*z+e*y.*z+j*z.^2+p*x+q*y+r*z+s;
 	double a,b,c,d,e,j,p,q,r,s;
 	//Mag数据椭圆参数比例系数
-	double scale;
+	//double scale;
 	//软磁校正矩阵
 	StaticMatrix m_Mag_SoftIron_CaliMatrix;
 
@@ -84,7 +84,7 @@ protected:
 	//矩阵乘积
 	MatrixMultiplier m_MatrixMulti;
 
-	void updateEllipseParaByScale();
+	void updateEllipseParaByScale(double scale);
 
 	//硬磁校正系数求解
 	bool generateHardIronCaliInfo();

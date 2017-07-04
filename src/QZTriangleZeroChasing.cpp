@@ -6,7 +6,7 @@
  */
 
 #include "QZTriangleZeroChasing.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 //QZTriangleZeroChasing::QZTriangleZeroChasing()
@@ -55,7 +55,7 @@ void QZTriangleZeroChasing::deflate()
 	int subMatrixSize;
 	int zeroIndex;
 
-	cout << "deflate----clean Q\Z total" << endl;
+	//cout << "deflate----clean Q\Z total" << endl;
 	//左Givens变换矩阵Q-总体综合矩阵
 	p_GivensMatrixFor_Q_total->resetMatrixToI();
 	//右Givens变换矩阵Z-总体综合矩阵
@@ -65,37 +65,37 @@ void QZTriangleZeroChasing::deflate()
 
 	for(int i=0; i<this->p_OpMatrix_A->rowNum; i++)
 	{
-		cout << "deflate----start iterate:" << i << endl;
+		//cout << "deflate----start iterate:" << i << endl;
 
 		subMatrixSize = p_OpMatrix_A->rowNum-i;
 		//子矩阵维度小于2时退出循环
 		if(subMatrixSize < 2)
 		{
 			deflate_End_New = p_OpMatrix_A->rowNum - 1 - i;
-			cout << "deflate----subMatrixSize < 2 quit!:" << deflate_End_New << endl;
+			//cout << "deflate----subMatrixSize < 2 quit!:" << deflate_End_New << endl;
 			break;
 		}
 
-		cout << "deflate----Generate Sub Matrix" << endl;
+		//cout << "deflate----Generate Sub Matrix" << endl;
 
 		//生成左上子矩阵,以及对应的子变换矩阵
 		generateSubMatrix(i);
 
-		cout << "deflate---- Sub A " <<endl;
-		this->p_OpSubMatrix_A->printMatrix();
-		cout << "deflate---- Sub B " <<endl;
-		this->p_OpSubMatrix_B->printMatrix();
+		//cout << "deflate---- Sub A " <<endl;
+		//this->p_OpSubMatrix_A->printMatrix();
+		//cout << "deflate---- Sub B " <<endl;
+		//this->p_OpSubMatrix_B->printMatrix();
 
 		//获取主对角线0元位置索引
 		zeroIndex = this->p_OpSubMatrix_B->maxIndexOfZeroOnDiagonal();
-		cout << "deflate----Zero Index of Sub B:" << zeroIndex << endl;
+		//cout << "deflate----Zero Index of Sub B:" << zeroIndex << endl;
 
 		//判断主对角线0元的位置
 		if(zeroIndex < 0)
 		{
 			//如果不存在0元,则退出,说明不再需要降零元
 			deflate_End_New = p_OpMatrix_A->rowNum - 1 - i;
-			cout << "deflate----No Zero, Quit:"<< deflate_End_New <<endl;
+			//cout << "deflate----No Zero, Quit:"<< deflate_End_New <<endl;
 			break;
 		}
 
@@ -110,7 +110,7 @@ void QZTriangleZeroChasing::deflate()
 			//如果0元不在B子矩阵右下角,则降零元,将0元降子矩阵右下角
 			for (int j=zeroIndex+1; j<subMatrixSize; j++)
 			{
-				cout << "deflate---- Sub B target:" << j << endl;
+				//cout << "deflate---- Sub B target:" << j << endl;
 
 				//cout << "deflate----clean&Resize Q\Z step" << endl;
 
@@ -125,21 +125,21 @@ void QZTriangleZeroChasing::deflate()
 					this->resizeTransMatrix(i);
 					//根据B子矩阵生成Q子矩阵
 					generateGivensSubMatrixForB(j);
-					cout << "deflate---- Q step" <<endl;
-					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//cout << "deflate---- Q step" <<endl;
+					//this->p_GivensMatrixFor_QZ_step->printMatrix();
 
 					//更新A,B子矩阵
 					updateSubOpMatrix_A_By_Q();
 					updateSubOpMatrix_B_By_Q();
-					cout << "deflate---- Sub Q A " <<endl;
-					this->p_OpSubMatrix_A->printMatrix();
-					cout << "deflate---- Sub Q B " <<endl;
-					this->p_OpSubMatrix_B->printMatrix();
+					//cout << "deflate---- Sub Q A " <<endl;
+					//this->p_OpSubMatrix_A->printMatrix();
+					//cout << "deflate---- Sub Q B " <<endl;
+					//this->p_OpSubMatrix_B->printMatrix();
 
 					//将Q子矩阵升级为全维度Q矩阵
 					upgradeGivensSubMatrix_QZ();
-					cout << "FullSize---- Q step" <<endl;
-					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//cout << "FullSize---- Q step" <<endl;
+					//this->p_GivensMatrixFor_QZ_step->printMatrix();
 					//相关变换阵升级为全维度变换阵
 					upgradeTransMatrix();
 					//更新Q 总体矩阵
@@ -158,22 +158,22 @@ void QZTriangleZeroChasing::deflate()
 					//根据A子矩阵生成Z子矩阵
 					generateGivensSubMatrixForA(j);
 
-					cout << "deflate---- Z step" <<endl;
-					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//cout << "deflate---- Z step" <<endl;
+					//this->p_GivensMatrixFor_QZ_step->printMatrix();
 
 					//更新A,B子矩阵
 					updateSubOpMatrix_A_By_Z();
 					updateSubOpMatrix_B_By_Z();
 
-					cout << "deflate---- Sub G A Z" <<endl;
-					this->p_OpSubMatrix_A->printMatrix();
-					cout << "deflate---- Sub G B Z" <<endl;
-					this->p_OpSubMatrix_B->printMatrix();
+					//cout << "deflate---- Sub G A Z" <<endl;
+					//this->p_OpSubMatrix_A->printMatrix();
+					//cout << "deflate---- Sub G B Z" <<endl;
+					//this->p_OpSubMatrix_B->printMatrix();
 
 					//将Z子矩阵升级为全维度Z矩阵
 					upgradeGivensSubMatrix_QZ();
-					cout << "FullSize---- Z step" <<endl;
-					this->p_GivensMatrixFor_QZ_step->printMatrix();
+					//cout << "FullSize---- Z step" <<endl;
+					//this->p_GivensMatrixFor_QZ_step->printMatrix();
 					//相关变换阵升级为全维度变换阵
 					upgradeTransMatrix();
 					//更新Z 总体矩阵
@@ -185,14 +185,14 @@ void QZTriangleZeroChasing::deflate()
 					tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(j,j-2,lowEdge);
 				}
 
-				cout << "deflate---- Op A " <<endl;
-				this->p_OpMatrix_A->printMatrix();
-				cout << "deflate---- Op B " <<endl;
-				this->p_OpMatrix_B->printMatrix();
+				//cout << "deflate---- Op A " <<endl;
+				//this->p_OpMatrix_A->printMatrix();
+				//cout << "deflate---- Op B " <<endl;
+				//this->p_OpMatrix_B->printMatrix();
 			}
 		}
-		cout << "deflate----Final Z for iterate:" << i <<endl;
-		cout << "deflate----clean Z iterate" << endl;
+		//cout << "deflate----Final Z for iterate:" << i <<endl;
+		//cout << "deflate----clean Z iterate" << endl;
 		//右Givens变换矩阵Z-单步过程矩阵
 		//p_GivensMatrixFor_Z_step->resetMatrixToI();
 
@@ -204,16 +204,16 @@ void QZTriangleZeroChasing::deflate()
 			this->resizeTransMatrix(i);
 			//此时0元应当位于B子矩阵右下角,对A子矩阵再进行一次变换,化最末行次对角元为0
 			generateGivensSubMatrixForA_last();
-			cout << "deflate----Final Z for iterate:" << i <<endl;
-			this->p_GivensMatrixFor_QZ_step->printMatrix();
+			//cout << "deflate----Final Z for iterate:" << i <<endl;
+			//this->p_GivensMatrixFor_QZ_step->printMatrix();
 
 			//更新A,B子矩阵
 			updateSubOpMatrix_A_By_Z();
 			updateSubOpMatrix_B_By_Z();
-			cout << "deflate---- Sub A Z_final" <<endl;
-			this->p_OpSubMatrix_A->printMatrix();
-			cout << "deflate---- Sub B Z_final" <<endl;
-			this->p_OpSubMatrix_B->printMatrix();
+			//cout << "deflate---- Sub A Z_final" <<endl;
+			//this->p_OpSubMatrix_A->printMatrix();
+			//cout << "deflate---- Sub B Z_final" <<endl;
+			//this->p_OpSubMatrix_B->printMatrix();
 
 			//将Z子矩阵升级为全维度Z矩阵
 			upgradeGivensSubMatrix_QZ();
@@ -232,17 +232,17 @@ void QZTriangleZeroChasing::deflate()
 			tempTarget_A = this->p_OpSubMatrix_A->getMatrixElementRegulared(p_OpSubMatrix_A->rowNum-1,p_OpSubMatrix_A->rowNum-2,lowEdge);
 		}
 
-		cout << "deflate---- Op A " <<endl;
-		this->p_OpMatrix_A->printMatrix();
-		cout << "deflate---- Op B " <<endl;
-		this->p_OpMatrix_B->printMatrix();
+		//cout << "deflate---- Op A " <<endl;
+		//this->p_OpMatrix_A->printMatrix();
+		//cout << "deflate---- Op B " <<endl;
+		//this->p_OpMatrix_B->printMatrix();
 
 		//updateGivensMatrix_Total_Q();
 		//updateGivensMatrix_Total_Z();
-		cout << "deflate---- Q total " <<endl;
-		this->p_GivensMatrixFor_Q_total->printMatrix();
-		cout << "deflate---- Z total " <<endl;
-		this->p_GivensMatrixFor_Z_total->printMatrix();
+		//cout << "deflate---- Q total " <<endl;
+		//this->p_GivensMatrixFor_Q_total->printMatrix();
+		//cout << "deflate---- Z total " <<endl;
+		//this->p_GivensMatrixFor_Z_total->printMatrix();
 	}
 };
 
@@ -257,17 +257,17 @@ void QZTriangleZeroChasing::generateGivensSubMatrixForB(int index)
 	BasicVector* p_Vector = this->p_OpSubMatrix_B->getColumnVector(index);
 
 	//test print
-	cout <<"generateGivensSubMatrixForB---- sub B column vector to zero:" << endl;
-	p_Vector->printVector();
+	//cout <<"generateGivensSubMatrixForB---- sub B column vector to zero:" << endl;
+	//p_Vector->printVector();
 
 	this->m_GivensTrans.reload(p_Vector);
 
 	//p_GivensSubMatrixFor_Q_step->copyMatrixElementNoCheck(this->p_GivensTrans->getGivensMatrixPreMultiple(index));
 	this->m_GivensTrans.getGivensMatrixPreMultiple(index,p_GivensMatrixFor_QZ_step);
 	//test print
-	cout <<"generateGivensSubMatrixForB---- sub B givens G:" << endl;
+	//cout <<"generateGivensSubMatrixForB---- sub B givens G:" << endl;
 	//p_GivensSubMatrixFor_Q_step->printMatrix();
-	p_GivensMatrixFor_QZ_step->printMatrix();
+	//p_GivensMatrixFor_QZ_step->printMatrix();
 
 };
 
@@ -281,22 +281,22 @@ void QZTriangleZeroChasing::generateGivensSubMatrixForA(int index)
 	int columnIndex = index-2;
 	if(columnIndex < 0)
 	{
-		cout <<"generateGivensSubMatrixForA---- columnIndex < 0 no need to eliminate" << endl;
+		//cout <<"generateGivensSubMatrixForA---- columnIndex < 0 no need to eliminate" << endl;
 		return;
 	};
 	BasicVector* p_Vector = this->p_OpSubMatrix_A->getRowVector(index);
 
 	//test print
-	cout <<"generateGivensSubMatrixForA---- sub A row vector to zero:" << endl;
-	p_Vector->printVector();
+	//cout <<"generateGivensSubMatrixForA---- sub A row vector to zero:" << endl;
+	//p_Vector->printVector();
 
 	this->m_GivensTrans.reload(p_Vector);
 	//p_GivensSubMatrixFor_Z_step->copyMatrixElementNoCheck(this->p_GivensTrans->getGivensMatrixAfterMultiple(columnIndex));
 	this->m_GivensTrans.getGivensMatrixAfterMultiple(columnIndex,p_GivensMatrixFor_QZ_step);
 	//test print
-	cout <<"generateGivensSubMatrixForA---- sub A givens Z:" << endl;
+	//cout <<"generateGivensSubMatrixForA---- sub A givens Z:" << endl;
 	//p_GivensSubMatrixFor_Z_step->printMatrix();
-	p_GivensMatrixFor_QZ_step->printMatrix();
+	//p_GivensMatrixFor_QZ_step->printMatrix();
 };
 
 void QZTriangleZeroChasing::generateGivensSubMatrixForA_last()
@@ -305,17 +305,17 @@ void QZTriangleZeroChasing::generateGivensSubMatrixForA_last()
 	BasicVector* p_Vector = this->p_OpSubMatrix_A->getRowVector(rowIndex);
 
 	//test print
-	cout <<"generateGivensSubMatrixForA_last---- sub A row vector to zero:" << endl;
-	p_Vector->printVector();
+	//cout <<"generateGivensSubMatrixForA_last---- sub A row vector to zero:" << endl;
+	//p_Vector->printVector();
 	//此处应当增加判断，向量指定位置的元素是否已经为0，如果已经为0，则不需要进行消元
 
 	this->m_GivensTrans.reload(p_Vector);
 	//p_GivensSubMatrixFor_Z_step->copyMatrixElementNoCheck(this->p_GivensTrans->getGivensMatrixAfterMultiple(rowIndex-1));
 	this->m_GivensTrans.getGivensMatrixAfterMultiple(rowIndex-1,p_GivensMatrixFor_QZ_step);
 	//test print
-	cout <<"generateGivensSubMatrixForA_last---- sub A givens Z:" << endl;
+	//cout <<"generateGivensSubMatrixForA_last---- sub A givens Z:" << endl;
 	//p_GivensSubMatrixFor_Z_step->printMatrix();
-	p_GivensMatrixFor_QZ_step->printMatrix();
+	//p_GivensMatrixFor_QZ_step->printMatrix();
 
 };
 

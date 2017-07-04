@@ -38,7 +38,7 @@ TEST(QZTriangleZeroChasingTest, postive)
 	inputMatrix_A.setMatrixElement(3,1,0);
 	inputMatrix_A.setMatrixElement(3,2,1);
 	inputMatrix_A.setMatrixElement(3,3,1);
-	inputMatrix_A.printMatrix();
+	//inputMatrix_A.printMatrix();
 
 	StaticMatrix inputMatrix_B = StaticMatrix(4,4);
 	inputMatrix_B.setMatrixElement(0,0,1);

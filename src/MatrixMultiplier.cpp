@@ -6,7 +6,7 @@
  */
 
 #include "MatrixMultiplier.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 MatrixMultiplier::MatrixMultiplier(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)
@@ -96,10 +96,12 @@ bool MatrixMultiplier::multiplyCalc()
 };
 
 //打印乘积结果矩阵
+/*
 void MatrixMultiplier::printMultiplyResult()
 {
-	p_MultiResult->printMatrix();
+	//p_MultiResult->printMatrix();
 };
+*/
 /*
 string MatrixMultiplier::getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp)
 {

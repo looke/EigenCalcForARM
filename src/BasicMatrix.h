@@ -28,7 +28,7 @@ public:
 	virtual double getMatrixElement(int rNum, int cNum);
 
 	//¥Ú”°æÿ’Û
-	virtual void printMatrix();
+	//virtual void printMatrix();
 
 	//Ωªªª––
 	virtual bool swapRow(int from, int to);

@@ -47,7 +47,7 @@ public:
 	//拷贝向量的元素
 	void copyVector(BasicVector* input_Vector);
 
-	void printVector();
+	//void printVector();
 
 	virtual ~BasicVector(){};
 

@@ -20,7 +20,7 @@ public:
 
 	bool multiplyCalc();
 
-	void printMultiplyResult();
+	//void printMultiplyResult();
 
 	//string getMatrixLengthErrorMessage(BasicMatrix* leftOp, BasicMatrix* rightOp, BasicMatrix* resultOp);
 

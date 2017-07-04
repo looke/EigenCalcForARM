@@ -7,9 +7,9 @@
 
 
 #include "BasicMatrix.h"
-#include <iostream>
+//#include <iostream>
 
-using namespace std;
+//using namespace std;
 
 
 BasicMatrix::BasicMatrix()
@@ -32,8 +32,8 @@ BasicMatrix::BasicMatrix(int inputRowNum, int inputColumnNum)
 	{
 		this->rowNum = 0;
 		this->columnNum = 0;
-		cout<<"Illegal in put row/column numbers!" << endl;
-		cout<<"Using default row/column number construct Matrix!" << endl;
+		//cout<<"Illegal in put row/column numbers!" << endl;
+		//cout<<"Using default row/column number construct Matrix!" << endl;
 		//BasicMatrix();
 	}
 };
@@ -41,10 +41,10 @@ BasicMatrix::BasicMatrix(int inputRowNum, int inputColumnNum)
 void BasicMatrix::initMatrix()
 {};
 
-void BasicMatrix::printMatrix()
-{
+//void BasicMatrix::printMatrix()
+//{
 
-};
+//};
 
 
 bool BasicMatrix::setMatrixElement(int rNum, int cNum, double val)

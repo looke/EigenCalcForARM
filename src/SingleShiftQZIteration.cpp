@@ -6,7 +6,7 @@
  */
 
 #include "SingleShiftQZIteration.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 //SingleShiftQZIteration::SingleShiftQZIteration()
@@ -57,10 +57,10 @@ void SingleShiftQZIteration::generateHessenTriangleOpMatrix()
 	//this->p_OpMatrix_Hessenberg->copyMatrixElementNoCheck(p_HessenbergTriangleFormular->getHessenbergMatrixA());
 	//this->p_OpMatrix_Triangle->copyMatrixElementNoCheck(p_HessenbergTriangleFormular->getTriangleMatrixB());
 
-	cout << "SingleShiftQZIteration--generateHessenTriangleOpMatrix----OP Hessenberg Matrix" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "SingleShiftQZIteration--generateHessenTriangleOpMatrix----OP Triangle Matrix" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "SingleShiftQZIteration--generateHessenTriangleOpMatrix----OP Hessenberg Matrix" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "SingleShiftQZIteration--generateHessenTriangleOpMatrix----OP Triangle Matrix" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 };
 
 /*
@@ -68,10 +68,10 @@ void SingleShiftQZIteration::generateHessenTriangleOpMatrix()
  */
 void SingleShiftQZIteration::updateHTMatrixByQ()
 {
-	cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Hessenberg Matrix Before" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Triangle Matrix Before" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Hessenberg Matrix Before" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Triangle Matrix Before" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 
 	//更新矩阵Hessenberg A
 	this->m_Multiplier.reload(p_QZMatrix_Implicit_Step, p_OpMatrix_A, p_TempMatrix);
@@ -83,10 +83,10 @@ void SingleShiftQZIteration::updateHTMatrixByQ()
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix_B->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Hessenberg Matrix After" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Triangle Matrix After" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Hessenberg Matrix After" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByQ----OP Triangle Matrix After" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 };
 
 /*
@@ -94,10 +94,10 @@ void SingleShiftQZIteration::updateHTMatrixByQ()
  */
 void SingleShiftQZIteration::updateHTMatrixByZ()
 {
-	cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Hessenberg Matrix Before" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Triangle Matrix Before" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Hessenberg Matrix Before" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Triangle Matrix Before" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 
 	//更新矩阵Hessenberg A
 	this->m_Multiplier.reload(p_OpMatrix_A, p_QZMatrix_Implicit_Step, p_TempMatrix);
@@ -109,10 +109,10 @@ void SingleShiftQZIteration::updateHTMatrixByZ()
 	this->m_Multiplier.multiplyCalc();
 	p_OpMatrix_B->copyMatrixElementNoCheck(p_TempMatrix);
 
-	cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Hessenberg Matrix After" << endl;
-	this->p_OpMatrix_A->printMatrix();
-	cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Triangle Matrix After" << endl;
-	this->p_OpMatrix_B->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Hessenberg Matrix After" << endl;
+	//this->p_OpMatrix_A->printMatrix();
+	//cout << "SingleShiftQZIteration--updateHTMatrixByZ----OP Triangle Matrix After" << endl;
+	//this->p_OpMatrix_B->printMatrix();
 };
 
 /*
@@ -144,7 +144,7 @@ void SingleShiftQZIteration::updateZMatrix_Total()
  */
 void SingleShiftQZIteration::initForImplicitQZ(double input_ShiftValue)
 {
-	cout << "SingleShiftQZIteration--initForImplicitQZ" << endl;
+	//cout << "SingleShiftQZIteration--initForImplicitQZ" << endl;
 	//p_QMatrix_Implicit_Step->resetMatrixToI();
 	p_QZMatrix_Implicit_Step->resetMatrixToI();
 
@@ -167,8 +167,8 @@ void SingleShiftQZIteration::initForImplicitQZ(double input_ShiftValue)
 	m_GivensTrans.reload(p_firstColumnVector);
 	m_GivensTrans.getGivensMatrixPreMultiple(1,p_QZMatrix_Implicit_Step);
 
-	cout << "SingleShiftQZIteration--initForImplicitQZ-----Q-Step" << endl;
-	p_QZMatrix_Implicit_Step->printMatrix();
+	//cout << "SingleShiftQZIteration--initForImplicitQZ-----Q-Step" << endl;
+	//p_QZMatrix_Implicit_Step->printMatrix();
 	//还原Hessenberg矩阵
 	this->p_OpMatrix_A->setMatrixElement(0,0,temp_old_a00);
 	this->p_OpMatrix_A->setMatrixElement(1,0,temp_old_a10);
@@ -183,14 +183,14 @@ void SingleShiftQZIteration::initForImplicitQZ(double input_ShiftValue)
 	m_GivensTrans.reload(p_secondRowVector);
 	m_GivensTrans.getGivensMatrixAfterMultiple(0,p_QZMatrix_Implicit_Step);
 
-	cout << "SingleShiftQZIteration--initForImplicitQZ-----Z-Step" << endl;
-	p_QZMatrix_Implicit_Step->printMatrix();
+	//cout << "SingleShiftQZIteration--initForImplicitQZ-----Z-Step" << endl;
+	//p_QZMatrix_Implicit_Step->printMatrix();
 	//更新H-T矩阵对
 	this->updateHTMatrixByZ();
 	//更新综合转换矩阵Z Total
 	updateZMatrix_Total();
 
-	cout << "SingleShiftQZIteration--initForImplicitQZ-----END" << endl;
+	//cout << "SingleShiftQZIteration--initForImplicitQZ-----END" << endl;
 
 };
 
@@ -237,8 +237,8 @@ void SingleShiftQZIteration::implicit_QZIteration(double input_shiftValue)
 	while (i<10)
 	{
 		implicit_QZIteration_Step(input_shiftValue);
-		cout << "SingleShiftQZIteration--implicit_QZIteration----OP Hessenberg Matrix after:" << i << "iteration" <<endl;
-		p_OpMatrix_A->printMatrix();
+		//cout << "SingleShiftQZIteration--implicit_QZIteration----OP Hessenberg Matrix after:" << i << "iteration" <<endl;
+		//p_OpMatrix_A->printMatrix();
 		i++;
 	}
 };

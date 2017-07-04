@@ -6,7 +6,7 @@
  */
 
 #include "MatrixEquationSolver.h"
-#include <iostream>
+//#include <iostream>
 //#include <malloc.h>
 #include "math.h"
 
@@ -168,22 +168,22 @@ void MatrixEquationSolver::gaussElim_ColmnPrin()
 	int pivotRow;
 	for(int i=0; i<this->rowNumber; i++)
 	{
-		cout << "LOOP:" << i << endl;
+		//cout << "LOOP:" << i << endl;
 
 		pivotRow = this->findPivotRow(i);
-		cout << "PivotRow:" << pivotRow << endl;
+		//cout << "PivotRow:" << pivotRow << endl;
 
 		this->swapRow(i, pivotRow);
-		cout << "After swap"<< endl;
-		this->p_opMatrix->printMatrix();
+		//cout << "After swap"<< endl;
+		//this->p_opMatrix->printMatrix();
 
 		this->normalizePivotRow(i);
-		cout << "After Normalization" << endl;
-		this->p_opMatrix->printMatrix();
+		//cout << "After Normalization" << endl;
+		//this->p_opMatrix->printMatrix();
 
 		this->eliminateSubMatrix(i);
-		cout << "After elimination" << endl;
-		this->p_opMatrix->printMatrix();
+		//cout << "After elimination" << endl;
+		//this->p_opMatrix->printMatrix();
 	}
 };
 
@@ -310,7 +310,7 @@ bool MatrixEquationSolver::calcRoots()
 {
 	if(this->rowNumber < this->columnNumber-1)
 	{
-		cout << "Do not have enough row to solve." << endl;
+		//cout << "Do not have enough row to solve." << endl;
 		return false;
 	}
 
@@ -319,13 +319,13 @@ bool MatrixEquationSolver::calcRoots()
 	//cout << "Argument Rank of Matrix:" << arguRank << " . Co Rank of Matrix:" << coRank <<endl;
 	if(augRank > coRank)
 	{
-		cout << "No root exist." <<endl;
+		//cout << "No root exist." <<endl;
 		return false;
 	}
 
 	if(augRank == coRank)
 	{
-		cout << "Only one root exist." <<endl;
+		//cout << "Only one root exist." <<endl;
 	}
 
 	//从最末行开始，对上三角矩阵进行消元，仅保留主对角元素

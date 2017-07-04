@@ -6,7 +6,7 @@
  */
 
 #include "BigStaticMatrix.h"
-#include <iostream>
+//#include <iostream>
 #include "math.h"
 
 using namespace std;
@@ -88,7 +88,7 @@ double BigStaticMatrix::getMatrixElementRegulared(int rNum, int cNum, double low
 	}
 	return this->matrixNxN[rNum][cNum];
 };
-
+/*
 void BigStaticMatrix::printMatrix()
 {
 	for(int i=0;i<this->rowNum;i++)
@@ -101,7 +101,7 @@ void BigStaticMatrix::printMatrix()
 		cout<<endl;
 	}
 };
-
+*/
 //½»»»ÐÐ
 bool BigStaticMatrix::swapRow(int from, int to)
 {

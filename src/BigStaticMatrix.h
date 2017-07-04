@@ -23,7 +23,7 @@ public:
 	double getMatrixElement(int rNum, int cNum);
 
 
-	void printMatrix();
+	//void printMatrix();
 
 	//½»»»ÐÐ
 	bool swapRow(int from, int to);

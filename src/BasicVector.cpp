@@ -7,7 +7,7 @@
 
 #include "BasicVector.h"
 #include "math.h"
-#include "iostream"
+//#include "iostream"
 using namespace std;
 
 BasicVector::BasicVector()
@@ -101,6 +101,7 @@ void BasicVector::normalizationVector()
 };
 
 //打印向量
+/*
 void BasicVector::printVector()
 {
 	cout << "Vecotr: ";
@@ -110,7 +111,7 @@ void BasicVector::printVector()
 	}
 	cout << endl;
 };
-
+*/
 //对向量所有元素置0
 void BasicVector::resetVectorElementToZero()
 {

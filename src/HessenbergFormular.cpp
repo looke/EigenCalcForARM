@@ -6,7 +6,7 @@
  */
 
 #include "HessenbergFormular.h"
-#include "iostream"
+//#include "iostream"
 using namespace std;
 
 //HessenbergFormular::HessenbergFormular()
@@ -58,14 +58,14 @@ void HessenbergFormular::generateSubHouseholderTrans(int iterateNum)
 	this->p_transMatrix->resizeMatrix(rowAndColumnNumber, rowAndColumnNumber);
 
 	BasicVector* p_hesseColumnVector = this->p_OpMatrix->getSubMatrixHessenColumnVector(iterateNum);
-	cout << "generateSubHouseholderTrans-----Current Hessen Vector:" << endl;
-	p_hesseColumnVector->printVector();
+	//cout << "generateSubHouseholderTrans-----Current Hessen Vector:" << endl;
+	//p_hesseColumnVector->printVector();
 
 	this->m_HouseholderTrans.reload(p_hesseColumnVector);
 	this->m_HouseholderTrans.getHouseholderMatrixToE1_ReverseElement(p_transMatrix);
 
-	cout << "generateSubHouseholderTrans-----Sub trans matrix for iterate:" << iterateNum <<endl;
-	this->p_transMatrix->printMatrix();
+	//cout << "generateSubHouseholderTrans-----Sub trans matrix for iterate:" << iterateNum <<endl;
+	//this->p_transMatrix->printMatrix();
 
 };
 
@@ -92,8 +92,8 @@ void HessenbergFormular::upgradeSubHouseholderTrans(int iterateNum)
 	//}
 	p_transMatrix->resizeMatrix(this->p_OpMatrix->rowNum, this->p_OpMatrix->columnNum);
 	p_transMatrix->moveDiagonalSubMatrixDown(0,this->p_OpMatrix->columnNum-iterateNum-2,iterateNum+1);
-	cout << "upgradeSubHouseholderTrans-----Complete trans matrix for iterate:" << iterateNum <<endl;
-	this->p_transMatrix->printMatrix();
+	//cout << "upgradeSubHouseholderTrans-----Complete trans matrix for iterate:" << iterateNum <<endl;
+	//this->p_transMatrix->printMatrix();
 };
 
 /*
@@ -105,8 +105,8 @@ void HessenbergFormular::updatePreTransMatrix()
 	this->m_Multiplier.multiplyCalc();
 	this->p_preTransMatrix->copyMatrixElementNoCheck(p_tempMatrix);
 
-	cout << "updatePreTransMatrix-----Pre trans matrix for total" << endl;
-	this->p_preTransMatrix->printMatrix();
+	//cout << "updatePreTransMatrix-----Pre trans matrix for total" << endl;
+	//this->p_preTransMatrix->printMatrix();
 
 };
 
@@ -131,15 +131,15 @@ void HessenbergFormular::updateOpMatrix()
 	this->m_Multiplier.reload(this->p_transMatrix, this->p_OpMatrix, this->p_tempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	this->p_OpMatrix->copyMatrixElementNoCheck(p_tempMatrix);
-	cout << "updateOpMatrix-----OP matrix pre tans" << endl;
-	this->p_OpMatrix->printMatrix();
+	//cout << "updateOpMatrix-----OP matrix pre tans" << endl;
+	//this->p_OpMatrix->printMatrix();
 
 	this->m_Multiplier.reload(this->p_OpMatrix, this->p_transMatrix, this->p_tempMatrix);
 	this->m_Multiplier.multiplyCalc();
 	this->p_OpMatrix->copyMatrixElementNoCheck(p_tempMatrix);
 
-	cout << "updateOpMatrix-----OP matrix after tans" << endl;
-	this->p_OpMatrix->printMatrix();
+	//cout << "updateOpMatrix-----OP matrix after tans" << endl;
+	//this->p_OpMatrix->printMatrix();
 };
 
 BasicMatrix* HessenbergFormular::getOpMatrix()

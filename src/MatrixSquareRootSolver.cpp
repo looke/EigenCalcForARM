@@ -5,7 +5,7 @@
  *      Author: looke
  */
 #include "MatrixSquareRootSolver.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 /*
  * 求平方根函数初始化，复制入参矩阵的内容
@@ -87,8 +87,8 @@ void MatrixSquareRootSolver::DenmanBeaversIteration()
 	}
 	*/
 	/////测试打印输出
-	cout << "Y Invers:" << endl;
-	this->p_tempZMatrix->printMatrix();
+	//cout << "Y Invers:" << endl;
+	//this->p_tempZMatrix->printMatrix();
 
 	//生成Z的逆矩阵
 	p_tempMatrix->copyMatrixElementNoCheck(p_ZMatrix);
@@ -109,8 +109,8 @@ void MatrixSquareRootSolver::DenmanBeaversIteration()
 		}
 	}
 	*/
-	cout << "Z Invers:" << endl;
-	this->p_tempYMatrix->printMatrix();
+	//cout << "Z Invers:" << endl;
+	//this->p_tempYMatrix->printMatrix();
 
 	//计算矩阵之和并将矩阵各元素乘以0.5，完成DB迭代
 	for(int i=0; i<this->rowNumber;i++)
@@ -130,11 +130,11 @@ void MatrixSquareRootSolver::DenmanBeaversIteration()
 			this->p_tempZMatrix->setMatrixElement(i,j,tempValue);
 		}
 	}
-	cout << "Yn+1:" << endl;
-	this->p_tempYMatrix->printMatrix();
+	//cout << "Yn+1:" << endl;
+	//this->p_tempYMatrix->printMatrix();
 
-	cout << "Zn+1:" << endl;
-	this->p_tempZMatrix->printMatrix();
+	//cout << "Zn+1:" << endl;
+	//this->p_tempZMatrix->printMatrix();
 
 	//计算迭代后的Yn+1与Yn的元素最大差值
 	//this->maxDiff = calcMaxDifferential(this->YMatrix, this->tempYMatrix);
@@ -145,6 +145,7 @@ void MatrixSquareRootSolver::DenmanBeaversIteration()
 /*
  * 打印Y矩阵，经过迭代会趋近于平方根
  */
+/*
 void MatrixSquareRootSolver::printYMatrix()
 {
 	for(int i=0;i<this->rowNumber;i++)
@@ -157,10 +158,11 @@ void MatrixSquareRootSolver::printYMatrix()
 		cout<<endl;
 	}
 };
-
+*/
 /*
  * 打印Z矩阵，经过迭代会趋近于平方根的逆矩阵
  */
+/*
 void MatrixSquareRootSolver::printZMatrix()
 {
 	for(int i=0;i<this->rowNumber;i++)
@@ -173,7 +175,7 @@ void MatrixSquareRootSolver::printZMatrix()
 		cout<<endl;
 	}
 };
-
+*/
 bool MatrixSquareRootSolver::generateSquareRootMatrix()
 {
 	bool isSuccess = true;
@@ -197,7 +199,7 @@ bool MatrixSquareRootSolver::generateSquareRootMatrix()
 			break;
 		}
 
-		cout << "D-B Iteration:" << this->iterationTime << endl;
+		//cout << "D-B Iteration:" << this->iterationTime << endl;
 		this->DenmanBeaversIteration();
 		//拷贝Yn+1到Yn  Zn+1到Zn
 		p_YMatrix->copyMatrixElementNoCheck(p_tempYMatrix);

@@ -49,3 +49,4 @@ Temporary Items
 #eclispe c\cpp out put files
 *.exe
 *.o
+/Debug/
